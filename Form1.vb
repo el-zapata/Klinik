@@ -5,6 +5,7 @@ Imports System.Drawing
 Imports Spire.Doc
 Imports Spire.Doc.Document
 Imports Spire.Doc.Fields
+Imports Spire.Doc.Documents
 
 Public Class Form1
 
@@ -423,6 +424,39 @@ Public Class Form1
                 End If
             End If
             Call Enter_press_on_TextBox()
+        ElseIf RadioButton2.Checked = True Then
+            If TextBox2.Text <> "" Then
+                If Int32.TryParse(TextBox2.Text, Umur) = False Then
+                    MsgBox("Field Umur harus diisi dengan angka")
+                    Exit Sub
+                End If
+            End If
+            Dim Surat_Sakit As New Document()
+            Try
+                Surat_Sakit.LoadFromFile("Template_Surat_Sakit.docx")
+            Catch ex As Exception
+                MsgBox("Template Surat Istirahat Sakit TIdak Ditemukan!!!")
+                Exit Sub
+            End Try
+
+            Dim section As Section = Surat_Sakit.Sections(0)
+            Dim para12 As Paragraph = section.Paragraphs(11)
+            Dim para13 As Paragraph = section.Paragraphs(12)
+
+            Dim tr1 As TextRange = para12.AppendText(TextBox1.Text)
+            Dim tr2 As TextRange = para13.AppendText(TextBox2.Text)
+
+            tr1.CharacterFormat.FontName = "Times New Roman"
+            tr2.CharacterFormat.FontName = "Times New Roman"
+
+            tr1.CharacterFormat.FontSize = 12
+            tr2.CharacterFormat.FontSize = 12
+
+            tr1.CharacterFormat.TextColor = Color.Black
+            tr2.CharacterFormat.TextColor = Color.Black
+
+            Surat_Sakit.SaveToFile("Surat Sakit\Surat Sakit " + TextBox1.Text + " .docx", FileFormat.Docx)
+            MsgBox("Saved")
         End If
     End Sub
 
@@ -710,6 +744,6 @@ Public Class Form1
 
         RichTextBox1.Visible = False
 
-        Button1.Text = "Save & Print"
+        Button1.Text = "Save and Print"
     End Sub
 End Class
