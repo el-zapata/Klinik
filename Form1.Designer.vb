@@ -57,6 +57,8 @@ Partial Class Form1
         Me.Label12 = New System.Windows.Forms.Label()
         Me.TextBox13 = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
+        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton5 = New System.Windows.Forms.RadioButton()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -372,11 +374,33 @@ Partial Class Form1
         Me.Label13.Size = New System.Drawing.Size(0, 15)
         Me.Label13.TabIndex = 35
         '
+        'RadioButton2
+        '
+        Me.RadioButton2.AutoSize = True
+        Me.RadioButton2.Location = New System.Drawing.Point(20, 146)
+        Me.RadioButton2.Name = "RadioButton2"
+        Me.RadioButton2.Size = New System.Drawing.Size(153, 19)
+        Me.RadioButton2.TabIndex = 36
+        Me.RadioButton2.Text = "Print Surat Istirahat Sakit"
+        Me.RadioButton2.UseVisualStyleBackColor = True
+        '
+        'RadioButton5
+        '
+        Me.RadioButton5.AutoSize = True
+        Me.RadioButton5.Location = New System.Drawing.Point(20, 171)
+        Me.RadioButton5.Name = "RadioButton5"
+        Me.RadioButton5.Size = New System.Drawing.Size(97, 19)
+        Me.RadioButton5.TabIndex = 37
+        Me.RadioButton5.Text = "Print Kwitansi"
+        Me.RadioButton5.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1351, 662)
+        Me.Controls.Add(Me.RadioButton5)
+        Me.Controls.Add(Me.RadioButton2)
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.TextBox11)
         Me.Controls.Add(Me.Label11)
@@ -456,4 +480,6 @@ Partial Class Form1
     Friend WithEvents Label12 As Label
     Friend WithEvents TextBox13 As TextBox
     Friend WithEvents Label13 As Label
+    Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents RadioButton5 As RadioButton
 End Class
