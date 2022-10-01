@@ -197,10 +197,6 @@ Public Class Form1
         conn.Close()
     End Sub
 
-    Private Sub RadioButton2_CheckedChanged(sender As Object, e As EventArgs)
-        Button1.Text = "Hapus"
-    End Sub
-
     Private Sub RadioButton3_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton3.CheckedChanged
         TextBox1.Enabled = True
         TextBox2.Enabled = True
@@ -225,6 +221,31 @@ Public Class Form1
 
         Button1.Visible = True
         Button1.Text = "Perbarui"
+
+        Label5.Visible = True
+        Label6.Visible = True
+        Label7.Visible = True
+        Label8.Visible = True
+
+        Label3.Text = "Alamat"
+        Label4.Text = "No. HP"
+
+        TextBox14.Visible = False
+        TextBox15.Visible = False
+        TextBox16.Visible = False
+        TextBox17.Visible = False
+        TextBox18.Visible = False
+        TextBox19.Visible = False
+
+        TextBox6.Visible = True
+        TextBox3.Visible = True
+        TextBox4.Visible = True
+        RichTextBox1.Visible = True
+
+        Label14.Visible = False
+        Label15.Visible = False
+        Label16.Visible = False
+        Label17.Visible = False
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
@@ -260,6 +281,31 @@ Public Class Form1
 
         Button1.Visible = True
         Button1.Text = "Masukkan ke Database"
+
+        Label5.Visible = True
+        Label6.Visible = True
+        Label7.Visible = True
+        Label8.Visible = True
+
+        Label3.Text = "Alamat"
+        Label4.Text = "No. HP"
+
+        TextBox14.Visible = False
+        TextBox15.Visible = False
+        TextBox16.Visible = False
+        TextBox17.Visible = False
+        TextBox18.Visible = False
+        TextBox19.Visible = False
+
+        TextBox6.Visible = True
+        TextBox3.Visible = True
+        TextBox4.Visible = True
+        RichTextBox1.Visible = True
+
+        Label14.Visible = False
+        Label15.Visible = False
+        Label16.Visible = False
+        Label17.Visible = False
     End Sub
 
     Private Sub RadioButton4_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton4.CheckedChanged
@@ -286,7 +332,30 @@ Public Class Form1
         'Button1.Visible = False
         Button1.Text = "Cari Pasien"
 
+        Label5.Visible = True
+        Label6.Visible = True
+        Label7.Visible = True
+        Label8.Visible = True
 
+        Label3.Text = "Alamat"
+        Label4.Text = "No. HP"
+
+        TextBox14.Visible = False
+        TextBox15.Visible = False
+        TextBox16.Visible = False
+        TextBox17.Visible = False
+        TextBox18.Visible = False
+        TextBox19.Visible = False
+
+        TextBox6.Visible = True
+        TextBox3.Visible = True
+        TextBox4.Visible = True
+        RichTextBox1.Visible = True
+
+        Label14.Visible = False
+        Label15.Visible = False
+        Label16.Visible = False
+        Label17.Visible = False
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -599,5 +668,46 @@ Public Class Form1
                 End If
             End If
         End If
+    End Sub
+
+    Private Sub RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton2.CheckedChanged
+        TextBox6.Visible = False
+        TextBox3.Visible = False
+        TextBox4.Visible = False
+        TextBox5.Visible = False
+        TextBox7.Visible = False
+        TextBox8.Visible = False
+        TextBox9.Visible = False
+        TextBox10.Visible = False
+        TextBox11.Visible = False
+        TextBox12.Visible = False
+        TextBox13.Visible = False
+
+        Label5.Visible = False
+        Label6.Visible = False
+        Label7.Visible = False
+        Label8.Visible = False
+
+        Label3.Text = "Tanggal Awal"
+        Label4.Text = "Tanggal Akhir"
+
+        TextBox14.Visible = True
+        TextBox15.Visible = True
+        TextBox16.Visible = True
+        TextBox17.Visible = True
+        TextBox18.Visible = True
+        TextBox19.Visible = True
+
+        Label14.Visible = True
+        Label15.Visible = True
+        Label16.Visible = True
+        Label17.Visible = True
+
+        Label9.Visible = False
+        Label10.Visible = False
+        Label11.Visible = False
+        Label12.Visible = False
+
+        RichTextBox1.Visible = False
     End Sub
 End Class
