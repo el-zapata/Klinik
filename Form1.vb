@@ -709,5 +709,7 @@ Public Class Form1
         Label12.Visible = False
 
         RichTextBox1.Visible = False
+
+        Button1.Text = "Save & Print"
     End Sub
 End Class
