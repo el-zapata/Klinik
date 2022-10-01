@@ -1,6 +1,10 @@
 ﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar
 Imports System.Data.Odbc
 Imports System.Data.Common
+Imports System.Drawing
+Imports Spire.Doc
+Imports Spire.Doc.Document
+Imports Spire.Doc.Fields
 
 Public Class Form1
 
