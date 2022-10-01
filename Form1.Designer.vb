@@ -59,6 +59,16 @@ Partial Class Form1
         Me.Label13 = New System.Windows.Forms.Label()
         Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.RadioButton5 = New System.Windows.Forms.RadioButton()
+        Me.TextBox14 = New System.Windows.Forms.TextBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.TextBox15 = New System.Windows.Forms.TextBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.TextBox16 = New System.Windows.Forms.TextBox()
+        Me.TextBox17 = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.TextBox18 = New System.Windows.Forms.TextBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.TextBox19 = New System.Windows.Forms.TextBox()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -394,11 +404,109 @@ Partial Class Form1
         Me.RadioButton5.Text = "Print Kwitansi"
         Me.RadioButton5.UseVisualStyleBackColor = True
         '
+        'TextBox14
+        '
+        Me.TextBox14.Location = New System.Drawing.Point(215, 348)
+        Me.TextBox14.Name = "TextBox14"
+        Me.TextBox14.Size = New System.Drawing.Size(50, 23)
+        Me.TextBox14.TabIndex = 47
+        Me.TextBox14.Visible = False
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(197, 352)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(12, 15)
+        Me.Label14.TabIndex = 46
+        Me.Label14.Text = "/"
+        Me.Label14.Visible = False
+        '
+        'TextBox15
+        '
+        Me.TextBox15.Location = New System.Drawing.Point(171, 348)
+        Me.TextBox15.Name = "TextBox15"
+        Me.TextBox15.Size = New System.Drawing.Size(20, 23)
+        Me.TextBox15.TabIndex = 45
+        Me.TextBox15.Visible = False
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(153, 352)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(12, 15)
+        Me.Label15.TabIndex = 44
+        Me.Label15.Text = "/"
+        Me.Label15.Visible = False
+        '
+        'TextBox16
+        '
+        Me.TextBox16.Location = New System.Drawing.Point(127, 348)
+        Me.TextBox16.Name = "TextBox16"
+        Me.TextBox16.Size = New System.Drawing.Size(20, 23)
+        Me.TextBox16.TabIndex = 43
+        Me.TextBox16.Visible = False
+        '
+        'TextBox17
+        '
+        Me.TextBox17.Location = New System.Drawing.Point(215, 319)
+        Me.TextBox17.Name = "TextBox17"
+        Me.TextBox17.Size = New System.Drawing.Size(50, 23)
+        Me.TextBox17.TabIndex = 42
+        Me.TextBox17.Visible = False
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(197, 323)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(12, 15)
+        Me.Label16.TabIndex = 41
+        Me.Label16.Text = "/"
+        Me.Label16.Visible = False
+        '
+        'TextBox18
+        '
+        Me.TextBox18.Location = New System.Drawing.Point(171, 319)
+        Me.TextBox18.Name = "TextBox18"
+        Me.TextBox18.Size = New System.Drawing.Size(20, 23)
+        Me.TextBox18.TabIndex = 40
+        Me.TextBox18.Visible = False
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(153, 323)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(12, 15)
+        Me.Label17.TabIndex = 39
+        Me.Label17.Text = "/"
+        Me.Label17.Visible = False
+        '
+        'TextBox19
+        '
+        Me.TextBox19.Location = New System.Drawing.Point(127, 319)
+        Me.TextBox19.Name = "TextBox19"
+        Me.TextBox19.Size = New System.Drawing.Size(20, 23)
+        Me.TextBox19.TabIndex = 38
+        Me.TextBox19.Visible = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1351, 662)
+        Me.Controls.Add(Me.TextBox14)
+        Me.Controls.Add(Me.Label14)
+        Me.Controls.Add(Me.TextBox15)
+        Me.Controls.Add(Me.Label15)
+        Me.Controls.Add(Me.TextBox16)
+        Me.Controls.Add(Me.TextBox17)
+        Me.Controls.Add(Me.Label16)
+        Me.Controls.Add(Me.TextBox18)
+        Me.Controls.Add(Me.Label17)
+        Me.Controls.Add(Me.TextBox19)
         Me.Controls.Add(Me.RadioButton5)
         Me.Controls.Add(Me.RadioButton2)
         Me.Controls.Add(Me.Label13)
@@ -482,4 +590,14 @@ Partial Class Form1
     Friend WithEvents Label13 As Label
     Friend WithEvents RadioButton2 As RadioButton
     Friend WithEvents RadioButton5 As RadioButton
+    Friend WithEvents TextBox14 As TextBox
+    Friend WithEvents Label14 As Label
+    Friend WithEvents TextBox15 As TextBox
+    Friend WithEvents Label15 As Label
+    Friend WithEvents TextBox16 As TextBox
+    Friend WithEvents TextBox17 As TextBox
+    Friend WithEvents Label16 As Label
+    Friend WithEvents TextBox18 As TextBox
+    Friend WithEvents Label17 As Label
+    Friend WithEvents TextBox19 As TextBox
 End Class
