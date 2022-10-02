@@ -425,13 +425,29 @@ Public Class Form1
             End If
             Call Enter_press_on_TextBox()
         ElseIf RadioButton2.Checked = True Then
-            If TextBox2.Text <> "" Then
-                If Int32.TryParse(TextBox2.Text, Umur) = False Then
-                    MsgBox("Field Umur harus diisi dengan angka")
-                    Exit Sub
-                    'ElseIf Int32.TryParse(TextBox2.Text, Umur) = False Then
-                End If
+            Dim Temp As Integer
+            If TextBox1.Text = "" Or TextBox2.Text = "" Or TextBox14.Text = "" Or TextBox15.Text = "" Or TextBox16.Text = "" Or TextBox17.Text = "" Or TextBox18.Text = "" Or TextBox19.Text = "" Then
+                MsgBox("Semua Field harus diisi!!!")
+                Exit Sub
             End If
+
+            Dim Bulan_Awal As String = Nama_Bulan(TextBox18.Text)
+            Dim Bulan_Akhir As String = Nama_Bulan(TextBox15.Text)
+
+            If Int32.TryParse(TextBox2.Text, Umur) = False Then
+                MsgBox("Field Umur harus diisi dengan angka")
+                Exit Sub
+            ElseIf Int32.TryParse(TextBox14.Text, Temp) = False Or Int32.TryParse(TextBox15.Text, Temp) = False Or Int32.TryParse(TextBox16.Text, Temp) = False Or Int32.TryParse(TextBox17.Text, Temp) = False Or Int32.TryParse(TextBox18.Text, Temp) = False Or Int32.TryParse(TextBox19.Text, Temp) = False Then
+                MsgBox("Tanggal Tidak Valid!!!")
+                Exit Sub
+            ElseIf TextBox14.Text.Trim().Length <> 4 Or TextBox17.Text.Trim().Length <> 4 Or TextBox15.Text.Trim().Length < 1 Or TextBox15.Text.Trim().Length > 2 Or TextBox18.Text.Trim().Length < 1 Or TextBox18.Text.Trim().Length > 2 Or TextBox16.Text.Trim().Length < 1 Or TextBox16.Text.Trim().Length > 2 Or TextBox19.Text.Trim().Length < 1 Or TextBox19.Text.Trim().Length > 2 Then
+                MsgBox("Tanggal Tidak Valid!!!")
+                Exit Sub
+            ElseIf Bulan_Awal = "Nomor bulan tidak valid!!!" Or Bulan_Akhir = "Nomor bulan tidak valid!!!" Then
+                MsgBox("Nomor bulan tidak valid!!!")
+                Exit Sub
+            End If
+
             Dim Surat_Sakit As New Document()
             Try
                 Surat_Sakit.LoadFromFile("Template_Surat_Sakit.docx")
@@ -449,9 +465,9 @@ Public Class Form1
 
             Dim tr1 As TextRange = para12.AppendText(TextBox1.Text)
             Dim tr2 As TextRange = para13.AppendText(TextBox2.Text)
-            Dim tr3 As TextRange
-            Dim tr4 As TextRange = para16.AppendText("Mulai Tanggal ")
-            Dim tr5 As TextRange
+            Dim tr3 As TextRange = para15.AppendText("")
+            Dim tr4 As TextRange = para16.AppendText("Mulai Tanggal " + TextBox19.Text + " " + Bulan_Awal + " " + TextBox17.Text)
+            Dim tr5 As TextRange = para17.AppendText("Sampai Tanggal " + TextBox16.Text + " " + Bulan_Akhir + " " + TextBox14.Text)
 
             tr1.CharacterFormat.FontName = "Times New Roman"
             tr2.CharacterFormat.FontName = "Times New Roman"
@@ -494,7 +510,7 @@ Public Class Form1
             Case Is = "12"
                 Return "Desember"
             Case Else
-                MsgBox("Nomor bulan tidak valid!!!")
+                Return "Nomor bulan tidak valid!!!"
         End Select
     End Function
 
@@ -619,6 +635,12 @@ Public Class Form1
         TextBox11.Text = ""
         TextBox12.Text = ""
         TextBox13.Text = ""
+        TextBox14.Text = ""
+        TextBox15.Text = ""
+        TextBox16.Text = ""
+        TextBox17.Text = ""
+        TextBox18.Text = ""
+        TextBox19.Text = ""
         RichTextBox1.Text = ""
     End Sub
 
