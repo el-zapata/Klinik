@@ -429,22 +429,29 @@ Public Class Form1
                 If Int32.TryParse(TextBox2.Text, Umur) = False Then
                     MsgBox("Field Umur harus diisi dengan angka")
                     Exit Sub
+                    'ElseIf Int32.TryParse(TextBox2.Text, Umur) = False Then
                 End If
             End If
             Dim Surat_Sakit As New Document()
             Try
                 Surat_Sakit.LoadFromFile("Template_Surat_Sakit.docx")
             Catch ex As Exception
-                MsgBox("Template Surat Istirahat Sakit TIdak Ditemukan!!!")
+                MsgBox("Template Surat Istirahat Sakit Tidak Ditemukan!!!")
                 Exit Sub
             End Try
 
             Dim section As Section = Surat_Sakit.Sections(0)
             Dim para12 As Paragraph = section.Paragraphs(11)
             Dim para13 As Paragraph = section.Paragraphs(12)
+            Dim para15 As Paragraph = section.Paragraphs(14)
+            Dim para16 As Paragraph = section.Paragraphs(15)
+            Dim para17 As Paragraph = section.Paragraphs(16)
 
             Dim tr1 As TextRange = para12.AppendText(TextBox1.Text)
             Dim tr2 As TextRange = para13.AppendText(TextBox2.Text)
+            Dim tr3 As TextRange
+            Dim tr4 As TextRange = para16.AppendText("Mulai Tanggal ")
+            Dim tr5 As TextRange
 
             tr1.CharacterFormat.FontName = "Times New Roman"
             tr2.CharacterFormat.FontName = "Times New Roman"
@@ -459,6 +466,37 @@ Public Class Form1
             MsgBox("Saved")
         End If
     End Sub
+
+    Function Nama_Bulan(i As String) As String
+        Select Case i
+            Case Is = "01" Or "1"
+                Return "Januari"
+            Case Is = "02" Or "3"
+                Return "Februari"
+            Case Is = "03" Or "3"
+                Return "Maret"
+            Case Is = "04" Or "4"
+                Return "April"
+            Case Is = "05" Or "5"
+                Return "Mei"
+            Case Is = "06" Or "6"
+                Return "Juni"
+            Case Is = "07" Or "7"
+                Return "Juli"
+            Case Is = "08" Or "8"
+                Return "Agustus"
+            Case Is = "09" Or "9"
+                Return "September"
+            Case Is = "10"
+                Return "Oktober"
+            Case Is = "11"
+                Return "November"
+            Case Is = "12"
+                Return "Desember"
+            Case Else
+                MsgBox("Nomor bulan tidak valid!!!")
+        End Select
+    End Function
 
     Private Sub TextBox6_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox6.KeyPress
         If RadioButton4.Checked = True Then
