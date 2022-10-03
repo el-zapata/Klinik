@@ -431,9 +431,6 @@ Public Class Form1
                 Exit Sub
             End If
 
-            Dim Bulan_Awal As String = Nama_Bulan(TextBox18.Text)
-            Dim Bulan_Akhir As String = Nama_Bulan(TextBox15.Text)
-
             If Int32.TryParse(TextBox2.Text, Umur) = False Then
                 MsgBox("Field Umur harus diisi dengan angka")
                 Exit Sub
@@ -443,8 +440,38 @@ Public Class Form1
             ElseIf TextBox14.Text.Trim().Length <> 4 Or TextBox17.Text.Trim().Length <> 4 Or TextBox15.Text.Trim().Length < 1 Or TextBox15.Text.Trim().Length > 2 Or TextBox18.Text.Trim().Length < 1 Or TextBox18.Text.Trim().Length > 2 Or TextBox16.Text.Trim().Length < 1 Or TextBox16.Text.Trim().Length > 2 Or TextBox19.Text.Trim().Length < 1 Or TextBox19.Text.Trim().Length > 2 Then
                 MsgBox("Tanggal Tidak Valid!!!")
                 Exit Sub
-            ElseIf Bulan_Awal = "Nomor bulan tidak valid!!!" Or Bulan_Akhir = "Nomor bulan tidak valid!!!" Then
+            End If
+
+
+            If Integer.Parse(TextBox17.Text) > Integer.Parse(TextBox14.Text) Then
+                MsgBox("Tanggal Tidak Valid!!!")
+                Exit Sub
+            ElseIf Integer.Parse(TextBox18.Text) > Integer.Parse(TextBox15.Text) And Integer.Parse(TextBox17.Text) = Integer.Parse(TextBox14.Text) Then
+                MsgBox("Tanggal Tidak Valid!!!")
+                Exit Sub
+            End If
+
+            Dim Hari_Pada_Bulan_Awal As Integer = Hari_Pada_Bulan(TextBox18.Text, Integer.Parse(TextBox17.Text))
+            Dim Hari_Pada_Bulan_Akhir As Integer = Hari_Pada_Bulan(TextBox15.Text, Integer.Parse(TextBox14.Text))
+            If (Integer.Parse(TextBox19.Text) > Hari_Pada_Bulan_Awal Or Integer.Parse(TextBox19.Text) <= 0) Or (Integer.Parse(TextBox16.Text) > Hari_Pada_Bulan_Akhir Or Integer.Parse(TextBox16.Text) <= 0) Then
+                If Hari_Pada_Bulan_Awal = -1 Or Hari_Pada_Bulan_Akhir = -1 Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+                MsgBox("Tanggal Tidak Valid!!!")
+                Exit Sub
+            End If
+
+            Dim Bulan_Awal As String = Nama_Bulan(TextBox18.Text)
+            Dim Bulan_Akhir As String = Nama_Bulan(TextBox15.Text)
+            If Bulan_Awal = "Nomor bulan tidak valid!!!" Or Bulan_Akhir = "Nomor bulan tidak valid!!!" Then
                 MsgBox("Nomor bulan tidak valid!!!")
+                Exit Sub
+            End If
+
+            Dim jumlah_hari As Integer = Hitung_Hari(Integer.Parse(TextBox19.Text), Integer.Parse(TextBox18.Text), Integer.Parse(TextBox17.Text), Integer.Parse(TextBox16.Text), Integer.Parse(TextBox15.Text), Integer.Parse(TextBox14.Text))
+            If jumlah_hari = -1 Or jumlah_hari > 30 Then
+                MsgBox("Jumlah hari terlalu banyak!!!! Maksimal 30 hari")
                 Exit Sub
             End If
 
@@ -465,29 +492,72 @@ Public Class Form1
 
             Dim tr1 As TextRange = para12.AppendText(TextBox1.Text)
             Dim tr2 As TextRange = para13.AppendText(TextBox2.Text)
-            Dim tr3 As TextRange = para15.AppendText("")
+            Dim tr3 As TextRange = para15.AppendText("Selama " + CStr(jumlah_hari) + " hari")
             Dim tr4 As TextRange = para16.AppendText("Mulai Tanggal " + TextBox19.Text + " " + Bulan_Awal + " " + TextBox17.Text)
             Dim tr5 As TextRange = para17.AppendText("Sampai Tanggal " + TextBox16.Text + " " + Bulan_Akhir + " " + TextBox14.Text)
 
             tr1.CharacterFormat.FontName = "Times New Roman"
             tr2.CharacterFormat.FontName = "Times New Roman"
+            tr3.CharacterFormat.FontName = "Times New Roman"
+            tr4.CharacterFormat.FontName = "Times New Roman"
+            tr5.CharacterFormat.FontName = "Times New Roman"
 
             tr1.CharacterFormat.FontSize = 12
             tr2.CharacterFormat.FontSize = 12
+            tr3.CharacterFormat.FontSize = 12
+            tr4.CharacterFormat.FontSize = 12
+            tr5.CharacterFormat.FontSize = 12
 
             tr1.CharacterFormat.TextColor = Color.Black
             tr2.CharacterFormat.TextColor = Color.Black
+            tr3.CharacterFormat.TextColor = Color.Black
+            tr4.CharacterFormat.TextColor = Color.Black
+            tr5.CharacterFormat.TextColor = Color.Black
 
             Surat_Sakit.SaveToFile("Surat Sakit\Surat Sakit " + TextBox1.Text + " .docx", FileFormat.Docx)
             MsgBox("Saved")
         End If
     End Sub
 
+    Function Hari_Pada_Bulan(i As String, tahun As Integer) As Integer
+        Select Case i
+            Case Is = "01" Or "1"
+                Return 31
+            Case Is = "02" Or "2"
+                If tahun Mod 4 = 0 Then
+                    Return 29
+                End If
+                Return 28
+            Case Is = "03" Or "3"
+                Return 31
+            Case Is = "04" Or "4"
+                Return 30
+            Case Is = "05" Or "5"
+                Return 31
+            Case Is = "06" Or "6"
+                Return 30
+            Case Is = "07" Or "7"
+                Return 31
+            Case Is = "08" Or "8"
+                Return 31
+            Case Is = "09" Or "9"
+                Return 30
+            Case Is = "10"
+                Return 31
+            Case Is = "11"
+                Return 30
+            Case Is = "12"
+                Return 31
+            Case Else
+                Return -1
+        End Select
+    End Function
+
     Function Nama_Bulan(i As String) As String
         Select Case i
             Case Is = "01" Or "1"
                 Return "Januari"
-            Case Is = "02" Or "3"
+            Case Is = "02" Or "2"
                 Return "Februari"
             Case Is = "03" Or "3"
                 Return "Maret"
@@ -512,6 +582,47 @@ Public Class Form1
             Case Else
                 Return "Nomor bulan tidak valid!!!"
         End Select
+    End Function
+
+    Function Hitung_Hari(tgl_awal As Integer, bulan_awal As Integer, tahun_awal As Integer, tgl_akhir As Integer, bulan_akhir As Integer, tahun_akhir As Integer) As Integer
+        If (bulan_awal = bulan_akhir) And (tahun_awal = tahun_akhir) Then
+            Return tgl_akhir - tgl_awal + 1
+        ElseIf tahun_awal = tahun_akhir Then
+            Dim selisih_bulan As Integer = bulan_akhir - bulan_awal
+            If selisih_bulan > 1 Then
+                Return -1
+            Else
+                Dim jumlah_hari As Integer
+                jumlah_hari += Hari_Pada_Bulan(CStr(bulan_awal), tahun_awal)
+                jumlah_hari = jumlah_hari - tgl_awal + 1
+                jumlah_hari += tgl_akhir
+                Return jumlah_hari
+            End If
+            'Dim i As Integer = 1
+            'Dim jumlah_hari As Integer
+            'For i = 1 To selisih_bulan
+            '    jumlah_hari += Hari_Pada_Bulan(CStr(bulan_awal), tahun_awal)
+            '    If i = 1 Then
+            '        jumlah_hari = jumlah_hari - tgl_awal + 1
+            '    ElseIf i = selisih_bulan Then
+            '        jumlah_hari += tgl_akhir
+            '    End If
+            '    bulan_awal += 1
+            'Next
+            'Return jumlah_hari
+        Else
+            Dim selisih_tahun As Integer = tahun_akhir - tahun_awal
+            If selisih_tahun > 1 Then
+                Return -1
+            ElseIf bulan_akhir + 12 - bulan_awal > 1 Then
+                Return -1
+            Else
+                Dim jumlah_hari As Integer
+                jumlah_hari = 31 - tgl_awal + 1
+                jumlah_hari += tgl_akhir
+                Return jumlah_hari
+            End If
+        End If
     End Function
 
     Private Sub TextBox6_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox6.KeyPress
