@@ -514,7 +514,7 @@ Public Class Form1
             tr4.CharacterFormat.TextColor = Color.Black
             tr5.CharacterFormat.TextColor = Color.Black
 
-            Surat_Sakit.SaveToFile("Surat Sakit\Surat Sakit " + TextBox1.Text + " .docx", FileFormat.Docx)
+            Surat_Sakit.SaveToFile("Surat Sakit\Surat Sakit " + TextBox1.Text + " " + DateTime.Now.ToString("dd MMMM yyyy") + ".docx", FileFormat.Docx)
             MsgBox("Saved")
         End If
     End Sub
