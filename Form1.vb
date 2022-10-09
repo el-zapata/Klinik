@@ -560,6 +560,36 @@ Public Class Form1
                 MsgBox("Nomor bulan tidak valid!!!")
                 Exit Sub
             End If
+
+            Dim Kwitansi As New Document()
+            Try
+                Kwitansi.LoadFromFile("Template_Kwitansi.docx")
+            Catch ex As Exception
+                MsgBox("Template Kwitansi Tidak Ditemukan!!!")
+                Exit Sub
+            End Try
+
+            Dim len_char_uang As Integer = TextBox2.Text.Length
+
+
+            Dim section As Section = Kwitansi.Sections(0)
+            Dim kwt_no As Paragraph = section.Paragraphs(1)
+            Dim terima As Paragraph = section.Paragraphs(2)
+
+            Dim tr1 As TextRange = kwt_no.AppendText(TextBox6.Text)
+            Dim tr2 As TextRange = terima.AppendText(TextBox1.Text)
+
+            tr1.CharacterFormat.FontName = "Times New Roman"
+            tr2.CharacterFormat.FontName = "Times New Roman"
+
+            tr1.CharacterFormat.FontSize = 14
+            tr2.CharacterFormat.FontSize = 14
+
+            tr1.CharacterFormat.TextColor = Color.Black
+            tr2.CharacterFormat.TextColor = Color.Black
+
+            Kwitansi.SaveToFile("Kwitansi\Kwitansi " + TextBox1.Text + " " + DateTime.Now.ToString("dd MMMM yyyy HH.mm") + ".pdf", FileFormat.PDF)
+            MsgBox("Saved")
         End If
     End Sub
 
