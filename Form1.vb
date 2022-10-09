@@ -470,8 +470,8 @@ Public Class Form1
             End If
 
             Dim jumlah_hari As Integer = Hitung_Hari(Integer.Parse(TextBox19.Text), Integer.Parse(TextBox18.Text), Integer.Parse(TextBox17.Text), Integer.Parse(TextBox16.Text), Integer.Parse(TextBox15.Text), Integer.Parse(TextBox14.Text))
-            If jumlah_hari = -1 Or jumlah_hari > 30 Then
-                MsgBox("Jumlah hari terlalu banyak!!!! Maksimal 30 hari")
+            If jumlah_hari <= 0 Or jumlah_hari > 30 Then
+                MsgBox("Jumlah hari terlalu banyak atau tanggal tidak valid")
                 Exit Sub
             End If
 
