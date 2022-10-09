@@ -27,6 +27,21 @@ Public Class Form1
         TextBox2.Text = ""
         TextBox3.Text = ""
         TextBox4.Text = ""
+        TextBox5.Text = ""
+        TextBox6.Text = ""
+        TextBox7.Text = ""
+        TextBox8.Text = ""
+        TextBox9.Text = ""
+        TextBox10.Text = ""
+        TextBox11.Text = ""
+        TextBox12.Text = ""
+        TextBox13.Text = ""
+        TextBox14.Text = ""
+        TextBox15.Text = ""
+        TextBox16.Text = ""
+        TextBox17.Text = ""
+        TextBox18.Text = ""
+        TextBox19.Text = ""
         RichTextBox1.Text = ""
     End Sub
 
@@ -274,14 +289,7 @@ Public Class Form1
         Label11.Visible = False
         Label12.Visible = False
 
-        TextBox1.Text = ""
-        TextBox2.Text = ""
-        TextBox3.Text = ""
-        TextBox4.Text = ""
-        TextBox5.Text = ""
-        TextBox6.Text = ""
-        TextBox7.Text = ""
-        RichTextBox1.Text = ""
+        Call Reset_textbox()
 
         Button1.Visible = True
         Button1.Text = "Masukkan ke Database"
@@ -749,7 +757,7 @@ Public Class Form1
             Dim Data_TglUpdate_Bulan As String = Data_TglUpdate(3) + Data_TglUpdate(4)
             Dim Data_TglUpdate_Tanggal As String = Data_TglUpdate(0) + Data_TglUpdate(1)
 
-            If RadioButton1.Checked = False Then
+            If Not (RadioButton1.Checked = False Xor RadioButton5.Checked = False) Then
                 TextBox6.Text = Data_Id
                 TextBox1.Text = Data_Nama
                 TextBox2.Text = Data_Umur
@@ -912,6 +920,7 @@ Public Class Form1
     End Sub
 
     Private Sub RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton2.CheckedChanged
+        Call Reset_textbox()
         TextBox6.Visible = False
         TextBox3.Visible = False
         TextBox4.Visible = False
@@ -955,6 +964,7 @@ Public Class Form1
     End Sub
 
     Private Sub RadioButton5_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton5.CheckedChanged
+        Call Reset_textbox()
         TextBox6.Enabled = True
         TextBox6.Visible = True
         TextBox3.Visible = True
