@@ -451,7 +451,6 @@ Public Class Form1
                 Exit Sub
             End If
 
-
             If Integer.Parse(TextBox17.Text) > Integer.Parse(TextBox14.Text) Then
                 MsgBox("Tanggal Tidak Valid!!!")
                 Exit Sub
@@ -525,6 +524,34 @@ Public Class Form1
 
             Surat_Sakit.SaveToFile("Surat Sakit\Surat Sakit " + TextBox1.Text + " " + DateTime.Now.ToString("dd MMMM yyyy") + ".pdf", FileFormat.PDF)
             MsgBox("Saved")
+        ElseIf RadioButton5.Checked = True Then
+            Dim Temp As Integer
+            If TextBox6.Text = "" Or TextBox1.Text = "" Or TextBox2.Text = "" Or TextBox3.Text = "" Or TextBox16.Text = "" Or TextBox15.Text = "" Or TextBox14.Text = "" Then
+                MsgBox("Semua field harus diisi!!!")
+                Exit Sub
+            ElseIf Int32.TryParse(TextBox2.Text, Temp) = False Or Int32.TryParse(TextBox16.Text, Temp) = False Or Int32.TryParse(TextBox15.Text, Temp) = False Or Int32.TryParse(TextBox14.Text, Temp) = False Then
+                MsgBox("Field Banyaknya Uang dan Tanggal harus diisi dengan angka")
+                Exit Sub
+            ElseIf TextBox14.Text.Trim().Length <> 4 Or TextBox15.Text.Trim().Length < 1 Or TextBox15.Text.Trim().Length > 2 Or TextBox16.Text.Trim().Length < 1 Or TextBox16.Text.Trim().Length > 2 Then
+                MsgBox("Tanggal Tidak Valid!!!")
+                Exit Sub
+            End If
+
+            Dim Hari_Pada_Bulan_Akhir As Integer = Hari_Pada_Bulan(TextBox15.Text, Integer.Parse(TextBox14.Text))
+            If Integer.Parse(TextBox16.Text) > Hari_Pada_Bulan_Akhir Or Integer.Parse(TextBox16.Text) <= 0 Then
+                If Hari_Pada_Bulan_Akhir = -1 Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+                MsgBox("Tanggal Tidak Valid!!!")
+                Exit Sub
+            End If
+
+            Dim Bulan As String = Nama_Bulan(TextBox15.Text)
+            If Bulan = "Nomor bulan tidak valid!!!" Then
+                MsgBox("Nomor bulan tidak valid!!!")
+                Exit Sub
+            End If
         End If
     End Sub
 
@@ -928,6 +955,7 @@ Public Class Form1
     End Sub
 
     Private Sub RadioButton5_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton5.CheckedChanged
+        TextBox6.Enabled = True
         TextBox6.Visible = True
         TextBox3.Visible = True
         TextBox4.Visible = False
