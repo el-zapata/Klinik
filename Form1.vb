@@ -228,6 +228,9 @@ Public Class Form1
         Label7.Visible = True
         Label8.Visible = True
 
+        Label6.Text = "Id"
+        Label1.Text = "Nama Pasien"
+        Label2.Text = "Umur"
         Label3.Text = "Alamat"
         Label4.Text = "No. HP"
 
@@ -288,6 +291,9 @@ Public Class Form1
         Label7.Visible = True
         Label8.Visible = True
 
+        Label6.Text = "Id"
+        Label1.Text = "Nama Pasien"
+        Label2.Text = "Umur"
         Label3.Text = "Alamat"
         Label4.Text = "No. HP"
 
@@ -338,6 +344,9 @@ Public Class Form1
         Label7.Visible = True
         Label8.Visible = True
 
+        Label6.Text = "Id"
+        Label1.Text = "Nama Pasien"
+        Label2.Text = "Umur"
         Label3.Text = "Alamat"
         Label4.Text = "No. HP"
 
@@ -907,6 +916,52 @@ Public Class Form1
         Label15.Visible = True
         Label16.Visible = True
         Label17.Visible = True
+
+        Label9.Visible = False
+        Label10.Visible = False
+        Label11.Visible = False
+        Label12.Visible = False
+
+        RichTextBox1.Visible = False
+
+        Button1.Text = "Save and Print"
+    End Sub
+
+    Private Sub RadioButton5_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton5.CheckedChanged
+        TextBox6.Visible = True
+        TextBox3.Visible = True
+        TextBox4.Visible = False
+        TextBox5.Visible = False
+        TextBox7.Visible = False
+        TextBox8.Visible = False
+        TextBox9.Visible = False
+        TextBox10.Visible = False
+        TextBox11.Visible = False
+        TextBox12.Visible = False
+        TextBox13.Visible = False
+
+        Label5.Visible = False
+        Label6.Visible = True
+        Label7.Visible = False
+        Label8.Visible = False
+
+        Label6.Text = "Kwt No"
+        Label1.Text = "Sudah Terima Dari"
+        Label2.Text = "Banyaknya Uang"
+        Label3.Text = "Untuk Pembayaran"
+        Label4.Text = "Tanggal"
+
+        TextBox14.Visible = True
+        TextBox15.Visible = True
+        TextBox16.Visible = True
+        TextBox17.Visible = False
+        TextBox18.Visible = False
+        TextBox19.Visible = False
+
+        Label14.Visible = True
+        Label15.Visible = True
+        Label16.Visible = False
+        Label17.Visible = False
 
         Label9.Visible = False
         Label10.Visible = False
