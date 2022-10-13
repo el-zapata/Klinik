@@ -935,11 +935,7 @@ Public Class Form1
             tr1.CharacterFormat.FontSize = 14
             tr2.CharacterFormat.FontSize = 14
 
-            If string_uang.Length > 95 Then
-                tr3.CharacterFormat.FontSize = 8
-            ElseIf string_uang.Length > 76 Then
-                tr3.CharacterFormat.FontSize = 10
-            ElseIf string_uang.Length > 64 Then
+            If string_uang.Length > 112 Then
                 tr3.CharacterFormat.FontSize = 12
             Else
                 tr3.CharacterFormat.FontSize = 14
