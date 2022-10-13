@@ -6,6 +6,8 @@ Imports Spire.Doc
 Imports Spire.Doc.Document
 Imports Spire.Doc.Fields
 Imports Spire.Doc.Documents
+Imports System.Drawing.Printing
+Imports Spire.Pdf
 
 Public Class Form1
 
@@ -234,6 +236,7 @@ Public Class Form1
         Label10.Visible = False
         Label11.Visible = False
         Label12.Visible = False
+        DataGridView2.Visible = False
 
         TextBox2.Font = New Font(TextBox2.Font, FontStyle.Regular)
 
@@ -291,6 +294,7 @@ Public Class Form1
         Label10.Visible = False
         Label11.Visible = False
         Label12.Visible = False
+        DataGridView2.Visible = False
 
         Call Reset_textbox()
 
@@ -352,6 +356,7 @@ Public Class Form1
         RichTextBox1.Enabled = True
         'Button1.Visible = False
         Button1.Text = "Cari Pasien"
+        DataGridView2.Visible = False
 
         TextBox2.Font = New Font(TextBox2.Font, FontStyle.Regular)
 
@@ -392,6 +397,12 @@ Public Class Form1
         da.Fill(ds, "tbl_pasien")
         DataGridView1.DataSource = ds.Tables("tbl_pasien")
         conn.Close()
+
+        Dim InstalledPrinters As String
+
+        For Each InstalledPrinters In System.Drawing.Printing.PrinterSettings.InstalledPrinters
+            DataGridView2.Rows.Add(InstalledPrinters)
+        Next InstalledPrinters
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -539,8 +550,17 @@ Public Class Form1
             tr4.CharacterFormat.TextColor = Color.Black
             tr5.CharacterFormat.TextColor = Color.Black
 
-            Surat_Sakit.SaveToFile("Surat Sakit\Surat Sakit " + TextBox1.Text + " " + DateTime.Now.ToString("dd MMMM yyyy") + ".pdf", FileFormat.PDF)
-            MsgBox("Saved")
+            Dim file_name As String = "Surat Sakit\Surat Sakit " + TextBox1.Text + " " + DateTime.Now.ToString("dd MMMM yyyy") + ".pdf"
+
+            Surat_Sakit.SaveToFile(file_name, Spire.Doc.FileFormat.PDF)
+            Dim Confirm As DialogResult = MessageBox.Show("Dokumen tersimpan." & vbCrLf & "Apakah anda ingin mencetak dokumen ini dengan printer " + DataGridView2.SelectedRows(0).Cells(0).Value + "?", "Konfirmasi Pencetakan Dokumen", MessageBoxButtons.YesNo)
+
+            If Confirm = DialogResult.Yes Then
+                Dim kwitansi_print As PdfDocument = New PdfDocument()
+                kwitansi_print.LoadFromFile(file_name)
+                kwitansi_print.PrintSettings.PrinterName = DataGridView2.SelectedRows(0).Cells(0).Value
+                kwitansi_print.Print()
+            End If
         ElseIf RadioButton5.Checked = True Then
             'Dim Temp As Integer
             Dim Temp_uang As Int64
@@ -591,273 +611,273 @@ Public Class Form1
             Next
 
             If digit_ratus.Count <= 3 Then
-                    For a As Integer = 0 To digit_ratus.Count - 1
-                        If digit_ratus(a) <> "0" Then
-                            If a = 0 Then
-                                If digit_ratus.Count >= 2 Then
-                                    If digit_ratus(1) <> "1" Then
-                                        string_uang = angka_ke_kata(digit_ratus(a)) + " " + string_uang
-                                    End If
-                                Else
+                For a As Integer = 0 To digit_ratus.Count - 1
+                    If digit_ratus(a) <> "0" Then
+                        If a = 0 Then
+                            If digit_ratus.Count >= 2 Then
+                                If digit_ratus(1) <> "1" Then
                                     string_uang = angka_ke_kata(digit_ratus(a)) + " " + string_uang
                                 End If
-                            ElseIf a = 1 Then
-                                If digit_ratus(a) = "1" Then
-                                    If digit_ratus(0) = "1" Then
-                                        string_uang = "Sebelas " + string_uang
-                                    ElseIf digit_ratus(0) = "0" Then
-                                        string_uang = "Sepuluh " + string_uang
-                                    Else
-                                        string_uang = angka_ke_kata(digit_ratus(0)) + " Belas " + string_uang
-                                    End If
-                                Else
-                                    string_uang = angka_ke_kata(digit_ratus(a)) + " Puluh " + string_uang
-                                End If
-                            ElseIf a = 2 Then
-                                If digit_ratus(a) = "1" Then
-                                    string_uang = "Seratus " + string_uang
-                                    Exit For
-                                Else
-                                    string_uang = angka_ke_kata(digit_ratus(a)) + " Ratus " + string_uang
-                                    Exit For
-                                End If
+                            Else
+                                string_uang = angka_ke_kata(digit_ratus(a)) + " " + string_uang
                             End If
-                            Continue For
+                        ElseIf a = 1 Then
+                            If digit_ratus(a) = "1" Then
+                                If digit_ratus(0) = "1" Then
+                                    string_uang = "Sebelas " + string_uang
+                                ElseIf digit_ratus(0) = "0" Then
+                                    string_uang = "Sepuluh " + string_uang
+                                Else
+                                    string_uang = angka_ke_kata(digit_ratus(0)) + " Belas " + string_uang
+                                End If
+                            Else
+                                string_uang = angka_ke_kata(digit_ratus(a)) + " Puluh " + string_uang
+                            End If
+                        ElseIf a = 2 Then
+                            If digit_ratus(a) = "1" Then
+                                string_uang = "Seratus " + string_uang
+                                Exit For
+                            Else
+                                string_uang = angka_ke_kata(digit_ratus(a)) + " Ratus " + string_uang
+                                Exit For
+                            End If
                         End If
-                    Next
-                End If
+                        Continue For
+                    End If
+                Next
+            End If
 
-                If digit_ribu.Count <= 3 And digit_ribu.Count > 0 Then
-                    Dim ribu As Boolean = False
-                    For a As Integer = 0 To digit_ribu.Count - 1
-                        If digit_ribu(a) <> "0" Then
-                            If a = 0 Then
-                                If digit_ribu.Count = 1 Then
-                                    If digit_ribu(a) = 1 Then
-                                        string_uang = "Seribu " + string_uang
-                                    Else
-                                        string_uang = angka_ke_kata(digit_ribu(a)) + " Ribu " + string_uang
-                                    End If
-                                    Exit For
-                                ElseIf digit_ribu(1) <> "1" Then
+            If digit_ribu.Count <= 3 And digit_ribu.Count > 0 Then
+                Dim ribu As Boolean = False
+                For a As Integer = 0 To digit_ribu.Count - 1
+                    If digit_ribu(a) <> "0" Then
+                        If a = 0 Then
+                            If digit_ribu.Count = 1 Then
+                                If digit_ribu(a) = 1 Then
+                                    string_uang = "Seribu " + string_uang
+                                Else
                                     string_uang = angka_ke_kata(digit_ribu(a)) + " Ribu " + string_uang
+                                End If
+                                Exit For
+                            ElseIf digit_ribu(1) <> "1" Then
+                                string_uang = angka_ke_kata(digit_ribu(a)) + " Ribu " + string_uang
+                                ribu = True
+                            End If
+                        ElseIf a = 1 Then
+                            If digit_ribu(a) = "1" Then
+                                If digit_ribu(0) = "0" Then
+                                    string_uang = "Sepuluh" + " Ribu " + string_uang
+                                    ribu = True
+                                ElseIf digit_ribu(0) = "1" Then
+                                    string_uang = "Sebelas" + " Ribu " + string_uang
+                                    ribu = True
+                                ElseIf digit_ribu(0) <> "0" And digit_ribu(0) <> "1" Then
+                                    string_uang = angka_ke_kata(digit_ribu(0)) + " Belas " + "Ribu " + string_uang
                                     ribu = True
                                 End If
-                            ElseIf a = 1 Then
-                                If digit_ribu(a) = "1" Then
-                                    If digit_ribu(0) = "0" Then
-                                        string_uang = "Sepuluh" + " Ribu " + string_uang
-                                        ribu = True
-                                    ElseIf digit_ribu(0) = "1" Then
-                                        string_uang = "Sebelas" + " Ribu " + string_uang
-                                        ribu = True
-                                    ElseIf digit_ribu(0) <> "0" And digit_ribu(0) <> "1" Then
-                                        string_uang = angka_ke_kata(digit_ribu(0)) + " Belas " + "Ribu " + string_uang
-                                        ribu = True
-                                    End If
+                            Else
+                                If ribu = False Then
+                                    string_uang = angka_ke_kata(digit_ribu(a)) + " Puluh " + "Ribu " + string_uang
+                                    ribu = True
                                 Else
-                                    If ribu = False Then
-                                        string_uang = angka_ke_kata(digit_ribu(a)) + " Puluh " + "Ribu " + string_uang
-                                        ribu = True
-                                    Else
-                                        string_uang = angka_ke_kata(digit_ribu(a)) + " Puluh " + string_uang
-                                    End If
-                                End If
-                            ElseIf a = 2 Then
-                                If digit_ribu(a) = "1" Then
-                                    If ribu = False Then
-                                        string_uang = "Seratus " + "Ribu " + string_uang
-                                        ribu = True
-                                        Exit For
-                                    Else
-                                        string_uang = "Seratus " + string_uang
-                                        Exit For
-                                    End If
-                                Else
-                                    If ribu = False Then
-                                        string_uang = angka_ke_kata(digit_ribu(a)) + " Ratus " + "Ribu " + string_uang
-                                        Exit For
-                                    Else
-                                        string_uang = angka_ke_kata(digit_ribu(a)) + " Ratus " + string_uang
-                                        Exit For
-                                    End If
+                                    string_uang = angka_ke_kata(digit_ribu(a)) + " Puluh " + string_uang
                                 End If
                             End If
-                            Continue For
-                        End If
-                    Next
-                End If
-
-                If digit_juta.Count <= 3 And digit_juta.Count > 0 Then
-                    Dim juta As Boolean = False
-                    For a As Integer = 0 To digit_juta.Count - 1
-                        If digit_juta(a) <> "0" Then
-                            If a = 0 Then
-                                If digit_juta.Count = 1 Then
-                                    string_uang = angka_ke_kata(digit_juta(a)) + " Juta " + string_uang
+                        ElseIf a = 2 Then
+                            If digit_ribu(a) = "1" Then
+                                If ribu = False Then
+                                    string_uang = "Seratus " + "Ribu " + string_uang
+                                    ribu = True
                                     Exit For
-                                ElseIf digit_juta(1) <> "1" Then
-                                    string_uang = angka_ke_kata(digit_juta(a)) + " Juta " + string_uang
+                                Else
+                                    string_uang = "Seratus " + string_uang
+                                    Exit For
+                                End If
+                            Else
+                                If ribu = False Then
+                                    string_uang = angka_ke_kata(digit_ribu(a)) + " Ratus " + "Ribu " + string_uang
+                                    Exit For
+                                Else
+                                    string_uang = angka_ke_kata(digit_ribu(a)) + " Ratus " + string_uang
+                                    Exit For
+                                End If
+                            End If
+                        End If
+                        Continue For
+                    End If
+                Next
+            End If
+
+            If digit_juta.Count <= 3 And digit_juta.Count > 0 Then
+                Dim juta As Boolean = False
+                For a As Integer = 0 To digit_juta.Count - 1
+                    If digit_juta(a) <> "0" Then
+                        If a = 0 Then
+                            If digit_juta.Count = 1 Then
+                                string_uang = angka_ke_kata(digit_juta(a)) + " Juta " + string_uang
+                                Exit For
+                            ElseIf digit_juta(1) <> "1" Then
+                                string_uang = angka_ke_kata(digit_juta(a)) + " Juta " + string_uang
+                                juta = True
+                            End If
+                        ElseIf a = 1 Then
+                            If digit_juta(a) = "1" Then
+                                If digit_juta(0) = "0" Then
+                                    string_uang = "Sepuluh" + " Juta " + string_uang
+                                    juta = True
+                                ElseIf digit_juta(0) = "1" Then
+                                    string_uang = "Sebelas" + " Juta " + string_uang
+                                    juta = True
+                                ElseIf digit_juta(0) <> "0" And digit_juta(0) <> "1" Then
+                                    string_uang = angka_ke_kata(digit_juta(0)) + " Belas " + "Juta " + string_uang
                                     juta = True
                                 End If
-                            ElseIf a = 1 Then
-                                If digit_juta(a) = "1" Then
-                                    If digit_juta(0) = "0" Then
-                                        string_uang = "Sepuluh" + " Juta " + string_uang
-                                        juta = True
-                                    ElseIf digit_juta(0) = "1" Then
-                                        string_uang = "Sebelas" + " Juta " + string_uang
-                                        juta = True
-                                    ElseIf digit_juta(0) <> "0" And digit_juta(0) <> "1" Then
-                                        string_uang = angka_ke_kata(digit_juta(0)) + " Belas " + "Juta " + string_uang
-                                        juta = True
-                                    End If
+                            Else
+                                If juta = False Then
+                                    string_uang = angka_ke_kata(digit_juta(a)) + " Puluh " + "Juta " + string_uang
+                                    juta = True
                                 Else
-                                    If juta = False Then
-                                        string_uang = angka_ke_kata(digit_juta(a)) + " Puluh " + "Juta " + string_uang
-                                        juta = True
-                                    Else
-                                        string_uang = angka_ke_kata(digit_juta(a)) + " Puluh " + string_uang
-                                    End If
-                                End If
-                            ElseIf a = 2 Then
-                                If digit_juta(a) = "1" Then
-                                    If juta = False Then
-                                        string_uang = "Seratus " + "Juta " + string_uang
-                                        juta = True
-                                        Exit For
-                                    Else
-                                        string_uang = "Seratus " + string_uang
-                                        Exit For
-                                    End If
-                                Else
-                                    If juta = False Then
-                                        string_uang = angka_ke_kata(digit_juta(a)) + " Ratus " + "Juta " + string_uang
-                                        Exit For
-                                    Else
-                                        string_uang = angka_ke_kata(digit_juta(a)) + " Ratus " + string_uang
-                                        Exit For
-                                    End If
+                                    string_uang = angka_ke_kata(digit_juta(a)) + " Puluh " + string_uang
                                 End If
                             End If
-                            Continue For
-                        End If
-                    Next
-                End If
-
-                If digit_miliar.Count <= 3 And digit_miliar.Count > 0 Then
-                    Dim miliar As Boolean = False
-                    For a As Integer = 0 To digit_miliar.Count - 1
-                        If digit_miliar(a) <> "0" Then
-                            If a = 0 Then
-                                If digit_miliar.Count = 1 Then
-                                    string_uang = angka_ke_kata(digit_miliar(a)) + " Miliar " + string_uang
+                        ElseIf a = 2 Then
+                            If digit_juta(a) = "1" Then
+                                If juta = False Then
+                                    string_uang = "Seratus " + "Juta " + string_uang
+                                    juta = True
                                     Exit For
-                                ElseIf digit_miliar(1) <> "1" Then
-                                    string_uang = angka_ke_kata(digit_miliar(a)) + " Miliar " + string_uang
+                                Else
+                                    string_uang = "Seratus " + string_uang
+                                    Exit For
+                                End If
+                            Else
+                                If juta = False Then
+                                    string_uang = angka_ke_kata(digit_juta(a)) + " Ratus " + "Juta " + string_uang
+                                    Exit For
+                                Else
+                                    string_uang = angka_ke_kata(digit_juta(a)) + " Ratus " + string_uang
+                                    Exit For
+                                End If
+                            End If
+                        End If
+                        Continue For
+                    End If
+                Next
+            End If
+
+            If digit_miliar.Count <= 3 And digit_miliar.Count > 0 Then
+                Dim miliar As Boolean = False
+                For a As Integer = 0 To digit_miliar.Count - 1
+                    If digit_miliar(a) <> "0" Then
+                        If a = 0 Then
+                            If digit_miliar.Count = 1 Then
+                                string_uang = angka_ke_kata(digit_miliar(a)) + " Miliar " + string_uang
+                                Exit For
+                            ElseIf digit_miliar(1) <> "1" Then
+                                string_uang = angka_ke_kata(digit_miliar(a)) + " Miliar " + string_uang
+                                miliar = True
+                            End If
+                        ElseIf a = 1 Then
+                            If digit_miliar(a) = "1" Then
+                                If digit_miliar(0) = "0" Then
+                                    string_uang = "Sepuluh" + " Miliar " + string_uang
+                                    miliar = True
+                                ElseIf digit_miliar(0) = "1" Then
+                                    string_uang = "Sebelas" + " Miliar " + string_uang
+                                    miliar = True
+                                ElseIf digit_miliar(0) <> "0" And digit_miliar(0) <> "1" Then
+                                    string_uang = angka_ke_kata(digit_miliar(0)) + " Belas " + "Miliar " + string_uang
                                     miliar = True
                                 End If
-                            ElseIf a = 1 Then
-                                If digit_miliar(a) = "1" Then
-                                    If digit_miliar(0) = "0" Then
-                                        string_uang = "Sepuluh" + " Miliar " + string_uang
-                                        miliar = True
-                                    ElseIf digit_miliar(0) = "1" Then
-                                        string_uang = "Sebelas" + " Miliar " + string_uang
-                                        miliar = True
-                                    ElseIf digit_miliar(0) <> "0" And digit_miliar(0) <> "1" Then
-                                        string_uang = angka_ke_kata(digit_miliar(0)) + " Belas " + "Miliar " + string_uang
-                                        miliar = True
-                                    End If
+                            Else
+                                If miliar = False Then
+                                    string_uang = angka_ke_kata(digit_miliar(a)) + " Puluh " + "Miliar " + string_uang
+                                    miliar = True
                                 Else
-                                    If miliar = False Then
-                                        string_uang = angka_ke_kata(digit_miliar(a)) + " Puluh " + "Miliar " + string_uang
-                                        miliar = True
-                                    Else
-                                        string_uang = angka_ke_kata(digit_miliar(a)) + " Puluh " + string_uang
-                                    End If
-                                End If
-                            ElseIf a = 2 Then
-                                If digit_miliar(a) = "1" Then
-                                    If miliar = False Then
-                                        string_uang = "Seratus " + "Miliar " + string_uang
-                                        miliar = True
-                                        Exit For
-                                    Else
-                                        string_uang = "Seratus " + string_uang
-                                        Exit For
-                                    End If
-                                Else
-                                    If miliar = False Then
-                                        string_uang = angka_ke_kata(digit_miliar(a)) + " Ratus " + "Miliar " + string_uang
-                                        Exit For
-                                    Else
-                                        string_uang = angka_ke_kata(digit_miliar(a)) + " Ratus " + string_uang
-                                        Exit For
-                                    End If
+                                    string_uang = angka_ke_kata(digit_miliar(a)) + " Puluh " + string_uang
                                 End If
                             End If
-                            Continue For
-                        End If
-                    Next
-                End If
-
-                If digit_triliun.Count <= 3 And digit_triliun.Count > 0 Then
-                    Dim triliun As Boolean = False
-                    For a As Integer = 0 To digit_triliun.Count - 1
-                        If digit_triliun(a) <> "0" Then
-                            If a = 0 Then
-                                If digit_triliun.Count = 1 Then
-                                    string_uang = angka_ke_kata(digit_triliun(a)) + " Triliun " + string_uang
+                        ElseIf a = 2 Then
+                            If digit_miliar(a) = "1" Then
+                                If miliar = False Then
+                                    string_uang = "Seratus " + "Miliar " + string_uang
+                                    miliar = True
                                     Exit For
-                                ElseIf digit_triliun(1) <> "1" Then
-                                    string_uang = angka_ke_kata(digit_triliun(a)) + " Triliun " + string_uang
+                                Else
+                                    string_uang = "Seratus " + string_uang
+                                    Exit For
+                                End If
+                            Else
+                                If miliar = False Then
+                                    string_uang = angka_ke_kata(digit_miliar(a)) + " Ratus " + "Miliar " + string_uang
+                                    Exit For
+                                Else
+                                    string_uang = angka_ke_kata(digit_miliar(a)) + " Ratus " + string_uang
+                                    Exit For
+                                End If
+                            End If
+                        End If
+                        Continue For
+                    End If
+                Next
+            End If
+
+            If digit_triliun.Count <= 3 And digit_triliun.Count > 0 Then
+                Dim triliun As Boolean = False
+                For a As Integer = 0 To digit_triliun.Count - 1
+                    If digit_triliun(a) <> "0" Then
+                        If a = 0 Then
+                            If digit_triliun.Count = 1 Then
+                                string_uang = angka_ke_kata(digit_triliun(a)) + " Triliun " + string_uang
+                                Exit For
+                            ElseIf digit_triliun(1) <> "1" Then
+                                string_uang = angka_ke_kata(digit_triliun(a)) + " Triliun " + string_uang
+                                triliun = True
+                            End If
+                        ElseIf a = 1 Then
+                            If digit_triliun(a) = "1" Then
+                                If digit_triliun(0) = "0" Then
+                                    string_uang = "Sepuluh" + " Triliun " + string_uang
+                                    triliun = True
+                                ElseIf digit_triliun(0) = "1" Then
+                                    string_uang = "Sebelas" + " Triliun " + string_uang
+                                    triliun = True
+                                ElseIf digit_triliun(0) <> "0" And digit_triliun(0) <> "1" Then
+                                    string_uang = angka_ke_kata(digit_triliun(0)) + " Belas " + "Triliun " + string_uang
                                     triliun = True
                                 End If
-                            ElseIf a = 1 Then
-                                If digit_triliun(a) = "1" Then
-                                    If digit_triliun(0) = "0" Then
-                                        string_uang = "Sepuluh" + " Triliun " + string_uang
-                                        triliun = True
-                                    ElseIf digit_triliun(0) = "1" Then
-                                        string_uang = "Sebelas" + " Triliun " + string_uang
-                                        triliun = True
-                                    ElseIf digit_triliun(0) <> "0" And digit_triliun(0) <> "1" Then
-                                        string_uang = angka_ke_kata(digit_triliun(0)) + " Belas " + "Triliun " + string_uang
-                                        triliun = True
-                                    End If
+                            Else
+                                If triliun = False Then
+                                    string_uang = angka_ke_kata(digit_triliun(a)) + " Puluh " + "Triliun " + string_uang
+                                    triliun = True
                                 Else
-                                    If triliun = False Then
-                                        string_uang = angka_ke_kata(digit_triliun(a)) + " Puluh " + "Triliun " + string_uang
-                                        triliun = True
-                                    Else
-                                        string_uang = angka_ke_kata(digit_triliun(a)) + " Puluh " + string_uang
-                                    End If
-                                End If
-                            ElseIf a = 2 Then
-                                If digit_triliun(a) = "1" Then
-                                    If triliun = False Then
-                                        string_uang = "Seratus " + "Triliun " + string_uang
-                                        triliun = True
-                                        Exit For
-                                    Else
-                                        string_uang = "Seratus " + string_uang
-                                        Exit For
-                                    End If
-                                Else
-                                    If triliun = False Then
-                                        string_uang = angka_ke_kata(digit_triliun(a)) + " Ratus " + "Triliun " + string_uang
-                                        Exit For
-                                    Else
-                                        string_uang = angka_ke_kata(digit_triliun(a)) + " Ratus " + string_uang
-                                        Exit For
-                                    End If
+                                    string_uang = angka_ke_kata(digit_triliun(a)) + " Puluh " + string_uang
                                 End If
                             End If
-                            Continue For
+                        ElseIf a = 2 Then
+                            If digit_triliun(a) = "1" Then
+                                If triliun = False Then
+                                    string_uang = "Seratus " + "Triliun " + string_uang
+                                    triliun = True
+                                    Exit For
+                                Else
+                                    string_uang = "Seratus " + string_uang
+                                    Exit For
+                                End If
+                            Else
+                                If triliun = False Then
+                                    string_uang = angka_ke_kata(digit_triliun(a)) + " Ratus " + "Triliun " + string_uang
+                                    Exit For
+                                Else
+                                    string_uang = angka_ke_kata(digit_triliun(a)) + " Ratus " + string_uang
+                                    Exit For
+                                End If
+                            End If
                         End If
-                    Next
-                End If
+                        Continue For
+                    End If
+                Next
+            End If
 
             'Label13.Text = MaskedTextBox1.Text
 
@@ -941,8 +961,27 @@ Public Class Form1
             tr3.CharacterFormat.Bold = True
             tr6.CharacterFormat.Bold = True
 
-            Kwitansi.SaveToFile("Kwitansi\Kwitansi " + TextBox1.Text + " " + DateTime.Now.ToString("dd MMMM yyyy HH.mm") + ".pdf", FileFormat.PDF)
-            MsgBox("Saved")
+            Dim file_name As String = "Kwitansi\Kwitansi " + TextBox1.Text + " " + DateTime.Now.ToString("dd MMMM yyyy HH.mm") + ".pdf"
+
+            Kwitansi.SaveToFile(file_name, Spire.Doc.FileFormat.PDF)
+            Dim Confirm As DialogResult = MessageBox.Show("Dokumen tersimpan." & vbCrLf & "Apakah anda ingin mencetak dokumen ini dengan printer " + DataGridView2.SelectedRows(0).Cells(0).Value + "?", "Konfirmasi Pencetakan Dokumen", MessageBoxButtons.YesNo)
+
+            If Confirm = DialogResult.Yes Then
+                Dim kwitansi_print As PdfDocument = New PdfDocument()
+                kwitansi_print.LoadFromFile(file_name)
+                kwitansi_print.PrintSettings.PrinterName = DataGridView2.SelectedRows(0).Cells(0).Value
+                kwitansi_print.PrintSettings.SelectSinglePageLayout(Print.PdfSinglePageScalingMode.ActualSize)
+                kwitansi_print.Print()
+            End If
+
+            'Dim PdfDocumentViewer1 As PdfDocumentViewer
+            'PdfDocumentViewer1.LoadFromFile(file_name)
+
+            'Kwitansi.LoadFromFile(file_name)
+            'Dim printDocument As PrintDocument = Kwitansi.PrintDocument
+            'PrintPreviewDialog1.Document = printDocument
+            'PrintPreviewDialog1.ShowDialog()
+            'PrintDocument.Print()
         End If
     End Sub
 
@@ -1341,9 +1380,11 @@ Public Class Form1
         TextBox12.Visible = False
         TextBox13.Visible = False
 
+        DataGridView2.Visible = True
+
         TextBox2.Font = New Font(TextBox2.Font, FontStyle.Regular)
 
-        Label5.Visible = False
+        Label5.Visible = True
         Label6.Visible = False
         Label7.Visible = False
         Label8.Visible = False
@@ -1352,6 +1393,7 @@ Public Class Form1
         Label2.Text = "Umur"
         Label3.Text = "Tanggal Awal"
         Label4.Text = "Tanggal Akhir"
+        Label5.Text = "Printer"
 
         TextBox14.Visible = True
         TextBox15.Visible = True
@@ -1391,9 +1433,11 @@ Public Class Form1
         TextBox12.Visible = False
         TextBox13.Visible = False
 
+        DataGridView2.Visible = True
+
         TextBox2.Font = New Font(TextBox2.Font, FontStyle.Bold)
 
-        Label5.Visible = False
+        Label5.Visible = True
         Label6.Visible = True
         Label7.Visible = False
         Label8.Visible = False
@@ -1403,7 +1447,7 @@ Public Class Form1
         Label2.Text = "Banyaknya Uang"
         Label3.Text = "Untuk Pembayaran"
         Label4.Text = "Nama TTD"
-        'Label5.Text = "Nama TTD"
+        Label5.Text = "Printer"
 
         TextBox14.Visible = False
         TextBox15.Visible = False
