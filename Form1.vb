@@ -889,7 +889,7 @@ Public Class Form1
             Dim uang As Paragraph = section.Paragraphs(3)
             Dim pembayaran As Paragraph = section.Paragraphs(4)
 
-            Dim nominal As TextBox = Kwitansi.TextBoxes.Item(2)
+            Dim nominal As TextBox = Kwitansi.TextBoxes.Item(4)
             Dim nominal_para As Paragraph = nominal.Body.FirstParagraph
             Dim nominal_angka As String = ""
             Dim count_nominal As Integer = 1
@@ -913,7 +913,7 @@ Public Class Form1
             Dim tanggal As TextBox = Kwitansi.TextBoxes.Item(3)
             Dim tanggal_para As Paragraph = tanggal.Body.FirstParagraph
 
-            Dim nama As TextBox = Kwitansi.TextBoxes.Item(4)
+            Dim nama As TextBox = Kwitansi.TextBoxes.Item(2)
             Dim nama_para As Paragraph = nama.Body.FirstParagraph
 
             Dim tr1 As TextRange = kwt_no.AppendText(TextBox6.Text)
