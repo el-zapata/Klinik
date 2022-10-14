@@ -19,9 +19,18 @@ Public Class Form1
     Dim MyDB As String
 
     Sub Connect()
-        MyDB = "Driver={MySQL ODBC 8.0 Unicode Driver};Database=db_pasien;Server=localhost;uid=root"
-        conn = New OdbcConnection(MyDB)
-        If conn.State = ConnectionState.Closed Then conn.Open()
+        Try
+            MyDB = "Driver={MySQL ODBC 8.0 Unicode Driver};Database=db_pasien;Server=localhost;uid=root"
+            conn = New OdbcConnection(MyDB)
+            If conn.State = ConnectionState.Closed Then conn.Open()
+        Catch ex As Exception
+            Dim Confirm As DialogResult = MsgBox("Tidak dapat terkoneksi dengan database. Cek xampp apakah database sudah dinyalakan", MessageBoxButtons.OK)
+            For i As Integer = 0 To 1 Step 0
+                If Confirm = DialogResult.OK Then
+                    Application.Exit()
+                End If
+            Next
+        End Try
     End Sub
 
     Sub Reset_textbox()
