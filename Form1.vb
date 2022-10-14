@@ -567,6 +567,21 @@ Public Class Form1
             If TextBox6.Text = "" Or TextBox1.Text = "" Or TextBox2.Text = "" Or TextBox3.Text = "" Or TextBox4.Text = "" Then
                 MsgBox("Semua field harus diisi!!!")
                 Exit Sub
+            ElseIf TextBox6.Text.Length > 47 Then
+                MsgBox("Field Id terlalu panjang (Maksimal 47 karakter)")
+                Exit Sub
+            ElseIf TextBox3.Text.Length > 100 Then
+                MsgBox("Field Id terlalu panjang (Maksimal 100 karakter)")
+                Exit Sub
+            ElseIf TextBox4.Text.Length > 55 Then
+                MsgBox("Nama ttd terlalu panjang (Maksimal 55 karakter)")
+                Exit Sub
+            ElseIf TextBox2.Text.Length > 15 Then
+                MsgBox("Tidak dapat mencetak nominal uang tersebut (Maksimal Rp 999,999,999,999,999)")
+                Exit Sub
+            ElseIf TextBox2.Text(0) = "0" Then
+                MsgBox("Jumlah nominal tidak valid")
+                Exit Sub
             ElseIf Int64.TryParse(TextBox2.Text, Temp_uang) = False Then
                 MsgBox("Field Banyaknya Uang harus diisi dengan angka")
                 Exit Sub
@@ -581,10 +596,6 @@ Public Class Form1
             End Try
 
             Dim len_char_uang As Integer = TextBox2.Text.Length
-            If TextBox2.Text(0) = "0" Then
-                MsgBox("Jumlah nominal tidak valid")
-                Exit Sub
-            End If
 
             Dim string_uang As String = "Rupiah"
             Dim count As Integer = 0
@@ -933,9 +944,25 @@ Public Class Form1
             tr7.CharacterFormat.FontName = "Times New Roman"
 
             tr1.CharacterFormat.FontSize = 14
-            tr2.CharacterFormat.FontSize = 14
 
-            If string_uang.Length > 112 Then
+            If TextBox1.Text.Length < 60 Then
+                tr2.CharacterFormat.FontSize = 14
+            ElseIf TextBox1.Text.Length < 78 Then
+                tr2.CharacterFormat.FontSize = 12
+            ElseIf TextBox1.Text.Length < 90 Then
+                tr2.CharacterFormat.FontSize = 11
+            ElseIf TextBox1.Text.Length < 97 Then
+                tr2.CharacterFormat.FontSize = 10
+            Else
+                tr2.CharacterFormat.FontSize = 9
+            End If
+
+
+            If string_uang.Length > 136 Then
+                tr3.CharacterFormat.FontSize = 10
+            ElseIf string_uang.Length > 121 Then
+                tr3.CharacterFormat.FontSize = 11
+            ElseIf string_uang.Length > 96 Then
                 tr3.CharacterFormat.FontSize = 12
             Else
                 tr3.CharacterFormat.FontSize = 14
