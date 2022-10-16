@@ -407,6 +407,8 @@ Public Class Form1
         DataGridView1.DataSource = ds.Tables("tbl_pasien")
         conn.Close()
 
+        DataGridView3.Visible = False
+
         Dim InstalledPrinters As String
 
         For Each InstalledPrinters In System.Drawing.Printing.PrinterSettings.InstalledPrinters
@@ -1501,5 +1503,40 @@ Public Class Form1
         RichTextBox1.Visible = False
 
         Button1.Text = "Save and Print"
+    End Sub
+
+    Dim Daftar_Pasien As Boolean = True
+    Dim Riwayat_Tindakan As Boolean = False
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        If Daftar_Pasien = True Then
+            Call Connect()
+            da = New OdbcDataAdapter("Select Id_tindakan, Nama, Tanggal, Tindakan From tbl_tindakan Where Id_pasien = '" & DataGridView1.SelectedRows(0).Cells(0).Value & "'", conn)
+            ds = New DataSet
+            da.Fill(ds, "tbl_tindakan")
+            DataGridView3.DataSource = ds.Tables("tbl_tindakan")
+            conn.Close()
+
+            DataGridView3.Visible = True
+
+            Daftar_Pasien = False
+            Riwayat_Tindakan = True
+            Button5.Text = "Daftar Pasien"
+        ElseIf Riwayat_Tindakan = True Then
+            DataGridView3.Visible = False
+
+            Daftar_Pasien = True
+            Riwayat_Tindakan = False
+            Button5.Text = "Riwayat Tindakan"
+        End If
+
+
+        'ds.Tables("tbl_tindakan").Columns
+
+        'Dim id_tindakan As String
+        'id_tindakan = "t" + ds.Tables("tbl_tindakan").Rows.Count + 1 + "#" + DataGridView1.SelectedRows(0).Cells(0).Value.ToString
+
+
+
     End Sub
 End Class
