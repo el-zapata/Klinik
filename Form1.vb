@@ -8,6 +8,7 @@ Imports Spire.Doc.Fields
 Imports Spire.Doc.Documents
 Imports System.Drawing.Printing
 Imports Spire.Pdf
+Imports MySqlConnector
 
 Public Class Form1
 
@@ -424,12 +425,37 @@ Public Class Form1
             ElseIf Int32.TryParse(TextBox2.Text, Umur) = False Then
                 MsgBox("Field Umur harus diisi dengan angka")
             Else
-                Dim Confirm As DialogResult = MessageBox.Show("Apakah anda yakin ingin menambah data pasien ini?", "Konfirmasi Penambahan Data", MessageBoxButtons.YesNo)
+                Dim message As String
+                If RichTextBox1.Text = "" Then
+                    message = "Apakah anda yakin ingin menambah data pasien ini? (Karena isi tindakan kosong, tindakan ini tidak akan masuk ke tabel Riwayat Tindakan)"
+                Else
+                    message = "Apakah anda yakin ingin menambah data pasien ini?"
+                End If
+                Dim Confirm As DialogResult = MessageBox.Show(message, "Konfirmasi Penambahan Data", MessageBoxButtons.YesNo)
                 If Confirm = DialogResult.Yes Then
                     Call Connect()
                     Dim InputData As String = "Insert into tbl_pasien (Nama, Umur, Alamat, `No. Hp`, Tindakan) Values ('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "', '" & TextBox4.Text & "', '" & RichTextBox1.Text & "')"
                     cmd = New OdbcCommand(InputData, conn)
                     cmd.ExecuteNonQuery()
+
+                    If RichTextBox1.Text <> "" Then
+                        InputData = "Select Id From tbl_pasien Where Id = (Select MAX(Id) From tbl_pasien)"
+                        cmd = New OdbcCommand(InputData, conn)
+                        Dim dr As Integer = cmd.ExecuteScalar()
+
+                        Dim id_tindakan As String
+                        id_tindakan = "T1#" + dr.ToString
+                        'Label13.Text = id_tindakan
+
+                        InputData = "Select Tindakan From tbl_pasien Where Id = (Select MAX(Id) From tbl_pasien)"
+                        cmd = New OdbcCommand(InputData, conn)
+                        Dim dr_tindakan As String = cmd.ExecuteScalar()
+
+                        InputData = "Insert into tbl_tindakan Values ('" & id_tindakan & "', (Select Id From tbl_pasien Where Id = '" & dr & "'), (Select Nama From tbl_pasien Where Id = '" & dr & "'), CURRENT_TIMESTAMP, '" & dr_tindakan & "')"
+                        cmd = New OdbcCommand(InputData, conn)
+                        cmd.ExecuteNonQuery()
+                    End If
+
                     MsgBox("Input Data Berhasil")
                     conn.Close()
                     Call Reset_textbox()
@@ -444,15 +470,47 @@ Public Class Form1
         ElseIf RadioButton3.Checked = True Then
             If TextBox1.Text = "" Or TextBox2.Text = "" Or TextBox3.Text = "" Or TextBox4.Text = "" Then
                 MsgBox("Semua field harus diisi!!!")
+            ElseIf TextBox6.Text = "" Then
+                MsgBox("Pilih terlebih dahulu data pasien yang akan diperbarui")
             ElseIf Int32.TryParse(TextBox2.Text, Umur) = False Then
                 MsgBox("Field Umur harus diisi dengan angka")
             Else
-                Dim Confirm As DialogResult = MessageBox.Show("Apakah anda yakin ingin memperbarui data pasien ini?", "Konfirmasi Perbaruan Data", MessageBoxButtons.YesNo)
+                Dim message As String
+                Dim Riwayat_sebelumnya As String = DataGridView1.SelectedRows(0).Cells(7).Value
+                If RichTextBox1.Text = "" Then
+                    message = "Apakah anda yakin ingin menambah data pasien ini? (Karena isi tindakan kosong, tindakan ini tidak akan masuk ke tabel Riwayat Tindakan. Tetapi kolom tindakan pada tabel Pasien akan kosong)"
+                Else
+                    message = "Apakah anda yakin ingin menambah data pasien ini?"
+                End If
+                Dim Confirm As DialogResult = MessageBox.Show(message, "Konfirmasi Perbaruan Data", MessageBoxButtons.YesNo)
                 If Confirm = DialogResult.Yes Then
                     Call Connect()
                     Dim EditData As String = "Update tbl_pasien set Nama = '" & TextBox1.Text & "', Umur = '" & TextBox2.Text & "', Alamat = '" & TextBox3.Text & "', `No. Hp` = '" & TextBox4.Text & "', `Update Terakhir` = CURRENT_TIMESTAMP, Tindakan = '" & RichTextBox1.Text & "' Where Id = '" & TextBox6.Text & "'"
                     cmd = New OdbcCommand(EditData, conn)
                     cmd.ExecuteNonQuery()
+
+                    If RichTextBox1.Text <> "" And Riwayat_sebelumnya <> RichTextBox1.Text Then
+                        EditData = "Select * From tbl_tindakan Where Id_pasien = '" & TextBox6.Text & "'"
+                        cmd = New OdbcCommand(EditData, conn)
+                        Dim dr As OdbcDataReader = cmd.ExecuteReader()
+                        Dim id_tindakan As String
+                        Dim count As Integer = 0
+
+                        If dr.HasRows Then
+                            While dr.Read()
+                                count += 1
+                            End While
+                            count += 1
+                            id_tindakan = "T" + count.ToString + "#" + TextBox6.Text
+                        Else
+                            id_tindakan = "T1#" + TextBox6.Text
+                        End If
+
+                        EditData = "Insert into tbl_tindakan Values ('" & id_tindakan & "', (Select Id From tbl_pasien Where Id = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where Id = '" & TextBox6.Text & "'), CURRENT_TIMESTAMP, '" & RichTextBox1.Text & "')"
+                        cmd = New OdbcCommand(EditData, conn)
+                        cmd.ExecuteNonQuery()
+                    End If
+
                     MsgBox("Update Data Berhasil")
                     conn.Close()
                     Call Reset_textbox()
@@ -1304,6 +1362,7 @@ Public Class Form1
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        DataGridView3.Visible = False
         Call Connect()
         da = New OdbcDataAdapter("Select * From tbl_pasien", conn)
         ds = New DataSet
@@ -1510,18 +1569,20 @@ Public Class Form1
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         If Daftar_Pasien = True Then
-            Call Connect()
-            da = New OdbcDataAdapter("Select Id_tindakan, Nama, Tanggal, Tindakan From tbl_tindakan Where Id_pasien = '" & DataGridView1.SelectedRows(0).Cells(0).Value & "'", conn)
-            ds = New DataSet
-            da.Fill(ds, "tbl_tindakan")
-            DataGridView3.DataSource = ds.Tables("tbl_tindakan")
-            conn.Close()
+            If DataGridView1.SelectedRows.Count() > 0 Then
+                Call Connect()
+                da = New OdbcDataAdapter("Select Id_tindakan, Nama, Tanggal, Tindakan From tbl_tindakan Where Id_pasien = '" & DataGridView1.SelectedRows(0).Cells(0).Value & "'", conn)
+                ds = New DataSet
+                da.Fill(ds, "tbl_tindakan")
+                DataGridView3.DataSource = ds.Tables("tbl_tindakan")
+                conn.Close()
 
-            DataGridView3.Visible = True
+                DataGridView3.Visible = True
 
-            Daftar_Pasien = False
-            Riwayat_Tindakan = True
-            Button5.Text = "Daftar Pasien"
+                Daftar_Pasien = False
+                Riwayat_Tindakan = True
+                Button5.Text = "Daftar Pasien"
+            End If
         ElseIf Riwayat_Tindakan = True Then
             DataGridView3.Visible = False
 
