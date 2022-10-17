@@ -434,7 +434,7 @@ Public Class Form1
                 Dim Confirm As DialogResult = MessageBox.Show(message, "Konfirmasi Penambahan Data", MessageBoxButtons.YesNo)
                 If Confirm = DialogResult.Yes Then
                     Call Connect()
-                    Dim InputData As String = "Insert into tbl_pasien (Nama, Umur, Alamat, `No. Hp`, Tindakan) Values ('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "', '" & TextBox4.Text & "', '" & RichTextBox1.Text & "')"
+                    Dim InputData As String = "Insert into tbl_pasien (Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Update Terakhir`, Tindakan) Values ('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "', '" & TextBox4.Text & "', (Select NOW()), (Select NOW()),  '" & RichTextBox1.Text & "')"
                     cmd = New OdbcCommand(InputData, conn)
                     cmd.ExecuteNonQuery()
 
@@ -451,7 +451,7 @@ Public Class Form1
                         cmd = New OdbcCommand(InputData, conn)
                         Dim dr_tindakan As String = cmd.ExecuteScalar()
 
-                        InputData = "Insert into tbl_tindakan Values ('" & id_tindakan & "', (Select Id From tbl_pasien Where Id = '" & dr & "'), (Select Nama From tbl_pasien Where Id = '" & dr & "'), CURRENT_TIMESTAMP, '" & dr_tindakan & "')"
+                        InputData = "Insert into tbl_tindakan Values ('" & id_tindakan & "', (Select Id From tbl_pasien Where Id = '" & dr & "'), (Select Nama From tbl_pasien Where Id = '" & dr & "'), (Select NOW()), '" & dr_tindakan & "')"
                         cmd = New OdbcCommand(InputData, conn)
                         cmd.ExecuteNonQuery()
                     End If
@@ -485,7 +485,7 @@ Public Class Form1
                 Dim Confirm As DialogResult = MessageBox.Show(message, "Konfirmasi Perbaruan Data", MessageBoxButtons.YesNo)
                 If Confirm = DialogResult.Yes Then
                     Call Connect()
-                    Dim EditData As String = "Update tbl_pasien set Nama = '" & TextBox1.Text & "', Umur = '" & TextBox2.Text & "', Alamat = '" & TextBox3.Text & "', `No. Hp` = '" & TextBox4.Text & "', `Update Terakhir` = CURRENT_TIMESTAMP, Tindakan = '" & RichTextBox1.Text & "' Where Id = '" & TextBox6.Text & "'"
+                    Dim EditData As String = "Update tbl_pasien set Nama = '" & TextBox1.Text & "', Umur = '" & TextBox2.Text & "', Alamat = '" & TextBox3.Text & "', `No. Hp` = '" & TextBox4.Text & "', `Update Terakhir` = (Select NOW()), Tindakan = '" & RichTextBox1.Text & "' Where Id = '" & TextBox6.Text & "'"
                     cmd = New OdbcCommand(EditData, conn)
                     cmd.ExecuteNonQuery()
 
@@ -506,7 +506,7 @@ Public Class Form1
                             id_tindakan = "T1#" + TextBox6.Text
                         End If
 
-                        EditData = "Insert into tbl_tindakan Values ('" & id_tindakan & "', (Select Id From tbl_pasien Where Id = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where Id = '" & TextBox6.Text & "'), CURRENT_TIMESTAMP, '" & RichTextBox1.Text & "')"
+                        EditData = "Insert into tbl_tindakan Values ('" & id_tindakan & "', (Select Id From tbl_pasien Where Id = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where Id = '" & TextBox6.Text & "'), (Select NOW()), '" & RichTextBox1.Text & "')"
                         cmd = New OdbcCommand(EditData, conn)
                         cmd.ExecuteNonQuery()
                     End If
