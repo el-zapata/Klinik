@@ -1340,14 +1340,19 @@ Public Class Form1
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Dim Selected_Row_Count As Integer = DataGridView1.SelectedRows.Count()
-        Dim Confirm As DialogResult = MessageBox.Show("Apakah anda yakin ingin menghapus data pasien ini?", "Konfirmasi Penghapusan Data", MessageBoxButtons.YesNo)
+        Dim Confirm As DialogResult = MessageBox.Show("Apakah anda yakin ingin menghapus data pasien ini? Semua riwayat tindakan pasien ini akan dihapus juga.", "Konfirmasi Penghapusan Data", MessageBoxButtons.YesNo)
         If Selected_Row_Count >= 1 Then
             If Confirm = DialogResult.Yes Then
                 Dim Data_Id As String = DataGridView1.SelectedRows(0).Cells(0).Value
                 Call Connect()
-                Dim HapusData As String = "Delete From tbl_pasien Where Id = '" & Data_Id & "'"
+                Dim HapusData As String = "Delete From tbl_tindakan Where Id_pasien = '" & Data_Id & "'"
                 cmd = New OdbcCommand(HapusData, conn)
                 cmd.ExecuteNonQuery()
+
+                HapusData = "Delete From tbl_pasien Where Id = '" & Data_Id & "'"
+                cmd = New OdbcCommand(HapusData, conn)
+                cmd.ExecuteNonQuery()
+
                 MsgBox("Hapus Data Berhasil")
                 conn.Close()
                 Call Reset_textbox()
