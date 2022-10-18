@@ -226,6 +226,7 @@ Public Class Form1
     End Sub
 
     Private Sub RadioButton3_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton3.CheckedChanged
+        DataGridView1.ClearSelection()
         TextBox1.Enabled = True
         TextBox2.Enabled = True
         TextBox3.Enabled = True
@@ -344,6 +345,7 @@ Public Class Form1
     End Sub
 
     Private Sub RadioButton4_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton4.CheckedChanged
+        DataGridView1.ClearSelection()
         TextBox1.Enabled = True
         TextBox2.Enabled = True
         TextBox3.Enabled = True
@@ -478,9 +480,9 @@ Public Class Form1
                 Dim message As String
                 Dim Riwayat_sebelumnya As String = DataGridView1.SelectedRows(0).Cells(7).Value
                 If RichTextBox1.Text = "" Then
-                    message = "Apakah anda yakin ingin menambah data pasien ini? (Karena isi tindakan kosong, tindakan ini tidak akan masuk ke tabel Riwayat Tindakan. Tetapi kolom tindakan pada tabel Pasien akan kosong)"
+                    message = "Apakah anda yakin ingin memperbarui data pasien ini? (Karena isi tindakan kosong, tindakan ini tidak akan masuk ke tabel Riwayat Tindakan. Tetapi kolom tindakan pada tabel Pasien akan kosong)"
                 Else
-                    message = "Apakah anda yakin ingin menambah data pasien ini?"
+                    message = "Apakah anda yakin ingin memperbarui data pasien ini?"
                 End If
                 Dim Confirm As DialogResult = MessageBox.Show(message, "Konfirmasi Perbaruan Data", MessageBoxButtons.YesNo)
                 If Confirm = DialogResult.Yes Then
@@ -1464,6 +1466,7 @@ Public Class Form1
     End Sub
 
     Private Sub RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton2.CheckedChanged
+        DataGridView1.ClearSelection()
         Call Reset_textbox()
         TextBox6.Visible = False
         TextBox3.Visible = False
@@ -1515,6 +1518,7 @@ Public Class Form1
     End Sub
 
     Private Sub RadioButton5_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton5.CheckedChanged
+        DataGridView1.ClearSelection()
         Call Reset_textbox()
         TextBox6.Enabled = True
         TextBox6.Visible = True
