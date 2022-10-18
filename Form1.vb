@@ -625,10 +625,14 @@ Public Class Form1
             Dim Confirm As DialogResult = MessageBox.Show("Dokumen tersimpan." & vbCrLf & "Apakah anda ingin mencetak dokumen ini dengan printer " + DataGridView2.SelectedRows(0).Cells(0).Value + "?", "Konfirmasi Pencetakan Dokumen", MessageBoxButtons.YesNo)
 
             If Confirm = DialogResult.Yes Then
-                Dim kwitansi_print As PdfDocument = New PdfDocument()
-                kwitansi_print.LoadFromFile(file_name)
-                kwitansi_print.PrintSettings.PrinterName = DataGridView2.SelectedRows(0).Cells(0).Value
-                kwitansi_print.Print()
+                Dim SuratSakit_print As PdfDocument = New PdfDocument()
+                SuratSakit_print.LoadFromFile(file_name)
+                SuratSakit_print.PrintSettings.PrinterName = DataGridView2.SelectedRows(0).Cells(0).Value
+                Try
+                    SuratSakit_print.Print()
+                Catch ex As Exception
+                    MsgBox("Terjadi kesalahan pada pencetakan dokumen")
+                End Try
             End If
         ElseIf RadioButton5.Checked = True Then
             'Dim Temp As Integer
@@ -1063,17 +1067,12 @@ Public Class Form1
                 kwitansi_print.LoadFromFile(file_name)
                 kwitansi_print.PrintSettings.PrinterName = DataGridView2.SelectedRows(0).Cells(0).Value
                 kwitansi_print.PrintSettings.SelectSinglePageLayout(Print.PdfSinglePageScalingMode.ActualSize)
-                kwitansi_print.Print()
+                Try
+                    kwitansi_print.Print()
+                Catch ex As Exception
+                    MsgBox("Terjadi kesalahan pada pencetakan dokumen")
+                End Try
             End If
-
-            'Dim PdfDocumentViewer1 As PdfDocumentViewer
-            'PdfDocumentViewer1.LoadFromFile(file_name)
-
-            'Kwitansi.LoadFromFile(file_name)
-            'Dim printDocument As PrintDocument = Kwitansi.PrintDocument
-            'PrintPreviewDialog1.Document = printDocument
-            'PrintPreviewDialog1.ShowDialog()
-            'PrintDocument.Print()
         End If
     End Sub
 
