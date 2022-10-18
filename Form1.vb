@@ -1590,6 +1590,7 @@ Public Class Form1
                 Daftar_Pasien = False
                 Riwayat_Tindakan = True
                 Button5.Text = "Daftar Pasien"
+                Button3.Enabled = False
             End If
         ElseIf Riwayat_Tindakan = True Then
             DataGridView3.Visible = False
@@ -1597,6 +1598,7 @@ Public Class Form1
             Daftar_Pasien = True
             Riwayat_Tindakan = False
             Button5.Text = "Riwayat Tindakan"
+            Button3.Enabled = True
         End If
 
 
