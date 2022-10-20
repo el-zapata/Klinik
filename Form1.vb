@@ -60,13 +60,21 @@ Public Class Form1
     Sub Enter_press_on_TextBox()
         Call Connect()
         Dim Query_String As String = "Select * From tbl_pasien Where "
-        Dim Add_String As String
+        Dim Add_String As String = ""
         'Dim Other_Params As Boolean = False
         Dim First_Params_Found As Boolean = False
 
         If TextBox1.Text <> "" Then
             First_Params_Found = True
-            Add_String = "Nama = '" & TextBox1.Text & "' "
+            Dim words = TextBox1.Text.Split(" ")
+            For i As Integer = 0 To words.Count - 1
+                If i = 0 Then
+                    Add_String = "Nama Like '%" + words(i) + "%' "
+                Else
+                    Add_String = Add_String + "And Nama Like '%" + words(i) + "%' "
+                End If
+            Next
+            'Add_String = "Nama = '" & TextBox1.Text & "' "
             Query_String = Query_String + Add_String
             'If TextBox2.Text <> "" Then
             '    Query_String = Query_String + "And "
@@ -122,7 +130,15 @@ Public Class Form1
             '    'End If
             'End If
             'First_Params = False
-            Add_String = "Alamat = '" & TextBox3.Text & "' "
+            'Add_String = "Alamat = '" & TextBox3.Text & "' "
+            Dim words = TextBox3.Text.Split(" ")
+            For i As Integer = 0 To words.Count - 1
+                If i = 0 Then
+                    Add_String = "Alamat Like '%" + words(i) + "%' "
+                Else
+                    Add_String = Add_String + "And Alamat Like '%" + words(i) + "%' "
+                End If
+            Next
             Query_String = Query_String + Add_String
             'If TextBox4.Text <> "" Then
             '    Query_String = Query_String + "And "
@@ -210,7 +226,18 @@ Public Class Form1
                 Case Is = False
                     First_Params_Found = True
             End Select
-            Add_String = "Tindakan = '" & RichTextBox1.Text & "' "
+            'Add_String = "Tindakan = '" & RichTextBox1.Text & "' "
+            Dim words = RichTextBox1.Text.Split(" ")
+            For i As Integer = 0 To words.Count - 1
+                If i = 0 Then
+                    Add_String = "Tindakan Like '%" + words(i) + "%' "
+                ElseIf i = words.Count - 1 Then
+                    words(i).Replace(ControlChars.Lf, "")
+                    Add_String = Add_String + "And Tindakan Like '%" + words(i) + "%' "
+                Else
+                    Add_String = Add_String + "And Tindakan Like '%" + words(i) + "%' "
+                End If
+            Next
             Query_String = Query_String + Add_String
         End If
 
@@ -223,6 +250,10 @@ Public Class Form1
         da.Fill(ds, "tbl_pasien")
         DataGridView1.DataSource = ds.Tables("tbl_pasien")
         conn.Close()
+
+
+
+        'Label13.Text = words(0)
     End Sub
 
     Private Sub RadioButton3_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton3.CheckedChanged
@@ -1267,14 +1298,14 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub RichTextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles RichTextBox1.KeyPress
-        If RadioButton1.Checked = False Then
-            If e.KeyChar = Chr(13) Then
-                Call Connect()
-                Call Enter_press_on_TextBox()
-            End If
-        End If
-    End Sub
+    'Private Sub RichTextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles RichTextBox1.KeyPress
+    '    If RadioButton1.Checked = False Then
+    '        If e.KeyChar = Chr(13) Then
+    '            Call Connect()
+    '            Call Enter_press_on_TextBox()
+    '        End If
+    '    End If
+    'End Sub
 
     Private Sub DataGridView1_SelectionChanged(sender As Object, e As EventArgs) Handles DataGridView1.SelectionChanged
         Button3.Enabled = True
@@ -1393,6 +1424,7 @@ Public Class Form1
 
     Private Sub DataGridView1_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles DataGridView1.DataBindingComplete
         DataGridView1.ClearSelection()
+        Call Reset_textbox()
     End Sub
 
     Private Sub TextBox9_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox9.KeyPress
@@ -1600,14 +1632,5 @@ Public Class Form1
             Button5.Text = "Riwayat Tindakan"
             Button3.Enabled = True
         End If
-
-
-        'ds.Tables("tbl_tindakan").Columns
-
-        'Dim id_tindakan As String
-        'id_tindakan = "t" + ds.Tables("tbl_tindakan").Rows.Count + 1 + "#" + DataGridView1.SelectedRows(0).Cells(0).Value.ToString
-
-
-
     End Sub
 End Class
