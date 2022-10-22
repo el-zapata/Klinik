@@ -184,13 +184,13 @@ Public Class Form1
             ElseIf TextBox13.Text = "" And TextBox12.Text = "" And TextBox11.Text = "" Then
                 Query_String = Query_String
             Else
-                MsgBox("Tanggal, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
                 Exit Sub
             End If
         ElseIf TextBox8.Text = "" And TextBox9.Text = "" And TextBox10.Text = "" Then
             Query_String = Query_String
         Else
-            MsgBox("Tanggal, bulan, dan hari harus terisi semua atau dikosongkan semua")
+            MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
             Exit Sub
         End If
 
@@ -214,7 +214,7 @@ Public Class Form1
         ElseIf TextBox13.Text = "" And TextBox12.Text = "" And TextBox11.Text = "" Then
             Query_String = Query_String
         Else
-            MsgBox("Tanggal, bulan, dan hari harus terisi semua atau dikosongkan semua")
+            MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
             Exit Sub
         End If
 
@@ -282,6 +282,9 @@ Public Class Form1
 
         TextBox2.Font = New Font(TextBox2.Font, FontStyle.Regular)
 
+        Label1.Visible = True
+        Label2.Visible = True
+
         Button1.Visible = True
         Button1.Text = "Perbarui"
 
@@ -338,9 +341,15 @@ Public Class Form1
         Label12.Visible = False
         DataGridView2.Visible = False
 
+        TextBox1.Visible = True
+        TextBox2.Visible = True
+
         Call Reset_textbox()
 
         TextBox2.Font = New Font(TextBox2.Font, FontStyle.Regular)
+
+        Label1.Visible = True
+        Label2.Visible = True
 
         Button1.Visible = True
         Button1.Text = "Masukkan ke Database"
@@ -401,7 +410,13 @@ Public Class Form1
         Button1.Text = "Cari Pasien"
         DataGridView2.Visible = False
 
+        TextBox1.Visible = True
+        TextBox2.Visible = True
+
         TextBox2.Font = New Font(TextBox2.Font, FontStyle.Regular)
+
+        Label1.Visible = True
+        Label2.Visible = True
 
         Label5.Visible = True
         Label6.Visible = True
@@ -1512,9 +1527,15 @@ Public Class Form1
         TextBox12.Visible = False
         TextBox13.Visible = False
 
+        TextBox1.Visible = True
+        TextBox2.Visible = True
+
         DataGridView2.Visible = True
 
         TextBox2.Font = New Font(TextBox2.Font, FontStyle.Regular)
+
+        Label1.Visible = True
+        Label2.Visible = True
 
         Label5.Visible = True
         Label6.Visible = False
@@ -1566,9 +1587,15 @@ Public Class Form1
         TextBox12.Visible = False
         TextBox13.Visible = False
 
+        TextBox1.Visible = True
+        TextBox2.Visible = True
+
         DataGridView2.Visible = True
 
         TextBox2.Font = New Font(TextBox2.Font, FontStyle.Bold)
+
+        Label1.Visible = True
+        Label2.Visible = True
 
         Label5.Visible = True
         Label6.Visible = True
@@ -1632,5 +1659,102 @@ Public Class Form1
             Button5.Text = "Riwayat Tindakan"
             Button3.Enabled = True
         End If
+    End Sub
+
+    Private Sub RadioButton6_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton6.CheckedChanged
+        DataGridView1.ClearSelection()
+        Call Reset_textbox()
+        TextBox6.Enabled = True
+        TextBox6.Visible = False
+        TextBox3.Visible = False
+        TextBox4.Visible = False
+        TextBox5.Visible = False
+        TextBox5.Enabled = False
+        TextBox7.Visible = False
+        TextBox8.Visible = True
+        TextBox9.Visible = True
+        TextBox10.Visible = True
+        TextBox11.Visible = True
+        TextBox12.Visible = True
+        TextBox13.Visible = True
+
+        TextBox1.Visible = False
+        TextBox2.Visible = False
+
+        DataGridView2.Visible = False
+
+        TextBox2.Font = New Font(TextBox2.Font, FontStyle.Regular)
+
+        Label1.Visible = False
+        Label2.Visible = False
+
+        Label5.Visible = True
+        Label6.Visible = False
+        Label7.Visible = True
+        Label8.Visible = False
+
+        Label3.Text = "Input Dari"
+        Label4.Text = "Input Sampai"
+        Label5.Text = "Update Dari"
+        Label7.Text = "Update Sampai"
+
+        TextBox14.Visible = True
+        TextBox15.Visible = True
+        TextBox16.Visible = True
+        TextBox17.Visible = True
+        TextBox18.Visible = True
+        TextBox19.Visible = True
+
+        Label14.Visible = True
+        Label15.Visible = True
+        Label16.Visible = True
+        Label17.Visible = True
+
+        Label9.Visible = True
+        Label10.Visible = True
+        Label11.Visible = True
+        Label12.Visible = True
+
+        RichTextBox1.Visible = False
+
+        Button1.Text = "Save and Print"
+    End Sub
+
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        If CheckBox1.Checked = True Then
+            TextBox14.Enabled = True
+            TextBox15.Enabled = True
+            TextBox16.Enabled = True
+            TextBox17.Enabled = True
+            TextBox18.Enabled = True
+            TextBox19.Enabled = True
+        Else
+            TextBox14.Enabled = False
+            TextBox15.Enabled = False
+            TextBox16.Enabled = False
+            TextBox17.Enabled = False
+            TextBox18.Enabled = False
+            TextBox19.Enabled = False
+        End If
+    End Sub
+
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        If CheckBox2.Checked = True Then
+            TextBox8.Enabled = True
+            TextBox9.Enabled = True
+            TextBox10.Enabled = True
+            TextBox11.Enabled = True
+            TextBox12.Enabled = True
+            TextBox13.Enabled = True
+        Else
+            TextBox8.Enabled = False
+            TextBox9.Enabled = False
+            TextBox10.Enabled = False
+            TextBox11.Enabled = False
+            TextBox12.Enabled = False
+            TextBox13.Enabled = False
+        End If
+
+
     End Sub
 End Class

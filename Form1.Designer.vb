@@ -73,6 +73,9 @@ Partial Class Form1
         Me.Printer = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridView3 = New System.Windows.Forms.DataGridView()
         Me.Button5 = New System.Windows.Forms.Button()
+        Me.RadioButton6 = New System.Windows.Forms.RadioButton()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -138,7 +141,7 @@ Partial Class Form1
         'RadioButton3
         '
         Me.RadioButton3.AutoSize = True
-        Me.RadioButton3.Location = New System.Drawing.Point(20, 96)
+        Me.RadioButton3.Location = New System.Drawing.Point(20, 72)
         Me.RadioButton3.Name = "RadioButton3"
         Me.RadioButton3.Size = New System.Drawing.Size(100, 19)
         Me.RadioButton3.TabIndex = 8
@@ -148,7 +151,7 @@ Partial Class Form1
         'RadioButton4
         '
         Me.RadioButton4.AutoSize = True
-        Me.RadioButton4.Location = New System.Drawing.Point(20, 121)
+        Me.RadioButton4.Location = New System.Drawing.Point(20, 97)
         Me.RadioButton4.Name = "RadioButton4"
         Me.RadioButton4.Size = New System.Drawing.Size(83, 19)
         Me.RadioButton4.TabIndex = 9
@@ -159,7 +162,7 @@ Partial Class Form1
         '
         Me.RadioButton1.AutoSize = True
         Me.RadioButton1.Checked = True
-        Me.RadioButton1.Location = New System.Drawing.Point(20, 71)
+        Me.RadioButton1.Location = New System.Drawing.Point(20, 47)
         Me.RadioButton1.Name = "RadioButton1"
         Me.RadioButton1.Size = New System.Drawing.Size(90, 19)
         Me.RadioButton1.TabIndex = 5
@@ -526,7 +529,7 @@ Partial Class Form1
         '
         Me.DataGridView3.AllowUserToAddRows = False
         Me.DataGridView3.AllowUserToDeleteRows = False
-        Me.DataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView3.Location = New System.Drawing.Point(405, 12)
         Me.DataGridView3.MultiSelect = False
@@ -547,11 +550,48 @@ Partial Class Form1
         Me.Button5.Text = "Riwayat Tindakan"
         Me.Button5.UseVisualStyleBackColor = True
         '
+        'RadioButton6
+        '
+        Me.RadioButton6.AutoSize = True
+        Me.RadioButton6.Location = New System.Drawing.Point(20, 121)
+        Me.RadioButton6.Name = "RadioButton6"
+        Me.RadioButton6.Size = New System.Drawing.Size(238, 19)
+        Me.RadioButton6.TabIndex = 51
+        Me.RadioButton6.Text = "Cari Pasien (Berdasarkan Range Tanggal)"
+        Me.RadioButton6.UseVisualStyleBackColor = True
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Checked = True
+        Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox1.Location = New System.Drawing.Point(289, 337)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(98, 19)
+        Me.CheckBox1.TabIndex = 52
+        Me.CheckBox1.Text = "Tanggal Input"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'CheckBox2
+        '
+        Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.Checked = True
+        Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox2.Location = New System.Drawing.Point(289, 395)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(108, 19)
+        Me.CheckBox2.TabIndex = 53
+        Me.CheckBox2.Text = "Update Terakhir"
+        Me.CheckBox2.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1351, 662)
+        Me.Controls.Add(Me.CheckBox2)
+        Me.Controls.Add(Me.CheckBox1)
+        Me.Controls.Add(Me.RadioButton6)
         Me.Controls.Add(Me.Button5)
         Me.Controls.Add(Me.DataGridView3)
         Me.Controls.Add(Me.DataGridView2)
@@ -664,4 +704,7 @@ Partial Class Form1
     Friend WithEvents Printer As DataGridViewTextBoxColumn
     Friend WithEvents DataGridView3 As DataGridView
     Friend WithEvents Button5 As Button
+    Friend WithEvents RadioButton6 As RadioButton
+    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents CheckBox2 As CheckBox
 End Class
