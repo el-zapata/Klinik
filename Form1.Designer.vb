@@ -571,6 +571,7 @@ Partial Class Form1
         Me.CheckBox1.TabIndex = 52
         Me.CheckBox1.Text = "Tanggal Input"
         Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.CheckBox1.Visible = False
         '
         'CheckBox2
         '
@@ -583,6 +584,7 @@ Partial Class Form1
         Me.CheckBox2.TabIndex = 53
         Me.CheckBox2.Text = "Update Terakhir"
         Me.CheckBox2.UseVisualStyleBackColor = True
+        Me.CheckBox2.Visible = False
         '
         'Form1
         '

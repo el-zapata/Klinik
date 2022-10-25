@@ -160,16 +160,44 @@ Public Class Form1
             ElseIf TextBox8.Text = "" And TextBox9.Text = "" And TextBox10.Text = "" Then
                 Query_String = Query_String
             Else
-                MsgBox("Tanggal, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
                 Exit Sub
             End If
         End If
 
+        Dim tanggal_input As Boolean = False
+
         If TextBox8.Text <> "" And TextBox9.Text <> "" And TextBox10.Text <> "" Then
+            Dim Temp As Integer
+
+            If TextBox8.Text(0) = "0" And TextBox8.Text.Count = 2 Then
+                TextBox8.Text = TextBox8.Text(1)
+            End If
+
+            If TextBox9.Text(0) = "0" And TextBox9.Text.Count = 2 Then
+                TextBox9.Text = TextBox9.Text(1)
+            End If
+
+            If Integer.TryParse(TextBox8.Text, Temp) = False Or Integer.TryParse(TextBox9.Text, Temp) = False Or Integer.TryParse(TextBox10.Text, Temp) = False Then
+                MsgBox("Input tanggal tidak valid")
+                Exit Sub
+            End If
+
             If TextBox8.Text.Trim().Length() < 1 Or TextBox8.Text.Trim().Length() > 2 Or TextBox9.Text.Trim().Length() < 1 Or TextBox9.Text.Trim().Length() > 2 Or TextBox10.Text.Trim().Length() <> 4 Then
                 MsgBox("Input tanggal tidak valid")
                 Exit Sub
             End If
+
+            Dim Hari_Pada_Bulan_Awal As Integer = Hari_Pada_Bulan(TextBox9.Text, Integer.Parse(TextBox10.Text))
+            If Integer.Parse(TextBox8.Text) > Hari_Pada_Bulan_Awal Or Integer.Parse(TextBox8.Text) <= 0 Then
+                If Hari_Pada_Bulan_Awal = -1 Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+                MsgBox("Tanggal Tidak Valid!!!")
+                Exit Sub
+            End If
+
             Select Case First_Params_Found
                 Case Is = True
                     Query_String = Query_String + "And "
@@ -181,6 +209,7 @@ Public Class Form1
             Query_String = Query_String + Add_String
             If TextBox13.Text <> "" And TextBox12.Text <> "" And TextBox11.Text <> "" Then
                 Query_String = Query_String
+                tanggal_input = True
             ElseIf TextBox13.Text = "" And TextBox12.Text = "" And TextBox11.Text = "" Then
                 Query_String = Query_String
             Else
@@ -195,9 +224,66 @@ Public Class Form1
         End If
 
         If TextBox13.Text <> "" And TextBox12.Text <> "" And TextBox11.Text <> "" Then
+            Dim Temp As Integer
+
+            If TextBox13.Text(0) = "0" And TextBox13.Text.Count = 2 Then
+                TextBox13.Text = TextBox13.Text(1)
+            End If
+
+            If TextBox12.Text(0) = "0" And TextBox12.Text.Count = 2 Then
+                TextBox12.Text = TextBox12.Text(1)
+            End If
+
+            If Integer.TryParse(TextBox13.Text, Temp) = False Or Integer.TryParse(TextBox12.Text, Temp) = False Or Integer.TryParse(TextBox11.Text, Temp) = False Then
+                MsgBox("Input tanggal tidak valid")
+                Exit Sub
+            End If
             If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
                 MsgBox("Input tanggal tidak valid")
                 Exit Sub
+            End If
+            If tanggal_input = True Then
+                If Integer.Parse(TextBox10.Text) > Integer.Parse(TextBox11.Text) Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                ElseIf Integer.Parse(TextBox9.Text) > Integer.Parse(TextBox12.Text) And Integer.Parse(TextBox10.Text) = Integer.Parse(TextBox11.Text) Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                Dim Hari_Pada_Bulan_Awal As Integer = Hari_Pada_Bulan(TextBox9.Text, Integer.Parse(TextBox10.Text))
+                Dim Hari_Pada_Bulan_Akhir As Integer = Hari_Pada_Bulan(TextBox12.Text, Integer.Parse(TextBox11.Text))
+                If (Integer.Parse(TextBox8.Text) > Hari_Pada_Bulan_Awal Or Integer.Parse(TextBox8.Text) <= 0) Or (Integer.Parse(TextBox13.Text) > Hari_Pada_Bulan_Akhir Or Integer.Parse(TextBox13.Text) <= 0) Then
+                    If Hari_Pada_Bulan_Awal = -1 Or Hari_Pada_Bulan_Akhir = -1 Then
+                        MsgBox("Tanggal Tidak Valid!!!")
+                        Exit Sub
+                    End If
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                Dim Bulan_Awal As String = Nama_Bulan(TextBox9.Text)
+                Dim Bulan_Akhir As String = Nama_Bulan(TextBox12.Text)
+                If Bulan_Awal = "Nomor bulan tidak valid!!!" Or Bulan_Akhir = "Nomor bulan tidak valid!!!" Then
+                    MsgBox("Nomor bulan tidak valid!!!")
+                    Exit Sub
+                End If
+
+                Dim jumlah_hari As Integer = Hitung_Hari(Integer.Parse(TextBox8.Text), Integer.Parse(TextBox9.Text), Integer.Parse(TextBox10.Text), Integer.Parse(TextBox13.Text), Integer.Parse(TextBox12.Text), Integer.Parse(TextBox11.Text), False)
+                If jumlah_hari <= 0 Then
+                    MsgBox("Tanggal tidak valid")
+                    Exit Sub
+                End If
+            Else
+                Dim Hari_Pada_Bulan_Akhir As Integer = Hari_Pada_Bulan(TextBox12.Text, Integer.Parse(TextBox11.Text))
+                If Integer.Parse(TextBox13.Text) > Hari_Pada_Bulan_Akhir Or Integer.Parse(TextBox13.Text) <= 0 Then
+                    If Hari_Pada_Bulan_Akhir = -1 Then
+                        MsgBox("Tanggal Tidak Valid!!!")
+                        Exit Sub
+                    End If
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
             End If
             Select Case First_Params_Found
                 Case Is = True
@@ -251,8 +337,6 @@ Public Class Form1
         DataGridView1.DataSource = ds.Tables("tbl_pasien")
         conn.Close()
 
-
-
         'Label13.Text = words(0)
     End Sub
 
@@ -299,6 +383,7 @@ Public Class Form1
         Label3.Text = "Alamat"
         Label4.Text = "No. HP"
         Label5.Text = "Tanggal Input"
+        Label7.Text = "Update Terakhir"
 
         TextBox14.Visible = False
         TextBox15.Visible = False
@@ -316,6 +401,9 @@ Public Class Form1
         Label15.Visible = False
         Label16.Visible = False
         Label17.Visible = False
+
+        CheckBox1.Visible = False
+        CheckBox2.Visible = False
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
@@ -365,6 +453,7 @@ Public Class Form1
         Label3.Text = "Alamat"
         Label4.Text = "No. HP"
         Label5.Text = "Tanggal Input"
+        Label7.Text = "Update Terakhir"
 
         TextBox14.Visible = False
         TextBox15.Visible = False
@@ -382,6 +471,9 @@ Public Class Form1
         Label15.Visible = False
         Label16.Visible = False
         Label17.Visible = False
+
+        CheckBox1.Visible = False
+        CheckBox2.Visible = False
     End Sub
 
     Private Sub RadioButton4_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton4.CheckedChanged
@@ -410,6 +502,13 @@ Public Class Form1
         Button1.Text = "Cari Pasien"
         DataGridView2.Visible = False
 
+        TextBox8.Enabled = True
+        TextBox9.Enabled = True
+        TextBox10.Enabled = True
+        TextBox11.Enabled = True
+        TextBox12.Enabled = True
+        TextBox13.Enabled = True
+
         TextBox1.Visible = True
         TextBox2.Visible = True
 
@@ -429,6 +528,7 @@ Public Class Form1
         Label3.Text = "Alamat"
         Label4.Text = "No. HP"
         Label5.Text = "Tanggal Input"
+        Label7.Text = "Update Terakhir"
 
         TextBox14.Visible = False
         TextBox15.Visible = False
@@ -446,6 +546,9 @@ Public Class Form1
         Label15.Visible = False
         Label16.Visible = False
         Label17.Visible = False
+
+        CheckBox1.Visible = False
+        CheckBox2.Visible = False
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -596,6 +699,22 @@ Public Class Form1
                 Exit Sub
             End If
 
+            If TextBox19.Text(0) = "0" And TextBox19.Text.Count = 2 Then
+                TextBox19.Text = TextBox19.Text(1)
+            End If
+
+            If TextBox16.Text(0) = "0" And TextBox16.Text.Count = 2 Then
+                TextBox16.Text = TextBox16.Text(1)
+            End If
+
+            If TextBox18.Text(0) = "0" And TextBox18.Text.Count = 2 Then
+                TextBox18.Text = TextBox18.Text(1)
+            End If
+
+            If TextBox15.Text(0) = "0" And TextBox15.Text.Count = 2 Then
+                TextBox15.Text = TextBox15.Text(1)
+            End If
+
             If Integer.Parse(TextBox17.Text) > Integer.Parse(TextBox14.Text) Then
                 MsgBox("Tanggal Tidak Valid!!!")
                 Exit Sub
@@ -622,7 +741,7 @@ Public Class Form1
                 Exit Sub
             End If
 
-            Dim jumlah_hari As Integer = Hitung_Hari(Integer.Parse(TextBox19.Text), Integer.Parse(TextBox18.Text), Integer.Parse(TextBox17.Text), Integer.Parse(TextBox16.Text), Integer.Parse(TextBox15.Text), Integer.Parse(TextBox14.Text))
+            Dim jumlah_hari As Integer = Hitung_Hari(Integer.Parse(TextBox19.Text), Integer.Parse(TextBox18.Text), Integer.Parse(TextBox17.Text), Integer.Parse(TextBox16.Text), Integer.Parse(TextBox15.Text), Integer.Parse(TextBox14.Text), True)
             If jumlah_hari <= 0 Or jumlah_hari > 30 Then
                 MsgBox("Jumlah hari terlalu banyak atau tanggal tidak valid")
                 Exit Sub
@@ -642,30 +761,41 @@ Public Class Form1
             Dim para15 As Paragraph = section.Paragraphs(14)
             Dim para16 As Paragraph = section.Paragraphs(15)
             Dim para17 As Paragraph = section.Paragraphs(16)
+            Dim para32 As Paragraph = section.Paragraphs(31)
+
+            Dim tgl_hariini = Today.Day.ToString
+            Dim bulan_ini = Today.Month.ToString
+            Dim tahun_ini = Today.Year.ToString
+
+            bulan_ini = Nama_Bulan(bulan_ini)
 
             Dim tr1 As TextRange = para12.AppendText(TextBox1.Text)
             Dim tr2 As TextRange = para13.AppendText(TextBox2.Text)
             Dim tr3 As TextRange = para15.AppendText("Selama " + CStr(jumlah_hari) + " hari")
             Dim tr4 As TextRange = para16.AppendText("Mulai Tanggal " + TextBox19.Text + " " + Bulan_Awal + " " + TextBox17.Text)
             Dim tr5 As TextRange = para17.AppendText("Sampai Tanggal " + TextBox16.Text + " " + Bulan_Akhir + " " + TextBox14.Text)
+            Dim tr6 As TextRange = para32.AppendText(tgl_hariini + " " + bulan_ini + " " + tahun_ini)
 
             tr1.CharacterFormat.FontName = "Times New Roman"
             tr2.CharacterFormat.FontName = "Times New Roman"
             tr3.CharacterFormat.FontName = "Times New Roman"
             tr4.CharacterFormat.FontName = "Times New Roman"
             tr5.CharacterFormat.FontName = "Times New Roman"
+            tr6.CharacterFormat.FontName = "Times New Roman"
 
             tr1.CharacterFormat.FontSize = 12
             tr2.CharacterFormat.FontSize = 12
             tr3.CharacterFormat.FontSize = 12
             tr4.CharacterFormat.FontSize = 12
             tr5.CharacterFormat.FontSize = 12
+            tr6.CharacterFormat.FontSize = 12
 
             tr1.CharacterFormat.TextColor = Color.Black
             tr2.CharacterFormat.TextColor = Color.Black
             tr3.CharacterFormat.TextColor = Color.Black
             tr4.CharacterFormat.TextColor = Color.Black
             tr5.CharacterFormat.TextColor = Color.Black
+            tr6.CharacterFormat.TextColor = Color.Black
 
             Dim file_name As String = "Surat Sakit\Surat Sakit " + TextBox1.Text + " " + DateTime.Now.ToString("dd MMMM yyyy") + ".pdf"
 
@@ -1121,6 +1251,274 @@ Public Class Form1
                     MsgBox("Terjadi kesalahan pada pencetakan dokumen")
                 End Try
             End If
+        ElseIf RadioButton6.Checked = True Then
+            Dim Temp As Integer
+            If CheckBox1.Checked = True And CheckBox2.Checked = False Then
+                If TextBox17.Text = "" Or TextBox18.Text = "" Or TextBox19.Text = "" Or TextBox14.Text = "" Or TextBox15.Text = "" Or TextBox16.Text = "" Then
+                    MsgBox("Semua Field harus diisi!!!")
+                    Exit Sub
+                End If
+
+                If TextBox19.Text(0) = "0" And TextBox19.Text.Count = 2 Then
+                    TextBox19.Text = TextBox19.Text(1)
+                End If
+
+                If TextBox16.Text(0) = "0" And TextBox16.Text.Count = 2 Then
+                    TextBox16.Text = TextBox16.Text(1)
+                End If
+
+                If TextBox18.Text(0) = "0" And TextBox18.Text.Count = 2 Then
+                    TextBox18.Text = TextBox18.Text(1)
+                End If
+
+                If TextBox15.Text(0) = "0" And TextBox15.Text.Count = 2 Then
+                    TextBox15.Text = TextBox15.Text(1)
+                End If
+
+                If Int32.TryParse(TextBox14.Text, Temp) = False Or Int32.TryParse(TextBox15.Text, Temp) = False Or Int32.TryParse(TextBox16.Text, Temp) = False Or Int32.TryParse(TextBox17.Text, Temp) = False Or Int32.TryParse(TextBox18.Text, Temp) = False Or Int32.TryParse(TextBox19.Text, Temp) = False Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                ElseIf TextBox14.Text.Trim().Length <> 4 Or TextBox17.Text.Trim().Length <> 4 Or TextBox15.Text.Trim().Length < 1 Or TextBox15.Text.Trim().Length > 2 Or TextBox18.Text.Trim().Length < 1 Or TextBox18.Text.Trim().Length > 2 Or TextBox16.Text.Trim().Length < 1 Or TextBox16.Text.Trim().Length > 2 Or TextBox19.Text.Trim().Length < 1 Or TextBox19.Text.Trim().Length > 2 Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                If Integer.Parse(TextBox17.Text) > Integer.Parse(TextBox14.Text) Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                ElseIf Integer.Parse(TextBox18.Text) > Integer.Parse(TextBox15.Text) And Integer.Parse(TextBox17.Text) = Integer.Parse(TextBox14.Text) Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                Dim Hari_Pada_Bulan_Awal As Integer = Hari_Pada_Bulan(TextBox18.Text, Integer.Parse(TextBox17.Text))
+                Dim Hari_Pada_Bulan_Akhir As Integer = Hari_Pada_Bulan(TextBox15.Text, Integer.Parse(TextBox14.Text))
+                If (Integer.Parse(TextBox19.Text) > Hari_Pada_Bulan_Awal Or Integer.Parse(TextBox19.Text) <= 0) Or (Integer.Parse(TextBox16.Text) > Hari_Pada_Bulan_Akhir Or Integer.Parse(TextBox16.Text) <= 0) Then
+                    If Hari_Pada_Bulan_Awal = -1 Or Hari_Pada_Bulan_Akhir = -1 Then
+                        MsgBox("Tanggal Tidak Valid!!!")
+                        Exit Sub
+                    End If
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                Dim Bulan_Awal As String = Nama_Bulan(TextBox18.Text)
+                Dim Bulan_Akhir As String = Nama_Bulan(TextBox15.Text)
+                If Bulan_Awal = "Nomor bulan tidak valid!!!" Or Bulan_Akhir = "Nomor bulan tidak valid!!!" Then
+                    MsgBox("Nomor bulan tidak valid!!!")
+                    Exit Sub
+                End If
+
+                Dim jumlah_hari As Integer = Hitung_Hari(Integer.Parse(TextBox19.Text), Integer.Parse(TextBox18.Text), Integer.Parse(TextBox17.Text), Integer.Parse(TextBox16.Text), Integer.Parse(TextBox15.Text), Integer.Parse(TextBox14.Text), False)
+                If jumlah_hari <= 0 Then
+                    MsgBox("Tanggal tidak valid")
+                    Exit Sub
+                End If
+
+                Call Connect()
+                da = New OdbcDataAdapter("Select * From tbl_pasien Where `Tanggal Input` Between '" & TextBox17.Text & "-" & TextBox18.Text & "-" & TextBox19.Text & " 00:00:00 ' And '" & TextBox14.Text & "-" & TextBox15.Text & "-" & TextBox16.Text & " 23:59:59'", conn)
+                ds = New DataSet
+                da.Fill(ds, "tbl_pasien")
+                DataGridView1.DataSource = ds.Tables("tbl_pasien")
+                conn.Close()
+            ElseIf CheckBox1.Checked = False And CheckBox2.Checked = True Then
+                If TextBox8.Text = "" Or TextBox9.Text = "" Or TextBox10.Text = "" Or TextBox11.Text = "" Or TextBox12.Text = "" Or TextBox13.Text = "" Then
+                    MsgBox("Semua Field harus diisi!!!")
+                    Exit Sub
+                End If
+
+                If TextBox8.Text(0) = "0" And TextBox8.Text.Count = 2 Then
+                    TextBox8.Text = TextBox8.Text(1)
+                End If
+
+                If TextBox9.Text(0) = "0" And TextBox9.Text.Count = 2 Then
+                    TextBox9.Text = TextBox9.Text(1)
+                End If
+
+                If TextBox13.Text(0) = "0" And TextBox13.Text.Count = 2 Then
+                    TextBox13.Text = TextBox13.Text(1)
+                End If
+
+                If TextBox12.Text(0) = "0" And TextBox12.Text.Count = 2 Then
+                    TextBox12.Text = TextBox12.Text(1)
+                End If
+
+                If Int32.TryParse(TextBox8.Text, Temp) = False Or Int32.TryParse(TextBox9.Text, Temp) = False Or Int32.TryParse(TextBox10.Text, Temp) = False Or Int32.TryParse(TextBox11.Text, Temp) = False Or Int32.TryParse(TextBox12.Text, Temp) = False Or Int32.TryParse(TextBox13.Text, Temp) = False Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                ElseIf TextBox10.Text.Trim().Length <> 4 Or TextBox11.Text.Trim().Length <> 4 Or TextBox9.Text.Trim().Length < 1 Or TextBox9.Text.Trim().Length > 2 Or TextBox12.Text.Trim().Length < 1 Or TextBox12.Text.Trim().Length > 2 Or TextBox8.Text.Trim().Length < 1 Or TextBox8.Text.Trim().Length > 2 Or TextBox13.Text.Trim().Length < 1 Or TextBox13.Text.Trim().Length > 2 Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                If Integer.Parse(TextBox10.Text) > Integer.Parse(TextBox11.Text) Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                ElseIf Integer.Parse(TextBox9.Text) > Integer.Parse(TextBox12.Text) And Integer.Parse(TextBox10.Text) = Integer.Parse(TextBox11.Text) Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                Dim Hari_Pada_Bulan_Awal As Integer = Hari_Pada_Bulan(TextBox9.Text, Integer.Parse(TextBox10.Text))
+                Dim Hari_Pada_Bulan_Akhir As Integer = Hari_Pada_Bulan(TextBox12.Text, Integer.Parse(TextBox11.Text))
+                If (Integer.Parse(TextBox8.Text) > Hari_Pada_Bulan_Awal Or Integer.Parse(TextBox8.Text) <= 0) Or (Integer.Parse(TextBox13.Text) > Hari_Pada_Bulan_Akhir Or Integer.Parse(TextBox13.Text) <= 0) Then
+                    If Hari_Pada_Bulan_Awal = -1 Or Hari_Pada_Bulan_Akhir = -1 Then
+                        MsgBox("Tanggal Tidak Valid!!!")
+                        Exit Sub
+                    End If
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                Dim Bulan_Awal As String = Nama_Bulan(TextBox9.Text)
+                Dim Bulan_Akhir As String = Nama_Bulan(TextBox12.Text)
+                If Bulan_Awal = "Nomor bulan tidak valid!!!" Or Bulan_Akhir = "Nomor bulan tidak valid!!!" Then
+                    MsgBox("Nomor bulan tidak valid!!!")
+                    Exit Sub
+                End If
+
+                Dim jumlah_hari As Integer = Hitung_Hari(Integer.Parse(TextBox8.Text), Integer.Parse(TextBox9.Text), Integer.Parse(TextBox10.Text), Integer.Parse(TextBox13.Text), Integer.Parse(TextBox12.Text), Integer.Parse(TextBox11.Text), False)
+                If jumlah_hari <= 0 Then
+                    MsgBox("Tanggal tidak valid")
+                    Exit Sub
+                End If
+
+                Call Connect()
+                da = New OdbcDataAdapter("Select * From tbl_pasien Where `Update Terakhir` Between '" & TextBox10.Text & "-" & TextBox9.Text & "-" & TextBox8.Text & " 00:00:00 ' And '" & TextBox11.Text & "-" & TextBox12.Text & "-" & TextBox13.Text & " 23:59:59'", conn)
+                ds = New DataSet
+                da.Fill(ds, "tbl_pasien")
+                DataGridView1.DataSource = ds.Tables("tbl_pasien")
+                conn.Close()
+            Else
+                If TextBox17.Text = "" Or TextBox18.Text = "" Or TextBox19.Text = "" Or TextBox14.Text = "" Or TextBox15.Text = "" Or TextBox16.Text = "" Then
+                    MsgBox("Semua Field harus diisi!!!")
+                    Exit Sub
+                End If
+
+                If TextBox19.Text(0) = "0" And TextBox19.Text.Count = 2 Then
+                    TextBox19.Text = TextBox19.Text(1)
+                End If
+
+                If TextBox16.Text(0) = "0" And TextBox16.Text.Count = 2 Then
+                    TextBox16.Text = TextBox16.Text(1)
+                End If
+
+                If TextBox18.Text(0) = "0" And TextBox18.Text.Count = 2 Then
+                    TextBox18.Text = TextBox18.Text(1)
+                End If
+
+                If TextBox15.Text(0) = "0" And TextBox15.Text.Count = 2 Then
+                    TextBox15.Text = TextBox15.Text(1)
+                End If
+
+                If Int32.TryParse(TextBox14.Text, Temp) = False Or Int32.TryParse(TextBox15.Text, Temp) = False Or Int32.TryParse(TextBox16.Text, Temp) = False Or Int32.TryParse(TextBox17.Text, Temp) = False Or Int32.TryParse(TextBox18.Text, Temp) = False Or Int32.TryParse(TextBox19.Text, Temp) = False Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                ElseIf TextBox14.Text.Trim().Length <> 4 Or TextBox17.Text.Trim().Length <> 4 Or TextBox15.Text.Trim().Length < 1 Or TextBox15.Text.Trim().Length > 2 Or TextBox18.Text.Trim().Length < 1 Or TextBox18.Text.Trim().Length > 2 Or TextBox16.Text.Trim().Length < 1 Or TextBox16.Text.Trim().Length > 2 Or TextBox19.Text.Trim().Length < 1 Or TextBox19.Text.Trim().Length > 2 Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                If Integer.Parse(TextBox17.Text) > Integer.Parse(TextBox14.Text) Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                ElseIf Integer.Parse(TextBox18.Text) > Integer.Parse(TextBox15.Text) And Integer.Parse(TextBox17.Text) = Integer.Parse(TextBox14.Text) Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                Dim Hari_Pada_Bulan_Awal As Integer = Hari_Pada_Bulan(TextBox18.Text, Integer.Parse(TextBox17.Text))
+                Dim Hari_Pada_Bulan_Akhir As Integer = Hari_Pada_Bulan(TextBox15.Text, Integer.Parse(TextBox14.Text))
+                If (Integer.Parse(TextBox19.Text) > Hari_Pada_Bulan_Awal Or Integer.Parse(TextBox19.Text) <= 0) Or (Integer.Parse(TextBox16.Text) > Hari_Pada_Bulan_Akhir Or Integer.Parse(TextBox16.Text) <= 0) Then
+                    If Hari_Pada_Bulan_Awal = -1 Or Hari_Pada_Bulan_Akhir = -1 Then
+                        MsgBox("Tanggal Tidak Valid!!!")
+                        Exit Sub
+                    End If
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                Dim Bulan_Awal As String = Nama_Bulan(TextBox18.Text)
+                Dim Bulan_Akhir As String = Nama_Bulan(TextBox15.Text)
+                If Bulan_Awal = "Nomor bulan tidak valid!!!" Or Bulan_Akhir = "Nomor bulan tidak valid!!!" Then
+                    MsgBox("Nomor bulan tidak valid!!!")
+                    Exit Sub
+                End If
+
+                Dim jumlah_hari As Integer = Hitung_Hari(Integer.Parse(TextBox19.Text), Integer.Parse(TextBox18.Text), Integer.Parse(TextBox17.Text), Integer.Parse(TextBox16.Text), Integer.Parse(TextBox15.Text), Integer.Parse(TextBox14.Text), False)
+                If jumlah_hari <= 0 Then
+                    MsgBox("Tanggal tidak valid")
+                    Exit Sub
+                End If
+
+                If TextBox8.Text = "" Or TextBox9.Text = "" Or TextBox10.Text = "" Or TextBox11.Text = "" Or TextBox12.Text = "" Or TextBox13.Text = "" Then
+                    MsgBox("Semua Field harus diisi!!!")
+                    Exit Sub
+                End If
+
+                If TextBox8.Text(0) = "0" And TextBox8.Text.Count = 2 Then
+                    TextBox8.Text = TextBox8.Text(1)
+                End If
+
+                If TextBox9.Text(0) = "0" And TextBox9.Text.Count = 2 Then
+                    TextBox9.Text = TextBox9.Text(1)
+                End If
+
+                If TextBox13.Text(0) = "0" And TextBox13.Text.Count = 2 Then
+                    TextBox13.Text = TextBox13.Text(1)
+                End If
+
+                If TextBox12.Text(0) = "0" And TextBox12.Text.Count = 2 Then
+                    TextBox12.Text = TextBox12.Text(1)
+                End If
+
+                If Int32.TryParse(TextBox8.Text, Temp) = False Or Int32.TryParse(TextBox9.Text, Temp) = False Or Int32.TryParse(TextBox10.Text, Temp) = False Or Int32.TryParse(TextBox11.Text, Temp) = False Or Int32.TryParse(TextBox12.Text, Temp) = False Or Int32.TryParse(TextBox13.Text, Temp) = False Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                ElseIf TextBox10.Text.Trim().Length <> 4 Or TextBox11.Text.Trim().Length <> 4 Or TextBox9.Text.Trim().Length < 1 Or TextBox9.Text.Trim().Length > 2 Or TextBox12.Text.Trim().Length < 1 Or TextBox12.Text.Trim().Length > 2 Or TextBox8.Text.Trim().Length < 1 Or TextBox8.Text.Trim().Length > 2 Or TextBox13.Text.Trim().Length < 1 Or TextBox13.Text.Trim().Length > 2 Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                If Integer.Parse(TextBox10.Text) > Integer.Parse(TextBox11.Text) Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                ElseIf Integer.Parse(TextBox9.Text) > Integer.Parse(TextBox12.Text) And Integer.Parse(TextBox10.Text) = Integer.Parse(TextBox11.Text) Then
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                Hari_Pada_Bulan_Awal = Hari_Pada_Bulan(TextBox9.Text, Integer.Parse(TextBox10.Text))
+                Hari_Pada_Bulan_Akhir = Hari_Pada_Bulan(TextBox12.Text, Integer.Parse(TextBox11.Text))
+                If (Integer.Parse(TextBox8.Text) > Hari_Pada_Bulan_Awal Or Integer.Parse(TextBox8.Text) <= 0) Or (Integer.Parse(TextBox13.Text) > Hari_Pada_Bulan_Akhir Or Integer.Parse(TextBox13.Text) <= 0) Then
+                    If Hari_Pada_Bulan_Awal = -1 Or Hari_Pada_Bulan_Akhir = -1 Then
+                        MsgBox("Tanggal Tidak Valid!!!")
+                        Exit Sub
+                    End If
+                    MsgBox("Tanggal Tidak Valid!!!")
+                    Exit Sub
+                End If
+
+                Bulan_Awal = Nama_Bulan(TextBox9.Text)
+                Bulan_Akhir = Nama_Bulan(TextBox12.Text)
+                If Bulan_Awal = "Nomor bulan tidak valid!!!" Or Bulan_Akhir = "Nomor bulan tidak valid!!!" Then
+                    MsgBox("Nomor bulan tidak valid!!!")
+                    Exit Sub
+                End If
+
+                jumlah_hari = Hitung_Hari(Integer.Parse(TextBox8.Text), Integer.Parse(TextBox9.Text), Integer.Parse(TextBox10.Text), Integer.Parse(TextBox13.Text), Integer.Parse(TextBox12.Text), Integer.Parse(TextBox11.Text), False)
+                If jumlah_hari <= 0 Then
+                    MsgBox("Tanggal tidak valid")
+                    Exit Sub
+                End If
+
+                Call Connect()
+                da = New OdbcDataAdapter("Select * From tbl_pasien Where (`Tanggal Input` Between '" & TextBox17.Text & "-" & TextBox18.Text & "-" & TextBox19.Text & " 00:00:00 ' And '" & TextBox14.Text & "-" & TextBox15.Text & "-" & TextBox16.Text & " 23:59:59') Or (`Update Terakhir` Between '" & TextBox10.Text & "-" & TextBox9.Text & "-" & TextBox8.Text & " 00:00:00 ' And '" & TextBox11.Text & "-" & TextBox12.Text & "-" & TextBox13.Text & " 23:59:59')", conn)
+                ds = New DataSet
+                da.Fill(ds, "tbl_pasien")
+                DataGridView1.DataSource = ds.Tables("tbl_pasien")
+                conn.Close()
+            End If
         End If
     End Sub
 
@@ -1214,7 +1612,7 @@ Public Class Form1
         End Select
     End Function
 
-    Function Hitung_Hari(tgl_awal As Integer, bulan_awal As Integer, tahun_awal As Integer, tgl_akhir As Integer, bulan_akhir As Integer, tahun_akhir As Integer) As Integer
+    Function Hitung_Hari(tgl_awal As Integer, bulan_awal As Integer, tahun_awal As Integer, tgl_akhir As Integer, bulan_akhir As Integer, tahun_akhir As Integer, limit As Boolean) As Integer
         If (bulan_awal = bulan_akhir) And (tahun_awal = tahun_akhir) Then
             Return tgl_akhir - tgl_awal + 1
         ElseIf tahun_awal = tahun_akhir Then
@@ -1240,17 +1638,23 @@ Public Class Form1
             '    bulan_awal += 1
             'Next
             'Return jumlah_hari
-        Else
+        ElseIf tahun_awal > tahun_akhir Then
+            Return -1
+        ElseIf tahun_awal < tahun_akhir Then
             Dim selisih_tahun As Integer = tahun_akhir - tahun_awal
-            If selisih_tahun > 1 Then
-                Return -1
-            ElseIf bulan_akhir + 12 - bulan_awal > 1 Then
-                Return -1
+            If limit = True Then
+                If selisih_tahun > 1 Then
+                    Return -1
+                ElseIf bulan_akhir + 12 - bulan_awal > 1 Then
+                    Return -1
+                Else
+                    Dim jumlah_hari As Integer
+                    jumlah_hari = 31 - tgl_awal + 1
+                    jumlah_hari += tgl_akhir
+                    Return jumlah_hari
+                End If
             Else
-                Dim jumlah_hari As Integer
-                jumlah_hari = 31 - tgl_awal + 1
-                jumlah_hari += tgl_akhir
-                Return jumlah_hari
+                Return 1
             End If
         End If
     End Function
@@ -1424,14 +1828,16 @@ Public Class Form1
     End Sub
 
     Private Sub TextBox8_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox8.KeyPress
-        If e.KeyChar = Chr(13) Then
-            If TextBox8.Text = "" Or TextBox9.Text = "" Or TextBox10.Text = "" Then
-                MsgBox("Tanggal, bulan, dan hari harus terisi semua atau dikosongkan semua")
-            ElseIf IsNumeric(TextBox8.Text) And IsNumeric(TextBox9.Text) And IsNumeric(TextBox10.Text) Then
-                If TextBox8.Text.Trim().Length() < 1 Or TextBox8.Text.Trim().Length() > 2 Or TextBox9.Text.Trim().Length() < 1 Or TextBox9.Text.Trim().Length() > 2 Or TextBox10.Text.Trim().Length() <> 4 Then
-                    MsgBox("Input tanggal tidak valid")
-                Else
-                    Call Enter_press_on_TextBox()
+        If RadioButton4.Checked = True Then
+            If e.KeyChar = Chr(13) Then
+                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                        MsgBox("Input tanggal tidak valid")
+                    Else
+                        Call Enter_press_on_TextBox()
+                    End If
                 End If
             End If
         End If
@@ -1443,70 +1849,80 @@ Public Class Form1
     End Sub
 
     Private Sub TextBox9_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox9.KeyPress
-        If e.KeyChar = Chr(13) Then
-            If TextBox8.Text = "" Or TextBox9.Text = "" Or TextBox10.Text = "" Then
-                MsgBox("Tanggal, bulan, dan hari harus terisi semua atau dikosongkan semua")
-            ElseIf IsNumeric(TextBox8.Text) And IsNumeric(TextBox9.Text) And IsNumeric(TextBox10.Text) Then
-                If TextBox8.Text.Trim().Length() < 1 Or TextBox8.Text.Trim().Length() > 2 Or TextBox9.Text.Trim().Length() < 1 Or TextBox9.Text.Trim().Length() > 2 Or TextBox10.Text.Trim().Length() <> 4 Then
-                    MsgBox("Input tanggal tidak valid")
-                Else
-                    Call Enter_press_on_TextBox()
+        If RadioButton4.Checked = True Then
+            If e.KeyChar = Chr(13) Then
+                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                        MsgBox("Input tanggal tidak valid")
+                    Else
+                        Call Enter_press_on_TextBox()
+                    End If
                 End If
             End If
         End If
     End Sub
 
     Private Sub TextBox10_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox10.KeyPress
-        If e.KeyChar = Chr(13) Then
-            If TextBox8.Text = "" Or TextBox9.Text = "" Or TextBox10.Text = "" Then
-                MsgBox("Tanggal, bulan, dan hari harus terisi semua atau dikosongkan semua")
-            ElseIf IsNumeric(TextBox8.Text) And IsNumeric(TextBox9.Text) And IsNumeric(TextBox10.Text) Then
-                If TextBox8.Text.Trim().Length() < 1 Or TextBox8.Text.Trim().Length() > 2 Or TextBox9.Text.Trim().Length() < 1 Or TextBox9.Text.Trim().Length() > 2 Or TextBox10.Text.Trim().Length() <> 4 Then
-                    MsgBox("Input tanggal tidak valid")
-                Else
-                    Call Enter_press_on_TextBox()
+        If RadioButton4.Checked = True Then
+            If e.KeyChar = Chr(13) Then
+                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                        MsgBox("Input tanggal tidak valid")
+                    Else
+                        Call Enter_press_on_TextBox()
+                    End If
                 End If
             End If
         End If
     End Sub
 
     Private Sub TextBox13_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox13.KeyPress
-        If e.KeyChar = Chr(13) Then
-            If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
-                MsgBox("Tanggal, bulan, dan hari harus terisi semua atau dikosongkan semua")
-            ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
-                If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
-                    MsgBox("Input tanggal tidak valid")
-                Else
-                    Call Enter_press_on_TextBox()
+        If RadioButton4.Checked = True Then
+            If e.KeyChar = Chr(13) Then
+                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                        MsgBox("Input tanggal tidak valid")
+                    Else
+                        Call Enter_press_on_TextBox()
+                    End If
                 End If
             End If
         End If
     End Sub
 
     Private Sub TextBox12_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox12.KeyPress
-        If e.KeyChar = Chr(13) Then
-            If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
-                MsgBox("Tanggal, bulan, dan hari harus terisi semua atau dikosongkan semua")
-            ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
-                If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
-                    MsgBox("Input tanggal tidak valid")
-                Else
-                    Call Enter_press_on_TextBox()
+        If RadioButton4.Checked = True Then
+            If e.KeyChar = Chr(13) Then
+                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                        MsgBox("Input tanggal tidak valid")
+                    Else
+                        Call Enter_press_on_TextBox()
+                    End If
                 End If
             End If
         End If
     End Sub
 
     Private Sub TextBox11_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox11.KeyPress
-        If e.KeyChar = Chr(13) Then
-            If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
-                MsgBox("Tanggal, bulan, dan hari harus terisi semua atau dikosongkan semua")
-            ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
-                If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
-                    MsgBox("Input tanggal tidak valid")
-                Else
-                    Call Enter_press_on_TextBox()
+        If RadioButton4.Checked = True Then
+            If e.KeyChar = Chr(13) Then
+                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                        MsgBox("Input tanggal tidak valid")
+                    Else
+                        Call Enter_press_on_TextBox()
+                    End If
                 End If
             End If
         End If
@@ -1555,6 +1971,13 @@ Public Class Form1
         TextBox18.Visible = True
         TextBox19.Visible = True
 
+        TextBox14.Enabled = True
+        TextBox15.Enabled = True
+        TextBox16.Enabled = True
+        TextBox17.Enabled = True
+        TextBox18.Enabled = True
+        TextBox19.Enabled = True
+
         Label14.Visible = True
         Label15.Visible = True
         Label16.Visible = True
@@ -1568,6 +1991,9 @@ Public Class Form1
         RichTextBox1.Visible = False
 
         Button1.Text = "Save and Print"
+
+        CheckBox1.Visible = False
+        CheckBox2.Visible = False
     End Sub
 
     Private Sub RadioButton5_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton5.CheckedChanged
@@ -1629,6 +2055,9 @@ Public Class Form1
         RichTextBox1.Visible = False
 
         Button1.Text = "Save and Print"
+
+        CheckBox1.Visible = False
+        CheckBox2.Visible = False
     End Sub
 
     Dim Daftar_Pasien As Boolean = True
@@ -1717,7 +2146,42 @@ Public Class Form1
 
         RichTextBox1.Visible = False
 
-        Button1.Text = "Save and Print"
+        Button1.Text = "Cari Pasien"
+
+        CheckBox1.Visible = True
+        CheckBox2.Visible = True
+
+        If CheckBox1.Checked = True Then
+            TextBox14.Enabled = True
+            TextBox15.Enabled = True
+            TextBox16.Enabled = True
+            TextBox17.Enabled = True
+            TextBox18.Enabled = True
+            TextBox19.Enabled = True
+        Else
+            TextBox14.Enabled = False
+            TextBox15.Enabled = False
+            TextBox16.Enabled = False
+            TextBox17.Enabled = False
+            TextBox18.Enabled = False
+            TextBox19.Enabled = False
+        End If
+
+        If CheckBox2.Checked = True Then
+            TextBox8.Enabled = True
+            TextBox9.Enabled = True
+            TextBox10.Enabled = True
+            TextBox11.Enabled = True
+            TextBox12.Enabled = True
+            TextBox13.Enabled = True
+        Else
+            TextBox8.Enabled = False
+            TextBox9.Enabled = False
+            TextBox10.Enabled = False
+            TextBox11.Enabled = False
+            TextBox12.Enabled = False
+            TextBox13.Enabled = False
+        End If
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
@@ -1754,7 +2218,19 @@ Public Class Form1
             TextBox12.Enabled = False
             TextBox13.Enabled = False
         End If
-
-
     End Sub
+
+    'Private Sub TextBox14_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox14.KeyPress
+    '    If e.KeyChar = Chr(13) Then
+    '        If TextBox14.Text = "" Or TextBox15.Text = "" Or TextBox16.Text = "" Then
+    '            MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+    '        ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+    '            If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+    '                MsgBox("Input tanggal tidak valid")
+    '            Else
+    '                Call Enter_press_on_TextBox()
+    '            End If
+    '        End If
+    '    End If
+    'End Sub
 End Class
