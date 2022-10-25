@@ -153,7 +153,8 @@ Public Class Form1
                 Case Is = False
                     First_Params_Found = True
             End Select
-            Add_String = "`No. Hp` = '" & TextBox4.Text & "' "
+            'Add_String = "`No. Hp` = '" & TextBox4.Text & "' "
+            Add_String = "`No. Hp` Like '%" + TextBox4.Text + "%' "
             Query_String = Query_String + Add_String
             If TextBox8.Text <> "" And TextBox9.Text <> "" And TextBox10.Text <> "" Then
                 Query_String = Query_String
@@ -1755,15 +1756,17 @@ Public Class Form1
                 TextBox4.Text = Data_Hp
                 TextBox5.Text = Data_TglInput
                 TextBox7.Text = Data_TglUpdate
-                TextBox8.Text = Data_TglInput_Tanggal
-                TextBox9.Text = Data_TglInput_Bulan
-                TextBox10.Text = Data_TglInput_Tahun
-                TextBox13.Text = Data_TglUpdate_Tanggal
-                TextBox12.Text = Data_TglUpdate_Bulan
-                TextBox11.Text = Data_TglUpdate_Tahun
+                If RadioButton6.Checked = False Then
+                    TextBox8.Text = Data_TglInput_Tanggal
+                    TextBox9.Text = Data_TglInput_Bulan
+                    TextBox10.Text = Data_TglInput_Tahun
+                    TextBox13.Text = Data_TglUpdate_Tanggal
+                    TextBox12.Text = Data_TglUpdate_Bulan
+                    TextBox11.Text = Data_TglUpdate_Tahun
+                End If
                 RichTextBox1.Text = Data_Tindakan
+                End If
             End If
-        End If
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
