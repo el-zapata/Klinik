@@ -628,7 +628,6 @@ Public Class Form1
                 MsgBox("Field Umur harus diisi dengan angka")
             Else
                 Dim message As String
-                Dim Riwayat_sebelumnya As String = DataGridView1.SelectedRows(0).Cells(7).Value
                 If RichTextBox1.Text = "" Then
                     message = "Apakah anda yakin ingin memperbarui data pasien ini? (Karena isi tindakan kosong, tindakan ini tidak akan masuk ke tabel Riwayat Tindakan. Tetapi kolom tindakan pada tabel Pasien akan kosong)"
                 Else
@@ -636,6 +635,8 @@ Public Class Form1
                 End If
                 Dim Confirm As DialogResult = MessageBox.Show(message, "Konfirmasi Perbaruan Data", MessageBoxButtons.YesNo)
                 If Confirm = DialogResult.Yes Then
+                    Dim Nama As String = DataGridView1.SelectedRows(0).Cells(1).Value
+                    Dim Riwayat_sebelumnya As String = DataGridView1.SelectedRows(0).Cells(7).Value
                     Call Connect()
                     Dim EditData As String = "Update tbl_pasien set Nama = '" & TextBox1.Text & "', Umur = '" & TextBox2.Text & "', Alamat = '" & TextBox3.Text & "', `No. Hp` = '" & TextBox4.Text & "', `Update Terakhir` = (Select NOW()), Tindakan = '" & RichTextBox1.Text & "' Where Id = '" & TextBox6.Text & "'"
                     cmd = New OdbcCommand(EditData, conn)
@@ -659,6 +660,12 @@ Public Class Form1
                         End If
 
                         EditData = "Insert into tbl_tindakan Values ('" & id_tindakan & "', (Select Id From tbl_pasien Where Id = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where Id = '" & TextBox6.Text & "'), (Select NOW()), '" & RichTextBox1.Text & "')"
+                        cmd = New OdbcCommand(EditData, conn)
+                        cmd.ExecuteNonQuery()
+                    End If
+
+                    If Nama <> TextBox1.Text Then
+                        EditData = "Update tbl_tindakan Set Nama = '" & TextBox1.Text & "' Where Id_pasien = '" & TextBox6.Text & "'"
                         cmd = New OdbcCommand(EditData, conn)
                         cmd.ExecuteNonQuery()
                     End If
