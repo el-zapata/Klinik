@@ -405,6 +405,10 @@ Public Class Form1
 
         CheckBox1.Visible = False
         CheckBox2.Visible = False
+
+        Label18.Visible = False
+        Label19.Visible = False
+        NumericUpDown1.Visible = False
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
@@ -475,6 +479,10 @@ Public Class Form1
 
         CheckBox1.Visible = False
         CheckBox2.Visible = False
+
+        Label18.Visible = False
+        Label19.Visible = False
+        NumericUpDown1.Visible = False
     End Sub
 
     Private Sub RadioButton4_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton4.CheckedChanged
@@ -550,6 +558,10 @@ Public Class Form1
 
         CheckBox1.Visible = False
         CheckBox2.Visible = False
+
+        Label18.Visible = False
+        Label19.Visible = False
+        NumericUpDown1.Visible = False
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -776,6 +788,8 @@ Public Class Form1
             Dim tahun_ini = Today.Year.ToString
 
             bulan_ini = Nama_Bulan(bulan_ini)
+
+            jumlah_hari = jumlah_hari - NumericUpDown1.Value
 
             Dim tr1 As TextRange = para12.AppendText(TextBox1.Text)
             Dim tr2 As TextRange = para13.AppendText(TextBox2.Text)
@@ -2013,6 +2027,11 @@ Public Class Form1
 
         CheckBox1.Visible = False
         CheckBox2.Visible = False
+
+        Label18.Visible = True
+        Label19.Visible = True
+        NumericUpDown1.Visible = True
+        NumericUpDown1.Value = 0
     End Sub
 
     Private Sub RadioButton5_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton5.CheckedChanged
@@ -2077,6 +2096,10 @@ Public Class Form1
 
         CheckBox1.Visible = False
         CheckBox2.Visible = False
+
+        Label18.Visible = False
+        Label19.Visible = False
+        NumericUpDown1.Visible = False
     End Sub
 
     Dim Daftar_Pasien As Boolean = True
@@ -2201,6 +2224,10 @@ Public Class Form1
             TextBox12.Enabled = False
             TextBox13.Enabled = False
         End If
+
+        Label18.Visible = False
+        Label19.Visible = False
+        NumericUpDown1.Visible = False
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
