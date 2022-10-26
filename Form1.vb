@@ -1,14 +1,14 @@
-﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar
+﻿'Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar
 Imports System.Data.Odbc
-Imports System.Data.Common
-Imports System.Drawing
+'Imports System.Data.Common
+'Imports System.Drawing
 Imports Spire.Doc
-Imports Spire.Doc.Document
+'Imports Spire.Doc.Document
 Imports Spire.Doc.Fields
 Imports Spire.Doc.Documents
-Imports System.Drawing.Printing
+'Imports System.Drawing.Printing
 Imports Spire.Pdf
-Imports MySqlConnector
+'Imports MySqlConnector
 
 Public Class Form1
 
@@ -1833,15 +1833,16 @@ Public Class Form1
     Private Sub TextBox8_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox8.KeyPress
         If RadioButton4.Checked = True Then
             If e.KeyChar = Chr(13) Then
-                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
-                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
-                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
-                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
-                        MsgBox("Input tanggal tidak valid")
-                    Else
-                        Call Enter_press_on_TextBox()
-                    End If
-                End If
+                Call Enter_press_on_TextBox()
+                'If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                '    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                'ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                '    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                '        MsgBox("Input tanggal tidak valid")
+                '    Else
+                '
+                '    End If
+                'End If
             End If
         End If
     End Sub
@@ -1854,15 +1855,16 @@ Public Class Form1
     Private Sub TextBox9_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox9.KeyPress
         If RadioButton4.Checked = True Then
             If e.KeyChar = Chr(13) Then
-                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
-                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
-                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
-                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
-                        MsgBox("Input tanggal tidak valid")
-                    Else
-                        Call Enter_press_on_TextBox()
-                    End If
-                End If
+                Call Enter_press_on_TextBox()
+                'If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                '    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                'ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                '    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                '        MsgBox("Input tanggal tidak valid")
+                '    Else
+                '
+                '    End If
+                'End If
             End If
         End If
     End Sub
@@ -1870,15 +1872,16 @@ Public Class Form1
     Private Sub TextBox10_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox10.KeyPress
         If RadioButton4.Checked = True Then
             If e.KeyChar = Chr(13) Then
-                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
-                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
-                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
-                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
-                        MsgBox("Input tanggal tidak valid")
-                    Else
-                        Call Enter_press_on_TextBox()
-                    End If
-                End If
+                Call Enter_press_on_TextBox()
+                'If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                '    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                'ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                '    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                '        MsgBox("Input tanggal tidak valid")
+                '    Else
+                '
+                '    End If
+                'End If
             End If
         End If
     End Sub
@@ -1886,15 +1889,16 @@ Public Class Form1
     Private Sub TextBox13_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox13.KeyPress
         If RadioButton4.Checked = True Then
             If e.KeyChar = Chr(13) Then
-                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
-                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
-                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
-                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
-                        MsgBox("Input tanggal tidak valid")
-                    Else
-                        Call Enter_press_on_TextBox()
-                    End If
-                End If
+                Call Enter_press_on_TextBox()
+                'If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                '    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                'ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                '    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                '        MsgBox("Input tanggal tidak valid")
+                '    Else
+                '
+                '    End If
+                'End If
             End If
         End If
     End Sub
@@ -1902,15 +1906,16 @@ Public Class Form1
     Private Sub TextBox12_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox12.KeyPress
         If RadioButton4.Checked = True Then
             If e.KeyChar = Chr(13) Then
-                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
-                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
-                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
-                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
-                        MsgBox("Input tanggal tidak valid")
-                    Else
-                        Call Enter_press_on_TextBox()
-                    End If
-                End If
+                Call Enter_press_on_TextBox()
+                'If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                '    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                'ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                '    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                '        MsgBox("Input tanggal tidak valid")
+                '    Else
+                '
+                '    End If
+                'End If
             End If
         End If
     End Sub
@@ -1918,15 +1923,16 @@ Public Class Form1
     Private Sub TextBox11_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox11.KeyPress
         If RadioButton4.Checked = True Then
             If e.KeyChar = Chr(13) Then
-                If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
-                    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
-                ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
-                    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
-                        MsgBox("Input tanggal tidak valid")
-                    Else
-                        Call Enter_press_on_TextBox()
-                    End If
-                End If
+                Call Enter_press_on_TextBox()
+                'If TextBox13.Text = "" Or TextBox12.Text = "" Or TextBox11.Text = "" Then
+                '    MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
+                'ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
+                '    If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
+                '        MsgBox("Input tanggal tidak valid")
+                '    Else
+                '
+                '    End If
+                'End If
             End If
         End If
     End Sub
