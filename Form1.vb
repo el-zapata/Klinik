@@ -816,7 +816,7 @@ Public Class Form1
         ElseIf RadioButton5.Checked = True Then
             'Dim Temp As Integer
             Dim Temp_uang As Int64
-            If TextBox6.Text = "" Or TextBox1.Text = "" Or TextBox2.Text = "" Or TextBox3.Text = "" Or TextBox4.Text = "" Then
+            If TextBox1.Text = "" Or TextBox2.Text = "" Or TextBox3.Text = "" Or TextBox4.Text = "" Then
                 MsgBox("Semua field harus diisi!!!")
                 Exit Sub
             ElseIf TextBox6.Text.Length > 47 Then
@@ -1828,6 +1828,9 @@ Public Class Form1
         da.Fill(ds, "tbl_pasien")
         DataGridView1.DataSource = ds.Tables("tbl_pasien")
         conn.Close()
+        Daftar_Pasien = True
+        Riwayat_Tindakan = False
+        Button5.Text = "Riwayat Tindakan"
     End Sub
 
     Private Sub TextBox8_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox8.KeyPress
