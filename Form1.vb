@@ -1999,7 +1999,7 @@ Public Class Form1
 
         RichTextBox1.Visible = False
 
-        Button1.Text = "Save and Print"
+        Button1.Text = "Save dan Print"
 
         CheckBox1.Visible = False
         CheckBox2.Visible = False
@@ -2063,7 +2063,7 @@ Public Class Form1
 
         RichTextBox1.Visible = False
 
-        Button1.Text = "Save and Print"
+        Button1.Text = "Save dan Print"
 
         CheckBox1.Visible = False
         CheckBox2.Visible = False
