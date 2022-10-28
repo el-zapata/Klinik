@@ -86,6 +86,7 @@ Public Class Form1
             Dim Umur As Integer
             If Int32.TryParse(TextBox2.Text, Umur) = False Then
                 MsgBox("Field Umur harus diisi dengan angka")
+                Exit Sub
             Else
                 Select Case First_Params_Found
                     Case Is = True
@@ -700,7 +701,26 @@ Public Class Form1
                     Exit Sub
                 End If
             End If
-            Call Enter_press_on_TextBox()
+
+            If TextBox6.Text <> "" Then
+                Call Connect()
+                cmd = New OdbcCommand("Select * From tbl_pasien Where Id = '" & TextBox6.Text & "'", conn)
+                rd = cmd.ExecuteReader
+                If rd.HasRows Then
+                    TextBox1.Text = rd.Item("Nama")
+                    TextBox2.Text = rd.Item("Umur")
+                    TextBox3.Text = rd.Item("Alamat")
+                    TextBox4.Text = rd.Item("No. Hp")
+                    RichTextBox1.Text = rd.Item("Tindakan")
+                End If
+                da = New OdbcDataAdapter("Select * From tbl_pasien Where Id = '" & TextBox6.Text & "'", conn)
+                ds = New DataSet
+                da.Fill(ds, "tbl_pasien")
+                DataGridView1.DataSource = ds.Tables("tbl_pasien")
+                conn.Close()
+            Else
+                Call Enter_press_on_TextBox()
+            End If
         ElseIf RadioButton2.Checked = True Then
             Dim Temp As Integer
             If TextBox1.Text = "" Or TextBox2.Text = "" Or TextBox14.Text = "" Or TextBox15.Text = "" Or TextBox16.Text = "" Or TextBox17.Text = "" Or TextBox18.Text = "" Or TextBox19.Text = "" Then
@@ -767,6 +787,13 @@ Public Class Form1
                 Exit Sub
             End If
 
+            If NumericUpDown1.Value > jumlah_hari - 1 Then
+                MsgBox("Jumlah hari yang dilewati terlalu banyak")
+                Exit Sub
+            Else
+                jumlah_hari = jumlah_hari - NumericUpDown1.Value
+            End If
+
             Dim Surat_Sakit As New Document()
             Try
                 Surat_Sakit.LoadFromFile("Template_Surat_Sakit.docx")
@@ -789,7 +816,7 @@ Public Class Form1
 
             bulan_ini = Nama_Bulan(bulan_ini)
 
-            jumlah_hari = jumlah_hari - NumericUpDown1.Value
+            'jumlah_hari = jumlah_hari - NumericUpDown1.Value
 
             Dim tr1 As TextRange = para12.AppendText(TextBox1.Text)
             Dim tr2 As TextRange = para13.AppendText(TextBox2.Text)
