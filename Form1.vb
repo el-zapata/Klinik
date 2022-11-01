@@ -387,7 +387,7 @@ Public Class Form1
         Label3.Text = "Alamat"
         Label4.Text = "No. HP"
         Label5.Text = "Tanggal Input"
-        Label7.Text = "Update Terakhir"
+        Label7.Text = "Pertemuan Terakhir"
 
         TextBox14.Visible = False
         TextBox15.Visible = False
@@ -463,7 +463,7 @@ Public Class Form1
         Label3.Text = "Alamat"
         Label4.Text = "No. HP"
         Label5.Text = "Tanggal Input"
-        Label7.Text = "Update Terakhir"
+        Label7.Text = "Pertemuan Terakhir"
 
         TextBox14.Visible = False
         TextBox15.Visible = False
@@ -543,7 +543,7 @@ Public Class Form1
         Label3.Text = "Alamat"
         Label4.Text = "No. HP"
         Label5.Text = "Tanggal Input"
-        Label7.Text = "Update Terakhir"
+        Label7.Text = "Pertemuan Terakhir"
 
         TextBox14.Visible = False
         TextBox15.Visible = False
@@ -572,7 +572,7 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Call Connect()
-        da = New OdbcDataAdapter("Select * From tbl_pasien", conn)
+        da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien", conn)
         ds = New DataSet
         da.Fill(ds, "tbl_pasien")
         DataGridView1.DataSource = ds.Tables("tbl_pasien")
@@ -596,41 +596,50 @@ Public Class Form1
                 MsgBox("Field Umur harus diisi dengan angka")
             Else
                 Dim message As String
-                If RichTextBox1.Text = "" Then
-                    message = "Apakah anda yakin ingin menambah data pasien ini? (Karena isi tindakan kosong, tindakan ini tidak akan masuk ke tabel Riwayat Tindakan)"
-                Else
-                    message = "Apakah anda yakin ingin menambah data pasien ini?"
-                End If
+                'If RichTextBox1.Text = "" Then
+                '    message = "Apakah anda yakin ingin menambah data pasien ini? (Karena isi tindakan kosong, tindakan ini tidak akan masuk ke tabel Riwayat Tindakan)"
+                'Else
+                message = "Apakah anda yakin ingin menambah data pasien ini?"
+                'End If
                 Dim Confirm As DialogResult = MessageBox.Show(message, "Konfirmasi Penambahan Data", MessageBoxButtons.YesNo)
                 If Confirm = DialogResult.Yes Then
                     Call Connect()
-                    Dim InputData As String = "Insert into tbl_pasien (Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Update Terakhir`, Tindakan) Values ('" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "', '" & TextBox4.Text & "', (Select NOW()), (Select NOW()),  '" & RichTextBox1.Text & "')"
+                    Dim InputData As String = "Select `AUTO_INCREMENT` From INFORMATION_SCHEMA.TABLES Where TABLE_SCHEMA = 'db_pasien' And TABLE_NAME = 'tbl_pasien'"
+                    cmd = New OdbcCommand(InputData, conn)
+                    Dim inc As Integer = cmd.ExecuteScalar()
+                    Dim med_rec As String = ""
+                    For i As Integer = 1 To 6 - inc.ToString.Length
+                        med_rec = med_rec + "0"
+                    Next
+                    med_rec = med_rec + inc.ToString
+
+                    InputData = "Insert into tbl_pasien (`Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`) Values ('" & med_rec & "', '" & TextBox1.Text & "','" & TextBox2.Text & "','" & TextBox3.Text & "', '" & TextBox4.Text & "', (Select NOW()))"
                     cmd = New OdbcCommand(InputData, conn)
                     cmd.ExecuteNonQuery()
 
-                    If RichTextBox1.Text <> "" Then
-                        InputData = "Select Id From tbl_pasien Where Id = (Select MAX(Id) From tbl_pasien)"
-                        cmd = New OdbcCommand(InputData, conn)
-                        Dim dr As Integer = cmd.ExecuteScalar()
-
-                        Dim id_tindakan As String
-                        id_tindakan = "T1#" + dr.ToString
-                        'Label13.Text = id_tindakan
-
-                        InputData = "Select Tindakan From tbl_pasien Where Id = (Select MAX(Id) From tbl_pasien)"
-                        cmd = New OdbcCommand(InputData, conn)
-                        Dim dr_tindakan As String = cmd.ExecuteScalar()
-
-                        InputData = "Insert into tbl_tindakan Values ('" & id_tindakan & "', (Select Id From tbl_pasien Where Id = '" & dr & "'), (Select Nama From tbl_pasien Where Id = '" & dr & "'), (Select NOW()), '" & dr_tindakan & "')"
-                        cmd = New OdbcCommand(InputData, conn)
-                        cmd.ExecuteNonQuery()
-                    End If
+                    'If RichTextBox1.Text <> "" Then
+                    '    InputData = "Select Id From tbl_pasien Where Id = (Select MAX(Id) From tbl_pasien)"
+                    '    cmd = New OdbcCommand(InputData, conn)
+                    '    Dim dr As Integer = cmd.ExecuteScalar()
+                    '
+                    '    Dim id_tindakan As String
+                    '    id_tindakan = "T1#" + dr.ToString
+                    '    'Label13.Text = id_tindakan
+                    '
+                    '    InputData = "Select Tindakan From tbl_pasien Where Id = (Select MAX(Id) From tbl_pasien)"
+                    '    cmd = New OdbcCommand(InputData, conn)
+                    '    Dim dr_tindakan As String = cmd.ExecuteScalar()
+                    '
+                    '    InputData = "Insert into tbl_tindakan Values ('" & id_tindakan & "', (Select Id From tbl_pasien Where Id = '" & dr & "'), (Select Nama From tbl_pasien Where Id = '" & dr & "'), (Select NOW()), '" & dr_tindakan & "')"
+                    '    cmd = New OdbcCommand(InputData, conn)
+                    '    cmd.ExecuteNonQuery()
+                    'End If
 
                     MsgBox("Input Data Berhasil")
                     conn.Close()
                     Call Reset_textbox()
                     Call Connect()
-                    da = New OdbcDataAdapter("Select * From tbl_pasien", conn)
+                    da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien", conn)
                     ds = New DataSet
                     da.Fill(ds, "tbl_pasien")
                     DataGridView1.DataSource = ds.Tables("tbl_pasien")
@@ -1790,16 +1799,16 @@ Public Class Form1
             Dim Data_Alamat As String = DataGridView1.SelectedRows(0).Cells(3).Value
             Dim Data_Hp As String = DataGridView1.SelectedRows(0).Cells(4).Value
             Dim Data_TglInput As String = DataGridView1.SelectedRows(0).Cells(5).Value
-            Dim Data_TglUpdate As String = DataGridView1.SelectedRows(0).Cells(6).Value
-            Dim Data_Tindakan As String = DataGridView1.SelectedRows(0).Cells(7).Value
+            'Dim Data_Tindakan As String = DataGridView1.SelectedRows(0).Cells(7).Value
 
             Dim Data_TglInput_Tahun As String = Data_TglInput(6) + Data_TglInput(7) + Data_TglInput(8) + Data_TglInput(9)
             Dim Data_TglInput_Bulan As String = Data_TglInput(3) + Data_TglInput(4)
             Dim Data_TglInput_Tanggal As String = Data_TglInput(0) + Data_TglInput(1)
 
-            Dim Data_TglUpdate_Tahun As String = Data_TglUpdate(6) + Data_TglUpdate(7) + Data_TglUpdate(8) + Data_TglUpdate(9)
-            Dim Data_TglUpdate_Bulan As String = Data_TglUpdate(3) + Data_TglUpdate(4)
-            Dim Data_TglUpdate_Tanggal As String = Data_TglUpdate(0) + Data_TglUpdate(1)
+
+
+
+
 
             If Not (RadioButton1.Checked = False Xor RadioButton5.Checked = False) Then
                 TextBox6.Text = Data_Id
@@ -1808,18 +1817,27 @@ Public Class Form1
                 TextBox3.Text = Data_Alamat
                 TextBox4.Text = Data_Hp
                 TextBox5.Text = Data_TglInput
-                TextBox7.Text = Data_TglUpdate
+                If DataGridView1.SelectedRows(0).Cells(6).Value.ToString <> "" Then
+                    Dim Data_TglPertemuan As String = DataGridView1.SelectedRows(0).Cells(6).Value.ToString
+                    TextBox7.Text = Data_TglPertemuan
+                End If
                 If RadioButton6.Checked = False Then
                     TextBox8.Text = Data_TglInput_Tanggal
                     TextBox9.Text = Data_TglInput_Bulan
                     TextBox10.Text = Data_TglInput_Tahun
-                    TextBox13.Text = Data_TglUpdate_Tanggal
-                    TextBox12.Text = Data_TglUpdate_Bulan
-                    TextBox11.Text = Data_TglUpdate_Tahun
+                    If DataGridView1.SelectedRows(0).Cells(6).Value.ToString <> "" Then
+                        Dim Data_TglPertemuan As String = DataGridView1.SelectedRows(0).Cells(6).Value.ToString
+                        Dim Data_TglPertemuan_Tahun As String = Data_TglPertemuan(6) + Data_TglPertemuan(7) + Data_TglPertemuan(8) + Data_TglPertemuan(9)
+                        Dim Data_TglPertemuan_Bulan As String = Data_TglPertemuan(3) + Data_TglPertemuan(4)
+                        Dim Data_TglPertemuan_Tanggal As String = Data_TglPertemuan(0) + Data_TglPertemuan(1)
+                        TextBox13.Text = Data_TglPertemuan_Tanggal
+                        TextBox12.Text = Data_TglPertemuan_Bulan
+                        TextBox11.Text = Data_TglPertemuan_Tahun
+                    End If
                 End If
-                RichTextBox1.Text = Data_Tindakan
-                End If
+                'RichTextBox1.Text = Data_Tindakan
             End If
+        End If
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
