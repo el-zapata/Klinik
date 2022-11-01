@@ -59,7 +59,7 @@ Public Class Form1
 
     Sub Enter_press_on_TextBox()
         Call Connect()
-        Dim Query_String As String = "Select * From tbl_pasien Where "
+        Dim Query_String As String = "Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien Where "
         Dim Add_String As String = ""
         'Dim Other_Params As Boolean = False
         Dim First_Params_Found As Boolean = False
@@ -294,7 +294,7 @@ Public Class Form1
                 Case Is = False
                     First_Params_Found = True
             End Select
-            Add_String = "(`Update Terakhir` Between '" & TextBox11.Text & "-" & TextBox12.Text & "-" & TextBox13.Text & " 00:00:00 ' And '" & TextBox11.Text & "-" & TextBox12.Text & "-" & TextBox13.Text & " 23:59:59') "
+            Add_String = "(`Pertemuan Terakhir` Between '" & TextBox11.Text & "-" & TextBox12.Text & "-" & TextBox13.Text & " 00:00:00 ' And '" & TextBox11.Text & "-" & TextBox12.Text & "-" & TextBox13.Text & " 23:59:59') "
             Query_String = Query_String + Add_String
             'If RichTextBox1.Text <> "" Then
             '    Query_String = Query_String + "And "
@@ -306,28 +306,28 @@ Public Class Form1
             Exit Sub
         End If
 
-        If RichTextBox1.Text <> "" Then
-            Select Case First_Params_Found
-                Case Is = True
-                    Query_String = Query_String + "And "
-                    Exit Select
-                Case Is = False
-                    First_Params_Found = True
-            End Select
-            'Add_String = "Tindakan = '" & RichTextBox1.Text & "' "
-            Dim words = RichTextBox1.Text.Split(" ")
-            For i As Integer = 0 To words.Count - 1
-                If i = 0 Then
-                    Add_String = "Tindakan Like '%" + words(i) + "%' "
-                ElseIf i = words.Count - 1 Then
-                    words(i).Replace(ControlChars.Lf, "")
-                    Add_String = Add_String + "And Tindakan Like '%" + words(i) + "%' "
-                Else
-                    Add_String = Add_String + "And Tindakan Like '%" + words(i) + "%' "
-                End If
-            Next
-            Query_String = Query_String + Add_String
-        End If
+        'If RichTextBox1.Text <> "" Then
+        '    Select Case First_Params_Found
+        '        Case Is = True
+        '            Query_String = Query_String + "And "
+        '            Exit Select
+        '        Case Is = False
+        '            First_Params_Found = True
+        '    End Select
+        '    'Add_String = "Tindakan = '" & RichTextBox1.Text & "' "
+        '    Dim words = RichTextBox1.Text.Split(" ")
+        '    For i As Integer = 0 To words.Count - 1
+        '        If i = 0 Then
+        '            Add_String = "Tindakan Like '%" + words(i) + "%' "
+        '        ElseIf i = words.Count - 1 Then
+        '            words(i).Replace(ControlChars.Lf, "")
+        '            Add_String = Add_String + "And Tindakan Like '%" + words(i) + "%' "
+        '        Else
+        '            Add_String = Add_String + "And Tindakan Like '%" + words(i) + "%' "
+        '        End If
+        '    Next
+        '    Query_String = Query_String + Add_String
+        'End If
 
         'TextBox6.Text = Query_String
         'TextBox4.Text = CStr(Other_Params)
@@ -655,53 +655,53 @@ Public Class Form1
                 MsgBox("Field Umur harus diisi dengan angka")
             Else
                 Dim message As String
-                If RichTextBox1.Text = "" Then
-                    message = "Apakah anda yakin ingin memperbarui data pasien ini? (Karena isi tindakan kosong, tindakan ini tidak akan masuk ke tabel Riwayat Tindakan. Tetapi kolom tindakan pada tabel Pasien akan kosong)"
-                Else
-                    message = "Apakah anda yakin ingin memperbarui data pasien ini?"
-                End If
+                'If RichTextBox1.Text = "" Then
+                '    message = "Apakah anda yakin ingin memperbarui data pasien ini? (Karena isi tindakan kosong, tindakan ini tidak akan masuk ke tabel Riwayat Tindakan. Tetapi kolom tindakan pada tabel Pasien akan kosong)"
+                ''Else
+                message = "Apakah anda yakin ingin memperbarui data pasien ini?"
+                'End If
                 Dim Confirm As DialogResult = MessageBox.Show(message, "Konfirmasi Perbaruan Data", MessageBoxButtons.YesNo)
                 If Confirm = DialogResult.Yes Then
-                    Dim Nama As String = DataGridView1.SelectedRows(0).Cells(1).Value
-                    Dim Riwayat_sebelumnya As String = DataGridView1.SelectedRows(0).Cells(7).Value
+                    'Dim Nama As String = DataGridView1.SelectedRows(0).Cells(1).Value
+                    'Dim Riwayat_sebelumnya As String = DataGridView1.SelectedRows(0).Cells(7).Value
                     Call Connect()
-                    Dim EditData As String = "Update tbl_pasien set Nama = '" & TextBox1.Text & "', Umur = '" & TextBox2.Text & "', Alamat = '" & TextBox3.Text & "', `No. Hp` = '" & TextBox4.Text & "', `Update Terakhir` = (Select NOW()), Tindakan = '" & RichTextBox1.Text & "' Where Id = '" & TextBox6.Text & "'"
+                    Dim EditData As String = "Update tbl_pasien set Nama = '" & TextBox1.Text & "', Umur = '" & TextBox2.Text & "', Alamat = '" & TextBox3.Text & "', `No. Hp` = '" & TextBox4.Text & "' Where `Medical Record` = '" & TextBox6.Text & "'"
                     cmd = New OdbcCommand(EditData, conn)
                     cmd.ExecuteNonQuery()
 
-                    If RichTextBox1.Text <> "" And Riwayat_sebelumnya <> RichTextBox1.Text Then
-                        EditData = "Select * From tbl_tindakan Where Id_pasien = '" & TextBox6.Text & "'"
-                        cmd = New OdbcCommand(EditData, conn)
-                        Dim dr As OdbcDataReader = cmd.ExecuteReader()
-                        Dim id_tindakan As String
-                        Dim count As Integer = 0
-
-                        If dr.HasRows Then
-                            While dr.Read()
-                                count += 1
-                            End While
-                            count += 1
-                            id_tindakan = "T" + count.ToString + "#" + TextBox6.Text
-                        Else
-                            id_tindakan = "T1#" + TextBox6.Text
-                        End If
-
-                        EditData = "Insert into tbl_tindakan Values ('" & id_tindakan & "', (Select Id From tbl_pasien Where Id = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where Id = '" & TextBox6.Text & "'), (Select NOW()), '" & RichTextBox1.Text & "')"
-                        cmd = New OdbcCommand(EditData, conn)
-                        cmd.ExecuteNonQuery()
-                    End If
-
-                    If Nama <> TextBox1.Text Then
-                        EditData = "Update tbl_tindakan Set Nama = '" & TextBox1.Text & "' Where Id_pasien = '" & TextBox6.Text & "'"
-                        cmd = New OdbcCommand(EditData, conn)
-                        cmd.ExecuteNonQuery()
-                    End If
+                    'If RichTextBox1.Text <> "" And Riwayat_sebelumnya <> RichTextBox1.Text Then
+                    '    EditData = "Select * From tbl_tindakan Where Id_pasien = '" & TextBox6.Text & "'"
+                    '    cmd = New OdbcCommand(EditData, conn)
+                    '    Dim dr As OdbcDataReader = cmd.ExecuteReader()
+                    '    Dim id_tindakan As String
+                    '    Dim count As Integer = 0
+                    '
+                    '    If dr.HasRows Then
+                    '        While dr.Read()
+                    '            count += 1
+                    '        End While
+                    '        count += 1
+                    '        id_tindakan = "T" + count.ToString + "#" + TextBox6.Text
+                    '    Else
+                    '        id_tindakan = "T1#" + TextBox6.Text
+                    '    End If
+                    '
+                    '    EditData = "Insert into tbl_tindakan Values ('" & id_tindakan & "', (Select Id From tbl_pasien Where Id = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where Id = '" & TextBox6.Text & "'), (Select NOW()), '" & RichTextBox1.Text & "')"
+                    '    cmd = New OdbcCommand(EditData, conn)
+                    '    cmd.ExecuteNonQuery()
+                    'End If
+                    '
+                    'If Nama <> TextBox1.Text Then
+                    '    EditData = "Update tbl_tindakan Set Nama = '" & TextBox1.Text & "' Where Id_pasien = '" & TextBox6.Text & "'"
+                    '    cmd = New OdbcCommand(EditData, conn)
+                    '    cmd.ExecuteNonQuery()
+                    'End If
 
                     MsgBox("Update Data Berhasil")
                     conn.Close()
                     Call Reset_textbox()
                     Call Connect()
-                    da = New OdbcDataAdapter("Select * From tbl_pasien", conn)
+                    da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien", conn)
                     ds = New DataSet
                     da.Fill(ds, "tbl_pasien")
                     DataGridView1.DataSource = ds.Tables("tbl_pasien")
@@ -718,16 +718,16 @@ Public Class Form1
 
             If TextBox6.Text <> "" Then
                 Call Connect()
-                cmd = New OdbcCommand("Select * From tbl_pasien Where Id = '" & TextBox6.Text & "'", conn)
+                cmd = New OdbcCommand("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien Where Id = '" & TextBox6.Text & "'", conn)
                 rd = cmd.ExecuteReader
                 If rd.HasRows Then
                     TextBox1.Text = rd.Item("Nama")
                     TextBox2.Text = rd.Item("Umur")
                     TextBox3.Text = rd.Item("Alamat")
                     TextBox4.Text = rd.Item("No. Hp")
-                    RichTextBox1.Text = rd.Item("Tindakan")
+                    'RichTextBox1.Text = rd.Item("Tindakan")
                 End If
-                da = New OdbcDataAdapter("Select * From tbl_pasien Where Id = '" & TextBox6.Text & "'", conn)
+                da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien Where Id = '" & TextBox6.Text & "'", conn)
                 ds = New DataSet
                 da.Fill(ds, "tbl_pasien")
                 DataGridView1.DataSource = ds.Tables("tbl_pasien")
@@ -1379,7 +1379,7 @@ Public Class Form1
                 End If
 
                 Call Connect()
-                da = New OdbcDataAdapter("Select * From tbl_pasien Where `Tanggal Input` Between '" & TextBox17.Text & "-" & TextBox18.Text & "-" & TextBox19.Text & " 00:00:00 ' And '" & TextBox14.Text & "-" & TextBox15.Text & "-" & TextBox16.Text & " 23:59:59'", conn)
+                da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien Where `Tanggal Input` Between '" & TextBox17.Text & "-" & TextBox18.Text & "-" & TextBox19.Text & " 00:00:00 ' And '" & TextBox14.Text & "-" & TextBox15.Text & "-" & TextBox16.Text & " 23:59:59'", conn)
                 ds = New DataSet
                 da.Fill(ds, "tbl_pasien")
                 DataGridView1.DataSource = ds.Tables("tbl_pasien")
@@ -1447,7 +1447,7 @@ Public Class Form1
                 End If
 
                 Call Connect()
-                da = New OdbcDataAdapter("Select * From tbl_pasien Where `Update Terakhir` Between '" & TextBox10.Text & "-" & TextBox9.Text & "-" & TextBox8.Text & " 00:00:00 ' And '" & TextBox11.Text & "-" & TextBox12.Text & "-" & TextBox13.Text & " 23:59:59'", conn)
+                da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien Where `Pertemuan Terakhir` Between '" & TextBox10.Text & "-" & TextBox9.Text & "-" & TextBox8.Text & " 00:00:00 ' And '" & TextBox11.Text & "-" & TextBox12.Text & "-" & TextBox13.Text & " 23:59:59'", conn)
                 ds = New DataSet
                 da.Fill(ds, "tbl_pasien")
                 DataGridView1.DataSource = ds.Tables("tbl_pasien")
@@ -1576,7 +1576,7 @@ Public Class Form1
                 End If
 
                 Call Connect()
-                da = New OdbcDataAdapter("Select * From tbl_pasien Where (`Tanggal Input` Between '" & TextBox17.Text & "-" & TextBox18.Text & "-" & TextBox19.Text & " 00:00:00 ' And '" & TextBox14.Text & "-" & TextBox15.Text & "-" & TextBox16.Text & " 23:59:59') Or (`Update Terakhir` Between '" & TextBox10.Text & "-" & TextBox9.Text & "-" & TextBox8.Text & " 00:00:00 ' And '" & TextBox11.Text & "-" & TextBox12.Text & "-" & TextBox13.Text & " 23:59:59')", conn)
+                da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien Where (`Tanggal Input` Between '" & TextBox17.Text & "-" & TextBox18.Text & "-" & TextBox19.Text & " 00:00:00 ' And '" & TextBox14.Text & "-" & TextBox15.Text & "-" & TextBox16.Text & " 23:59:59') Or (`Pertemuan Terakhir` Between '" & TextBox10.Text & "-" & TextBox9.Text & "-" & TextBox8.Text & " 00:00:00 ' And '" & TextBox11.Text & "-" & TextBox12.Text & "-" & TextBox13.Text & " 23:59:59')", conn)
                 ds = New DataSet
                 da.Fill(ds, "tbl_pasien")
                 DataGridView1.DataSource = ds.Tables("tbl_pasien")
@@ -1726,16 +1726,16 @@ Public Class Form1
         If RadioButton4.Checked = True Then
             If e.KeyChar = Chr(13) Then
                 Call Connect()
-                cmd = New OdbcCommand("Select * From tbl_pasien Where Id = '" & TextBox6.Text & "'", conn)
+                cmd = New OdbcCommand("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien Where Id = '" & TextBox6.Text & "'", conn)
                 rd = cmd.ExecuteReader
                 If rd.HasRows Then
                     TextBox1.Text = rd.Item("Nama")
                     TextBox2.Text = rd.Item("Umur")
                     TextBox3.Text = rd.Item("Alamat")
                     TextBox4.Text = rd.Item("No. Hp")
-                    RichTextBox1.Text = rd.Item("Tindakan")
+                    'RichTextBox1.Text = rd.Item("Tindakan")
                 End If
-                da = New OdbcDataAdapter("Select * From tbl_pasien Where Id = '" & TextBox6.Text & "'", conn)
+                da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien Where Id = '" & TextBox6.Text & "'", conn)
                 ds = New DataSet
                 da.Fill(ds, "tbl_pasien")
                 DataGridView1.DataSource = ds.Tables("tbl_pasien")
@@ -1882,7 +1882,7 @@ Public Class Form1
                 conn.Close()
                 Call Reset_textbox()
                 Call Connect()
-                da = New OdbcDataAdapter("Select * From tbl_pasien", conn)
+                da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien", conn)
                 ds = New DataSet
                 da.Fill(ds, "tbl_pasien")
                 DataGridView1.DataSource = ds.Tables("tbl_pasien")
@@ -1894,7 +1894,7 @@ Public Class Form1
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         DataGridView3.Visible = False
         Call Connect()
-        da = New OdbcDataAdapter("Select * From tbl_pasien", conn)
+        da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien", conn)
         ds = New DataSet
         da.Fill(ds, "tbl_pasien")
         DataGridView1.DataSource = ds.Tables("tbl_pasien")
@@ -2219,8 +2219,8 @@ Public Class Form1
 
         Label3.Text = "Input Dari"
         Label4.Text = "Input Sampai"
-        Label5.Text = "Update Dari"
-        Label7.Text = "Update Sampai"
+        Label5.Text = "Pertemuan Dari"
+        Label7.Text = "Pertemuan Sampai"
 
         TextBox14.Visible = True
         TextBox15.Visible = True

@@ -648,7 +648,7 @@ Partial Class Form1
         Me.CheckBox1.Checked = True
         Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBox1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.CheckBox1.Location = New System.Drawing.Point(336, 353)
+        Me.CheckBox1.Location = New System.Drawing.Point(13, 270)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(122, 25)
         Me.CheckBox1.TabIndex = 52
@@ -662,11 +662,11 @@ Partial Class Form1
         Me.CheckBox2.Checked = True
         Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBox2.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.CheckBox2.Location = New System.Drawing.Point(336, 422)
+        Me.CheckBox2.Location = New System.Drawing.Point(13, 305)
         Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(138, 25)
+        Me.CheckBox2.Size = New System.Drawing.Size(163, 25)
         Me.CheckBox2.TabIndex = 53
-        Me.CheckBox2.Text = "Update Terakhir"
+        Me.CheckBox2.Text = "Pertemuan Terakhir"
         Me.CheckBox2.UseVisualStyleBackColor = True
         Me.CheckBox2.Visible = False
         '
