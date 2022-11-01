@@ -370,6 +370,8 @@ Public Class Form1
 
         Label1.Visible = True
         Label2.Visible = True
+        Label3.Visible = True
+        Label4.Visible = True
 
         Button1.Visible = True
         Button1.Text = "Perbarui"
@@ -377,9 +379,9 @@ Public Class Form1
         Label5.Visible = True
         Label6.Visible = True
         Label7.Visible = True
-        Label8.Visible = True
+        Label8.Visible = False
 
-        Label6.Text = "Id"
+        Label6.Text = "Medical Record"
         Label1.Text = "Nama Pasien"
         Label2.Text = "Umur"
         Label3.Text = "Alamat"
@@ -397,7 +399,7 @@ Public Class Form1
         TextBox6.Visible = True
         TextBox3.Visible = True
         TextBox4.Visible = True
-        RichTextBox1.Visible = True
+        RichTextBox1.Visible = False
 
         Label14.Visible = False
         Label15.Visible = False
@@ -444,6 +446,8 @@ Public Class Form1
 
         Label1.Visible = True
         Label2.Visible = True
+        Label3.Visible = True
+        Label4.Visible = True
 
         Button1.Visible = True
         Button1.Text = "Masukkan ke Database"
@@ -451,9 +455,9 @@ Public Class Form1
         Label5.Visible = True
         Label6.Visible = True
         Label7.Visible = True
-        Label8.Visible = True
+        Label8.Visible = False
 
-        Label6.Text = "Id"
+        Label6.Text = "Medical Record"
         Label1.Text = "Nama Pasien"
         Label2.Text = "Umur"
         Label3.Text = "Alamat"
@@ -471,7 +475,7 @@ Public Class Form1
         TextBox6.Visible = True
         TextBox3.Visible = True
         TextBox4.Visible = True
-        RichTextBox1.Visible = True
+        RichTextBox1.Visible = False
 
         Label14.Visible = False
         Label15.Visible = False
@@ -526,13 +530,14 @@ Public Class Form1
 
         Label1.Visible = True
         Label2.Visible = True
-
+        Label3.Visible = True
+        Label4.Visible = True
         Label5.Visible = True
         Label6.Visible = True
         Label7.Visible = True
-        Label8.Visible = True
+        Label8.Visible = False
 
-        Label6.Text = "Id"
+        Label6.Text = "Medical Record"
         Label1.Text = "Nama Pasien"
         Label2.Text = "Umur"
         Label3.Text = "Alamat"
@@ -550,7 +555,7 @@ Public Class Form1
         TextBox6.Visible = True
         TextBox3.Visible = True
         TextBox4.Visible = True
-        RichTextBox1.Visible = True
+        RichTextBox1.Visible = False
 
         Label14.Visible = False
         Label15.Visible = False
@@ -2012,7 +2017,8 @@ Public Class Form1
 
         Label1.Visible = True
         Label2.Visible = True
-
+        Label3.Visible = True
+        Label4.Visible = True
         Label5.Visible = True
         Label6.Visible = False
         Label7.Visible = False
@@ -2087,7 +2093,8 @@ Public Class Form1
 
         Label1.Visible = True
         Label2.Visible = True
-
+        Label3.Visible = True
+        Label4.Visible = True
         Label5.Visible = True
         Label6.Visible = True
         Label7.Visible = False
@@ -2185,7 +2192,8 @@ Public Class Form1
 
         Label1.Visible = False
         Label2.Visible = False
-
+        Label3.Visible = True
+        Label4.Visible = True
         Label5.Visible = True
         Label6.Visible = False
         Label7.Visible = True
@@ -2291,6 +2299,71 @@ Public Class Form1
             TextBox12.Enabled = False
             TextBox13.Enabled = False
         End If
+    End Sub
+
+    Private Sub RadioButton7_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton7.CheckedChanged
+        DataGridView1.ClearSelection()
+        Call Reset_textbox()
+        TextBox6.Enabled = False
+        TextBox6.Visible = True
+        TextBox3.Visible = False
+        TextBox4.Visible = False
+        TextBox5.Visible = False
+        TextBox5.Enabled = False
+        TextBox7.Visible = False
+        TextBox8.Visible = False
+        TextBox9.Visible = False
+        TextBox10.Visible = False
+        TextBox11.Visible = False
+        TextBox12.Visible = False
+        TextBox13.Visible = False
+
+        TextBox1.Visible = True
+        TextBox2.Visible = False
+
+        DataGridView2.Visible = False
+
+        TextBox2.Font = New Font(TextBox2.Font, FontStyle.Regular)
+
+        Label1.Visible = True
+        Label2.Visible = False
+        Label3.Visible = False
+        Label4.Visible = False
+        Label5.Visible = False
+        Label6.Visible = True
+        Label7.Visible = False
+        Label8.Visible = True
+
+        Label6.Text = "Medical Record"
+        Label1.Text = "Elemen"
+
+        TextBox14.Visible = False
+        TextBox15.Visible = False
+        TextBox16.Visible = False
+        TextBox17.Visible = False
+        TextBox18.Visible = False
+        TextBox19.Visible = False
+
+        Label14.Visible = False
+        Label15.Visible = False
+        Label16.Visible = False
+        Label17.Visible = False
+
+        Label9.Visible = False
+        Label10.Visible = False
+        Label11.Visible = False
+        Label12.Visible = False
+
+        RichTextBox1.Visible = True
+
+        Button1.Text = "Masukkan ke Database"
+
+        CheckBox1.Visible = False
+        CheckBox2.Visible = False
+
+        Label18.Visible = False
+        Label19.Visible = False
+        NumericUpDown1.Visible = False
     End Sub
 
     'Private Sub TextBox14_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox14.KeyPress
