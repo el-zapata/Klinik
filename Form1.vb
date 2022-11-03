@@ -54,6 +54,9 @@ Public Class Form1
         TextBox17.Text = ""
         TextBox18.Text = ""
         TextBox19.Text = ""
+        TextBox20.Text = ""
+        TextBox21.Text = ""
+        TextBox22.Text = ""
         RichTextBox1.Text = ""
     End Sub
 
@@ -400,6 +403,7 @@ Public Class Form1
         TextBox3.Visible = True
         TextBox4.Visible = True
         RichTextBox1.Visible = False
+        RichTextBox2.Visible = False
 
         Label14.Visible = False
         Label15.Visible = False
@@ -412,6 +416,13 @@ Public Class Form1
         Label18.Visible = False
         Label19.Visible = False
         NumericUpDown1.Visible = False
+
+        TextBox20.Visible = False
+        TextBox21.Visible = False
+        TextBox22.Visible = False
+        Label20.Visible = False
+        Label21.Visible = False
+        CheckBox3.Visible = False
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
@@ -476,6 +487,7 @@ Public Class Form1
         TextBox3.Visible = True
         TextBox4.Visible = True
         RichTextBox1.Visible = False
+        RichTextBox2.Visible = False
 
         Label14.Visible = False
         Label15.Visible = False
@@ -488,6 +500,13 @@ Public Class Form1
         Label18.Visible = False
         Label19.Visible = False
         NumericUpDown1.Visible = False
+
+        TextBox20.Visible = False
+        TextBox21.Visible = False
+        TextBox22.Visible = False
+        Label20.Visible = False
+        Label21.Visible = False
+        CheckBox3.Visible = False
     End Sub
 
     Private Sub RadioButton4_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton4.CheckedChanged
@@ -556,6 +575,7 @@ Public Class Form1
         TextBox3.Visible = True
         TextBox4.Visible = True
         RichTextBox1.Visible = False
+        RichTextBox2.Visible = False
 
         Label14.Visible = False
         Label15.Visible = False
@@ -568,6 +588,13 @@ Public Class Form1
         Label18.Visible = False
         Label19.Visible = False
         NumericUpDown1.Visible = False
+
+        TextBox20.Visible = False
+        TextBox21.Visible = False
+        TextBox22.Visible = False
+        Label20.Visible = False
+        Label21.Visible = False
+        CheckBox3.Visible = False
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -2073,6 +2100,7 @@ Public Class Form1
         Label12.Visible = False
 
         RichTextBox1.Visible = False
+        RichTextBox2.Visible = False
 
         Button1.Text = "Save dan Print"
 
@@ -2083,6 +2111,13 @@ Public Class Form1
         Label19.Visible = True
         NumericUpDown1.Visible = True
         NumericUpDown1.Value = 0
+
+        TextBox20.Visible = False
+        TextBox21.Visible = False
+        TextBox22.Visible = False
+        Label20.Visible = False
+        Label21.Visible = False
+        CheckBox3.Visible = False
     End Sub
 
     Private Sub RadioButton5_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton5.CheckedChanged
@@ -2143,6 +2178,7 @@ Public Class Form1
         Label12.Visible = False
 
         RichTextBox1.Visible = False
+        RichTextBox2.Visible = False
 
         Button1.Text = "Save dan Print"
 
@@ -2152,6 +2188,13 @@ Public Class Form1
         Label18.Visible = False
         Label19.Visible = False
         NumericUpDown1.Visible = False
+
+        TextBox20.Visible = False
+        TextBox21.Visible = False
+        TextBox22.Visible = False
+        Label20.Visible = False
+        Label21.Visible = False
+        CheckBox3.Visible = False
     End Sub
 
     Dim Daftar_Pasien As Boolean = True
@@ -2240,6 +2283,7 @@ Public Class Form1
         Label12.Visible = True
 
         RichTextBox1.Visible = False
+        RichTextBox2.Visible = False
 
         Button1.Text = "Cari Pasien"
 
@@ -2281,6 +2325,13 @@ Public Class Form1
         Label18.Visible = False
         Label19.Visible = False
         NumericUpDown1.Visible = False
+
+        TextBox20.Visible = False
+        TextBox21.Visible = False
+        TextBox22.Visible = False
+        Label20.Visible = False
+        Label21.Visible = False
+        CheckBox3.Visible = False
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
@@ -2347,13 +2398,14 @@ Public Class Form1
         Label2.Visible = False
         Label3.Visible = False
         Label4.Visible = False
-        Label5.Visible = False
+        Label5.Visible = True
         Label6.Visible = True
         Label7.Visible = False
         Label8.Visible = True
 
         Label6.Text = "Medical Record"
         Label1.Text = "Elemen"
+        Label5.Text = "Keterangan"
 
         TextBox14.Visible = False
         TextBox15.Visible = False
@@ -2373,6 +2425,7 @@ Public Class Form1
         Label12.Visible = False
 
         RichTextBox1.Visible = True
+        RichTextBox2.Visible = True
 
         Button1.Text = "Masukkan ke Database"
 
@@ -2382,6 +2435,118 @@ Public Class Form1
         Label18.Visible = False
         Label19.Visible = False
         NumericUpDown1.Visible = False
+
+        TextBox20.Visible = False
+        TextBox21.Visible = False
+        TextBox22.Visible = False
+        Label20.Visible = False
+        Label21.Visible = False
+        CheckBox3.Visible = False
+    End Sub
+
+    Private Sub RadioButton8_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton8.CheckedChanged
+        DataGridView1.ClearSelection()
+        Call Reset_textbox()
+        TextBox6.Enabled = False
+        TextBox6.Visible = True
+        TextBox3.Visible = False
+        TextBox4.Visible = False
+        TextBox5.Visible = False
+        TextBox5.Enabled = False
+        TextBox7.Visible = False
+        TextBox8.Visible = False
+        TextBox9.Visible = False
+        TextBox10.Visible = False
+        TextBox11.Visible = False
+        TextBox12.Visible = False
+        TextBox13.Visible = False
+
+        TextBox1.Visible = False
+        TextBox2.Visible = True
+
+        DataGridView2.Visible = False
+
+        TextBox2.Font = New Font(TextBox2.Font, FontStyle.Bold)
+
+        Label1.Visible = True
+        Label2.Visible = True
+        Label3.Visible = False
+        Label4.Visible = False
+        Label5.Visible = True
+        Label6.Visible = True
+        Label7.Visible = False
+        Label8.Visible = False
+
+        Label6.Text = "Medical Record"
+        Label1.Text = "Tanggal"
+        Label2.Text = "Total Harga"
+        Label5.Text = "Keterangan"
+
+        TextBox14.Visible = False
+        TextBox15.Visible = False
+        TextBox16.Visible = False
+        TextBox17.Visible = False
+        TextBox18.Visible = False
+        TextBox19.Visible = False
+
+        Label14.Visible = False
+        Label15.Visible = False
+        Label16.Visible = False
+        Label17.Visible = False
+
+        Label9.Visible = False
+        Label10.Visible = False
+        Label11.Visible = False
+        Label12.Visible = False
+
+        RichTextBox1.Visible = False
+        RichTextBox2.Visible = True
+
+        Button1.Text = "Masukkan ke Database"
+
+        CheckBox1.Visible = False
+        CheckBox2.Visible = False
+
+        Label18.Visible = False
+        Label19.Visible = False
+        NumericUpDown1.Visible = False
+
+        TextBox20.Visible = True
+        TextBox21.Visible = True
+        TextBox22.Visible = True
+        Label20.Visible = True
+        Label21.Visible = True
+        CheckBox3.Visible = True
+
+        If CheckBox3.Checked = True Then
+            TextBox20.Enabled = False
+            TextBox21.Enabled = False
+            TextBox22.Enabled = False
+
+            TextBox20.Text = ""
+            TextBox21.Text = ""
+            TextBox22.Text = ""
+        Else
+            TextBox20.Enabled = True
+            TextBox21.Enabled = True
+            TextBox22.Enabled = True
+        End If
+    End Sub
+
+    Private Sub CheckBox3_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox3.CheckedChanged
+        If CheckBox3.Checked = True Then
+            TextBox20.Enabled = False
+            TextBox21.Enabled = False
+            TextBox22.Enabled = False
+
+            TextBox20.Text = ""
+            TextBox21.Text = ""
+            TextBox22.Text = ""
+        Else
+            TextBox20.Enabled = True
+            TextBox21.Enabled = True
+            TextBox22.Enabled = True
+        End If
     End Sub
 
     'Private Sub TextBox14_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox14.KeyPress

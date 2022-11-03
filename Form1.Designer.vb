@@ -26,6 +26,7 @@ Partial Class Form1
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -84,17 +85,27 @@ Partial Class Form1
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.RadioButton7 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton8 = New System.Windows.Forms.RadioButton()
+        Me.TextBox20 = New System.Windows.Forms.TextBox()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.TextBox21 = New System.Windows.Forms.TextBox()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.TextBox22 = New System.Windows.Forms.TextBox()
+        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
+        Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
+        Me.DataGridView4 = New System.Windows.Forms.DataGridView()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label1.Location = New System.Drawing.Point(10, 270)
+        Me.Label1.Location = New System.Drawing.Point(9, 237)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(100, 21)
         Me.Label1.TabIndex = 0
@@ -103,7 +114,7 @@ Partial Class Form1
         'TextBox1
         '
         Me.TextBox1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox1.Location = New System.Drawing.Point(178, 262)
+        Me.TextBox1.Location = New System.Drawing.Point(177, 229)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(265, 29)
         Me.TextBox1.TabIndex = 1
@@ -112,7 +123,7 @@ Partial Class Form1
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label2.Location = New System.Drawing.Point(10, 305)
+        Me.Label2.Location = New System.Drawing.Point(9, 272)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(50, 21)
         Me.Label2.TabIndex = 2
@@ -121,7 +132,7 @@ Partial Class Form1
         'TextBox2
         '
         Me.TextBox2.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox2.Location = New System.Drawing.Point(178, 297)
+        Me.TextBox2.Location = New System.Drawing.Point(177, 264)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(265, 29)
         Me.TextBox2.TabIndex = 3
@@ -198,7 +209,7 @@ Partial Class Form1
         'TextBox3
         '
         Me.TextBox3.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox3.Location = New System.Drawing.Point(178, 332)
+        Me.TextBox3.Location = New System.Drawing.Point(177, 299)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(265, 29)
         Me.TextBox3.TabIndex = 11
@@ -207,7 +218,7 @@ Partial Class Form1
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label3.Location = New System.Drawing.Point(10, 340)
+        Me.Label3.Location = New System.Drawing.Point(9, 307)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(59, 21)
         Me.Label3.TabIndex = 10
@@ -216,7 +227,7 @@ Partial Class Form1
         'TextBox4
         '
         Me.TextBox4.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox4.Location = New System.Drawing.Point(178, 367)
+        Me.TextBox4.Location = New System.Drawing.Point(177, 334)
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(265, 29)
         Me.TextBox4.TabIndex = 13
@@ -225,7 +236,7 @@ Partial Class Form1
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label4.Location = New System.Drawing.Point(10, 375)
+        Me.Label4.Location = New System.Drawing.Point(9, 342)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(58, 21)
         Me.Label4.TabIndex = 12
@@ -235,7 +246,7 @@ Partial Class Form1
         '
         Me.TextBox5.Enabled = False
         Me.TextBox5.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox5.Location = New System.Drawing.Point(178, 402)
+        Me.TextBox5.Location = New System.Drawing.Point(177, 369)
         Me.TextBox5.Name = "TextBox5"
         Me.TextBox5.Size = New System.Drawing.Size(265, 29)
         Me.TextBox5.TabIndex = 15
@@ -244,7 +255,7 @@ Partial Class Form1
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label5.Location = New System.Drawing.Point(10, 410)
+        Me.Label5.Location = New System.Drawing.Point(9, 377)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(103, 21)
         Me.Label5.TabIndex = 14
@@ -254,7 +265,7 @@ Partial Class Form1
         '
         Me.TextBox6.Enabled = False
         Me.TextBox6.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox6.Location = New System.Drawing.Point(178, 227)
+        Me.TextBox6.Location = New System.Drawing.Point(177, 194)
         Me.TextBox6.Name = "TextBox6"
         Me.TextBox6.Size = New System.Drawing.Size(265, 29)
         Me.TextBox6.TabIndex = 17
@@ -263,7 +274,7 @@ Partial Class Form1
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label6.Location = New System.Drawing.Point(10, 235)
+        Me.Label6.Location = New System.Drawing.Point(9, 202)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(117, 21)
         Me.Label6.TabIndex = 16
@@ -273,7 +284,7 @@ Partial Class Form1
         '
         Me.TextBox7.Enabled = False
         Me.TextBox7.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox7.Location = New System.Drawing.Point(178, 437)
+        Me.TextBox7.Location = New System.Drawing.Point(177, 404)
         Me.TextBox7.Name = "TextBox7"
         Me.TextBox7.Size = New System.Drawing.Size(265, 29)
         Me.TextBox7.TabIndex = 19
@@ -282,7 +293,7 @@ Partial Class Form1
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label7.Location = New System.Drawing.Point(10, 445)
+        Me.Label7.Location = New System.Drawing.Point(9, 412)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(144, 21)
         Me.Label7.TabIndex = 18
@@ -292,7 +303,7 @@ Partial Class Form1
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label8.Location = New System.Drawing.Point(10, 305)
+        Me.Label8.Location = New System.Drawing.Point(9, 272)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(73, 21)
         Me.Label8.TabIndex = 20
@@ -301,11 +312,12 @@ Partial Class Form1
         'RichTextBox1
         '
         Me.RichTextBox1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.RichTextBox1.Location = New System.Drawing.Point(178, 297)
+        Me.RichTextBox1.Location = New System.Drawing.Point(177, 264)
         Me.RichTextBox1.Name = "RichTextBox1"
         Me.RichTextBox1.Size = New System.Drawing.Size(265, 96)
         Me.RichTextBox1.TabIndex = 21
         Me.RichTextBox1.Text = ""
+        Me.RichTextBox1.Visible = False
         '
         'Button2
         '
@@ -341,7 +353,7 @@ Partial Class Form1
         'TextBox8
         '
         Me.TextBox8.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox8.Location = New System.Drawing.Point(178, 402)
+        Me.TextBox8.Location = New System.Drawing.Point(177, 369)
         Me.TextBox8.Name = "TextBox8"
         Me.TextBox8.Size = New System.Drawing.Size(25, 29)
         Me.TextBox8.TabIndex = 25
@@ -351,7 +363,7 @@ Partial Class Form1
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label9.Location = New System.Drawing.Point(205, 406)
+        Me.Label9.Location = New System.Drawing.Point(204, 373)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(16, 21)
         Me.Label9.TabIndex = 26
@@ -361,7 +373,7 @@ Partial Class Form1
         'TextBox9
         '
         Me.TextBox9.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox9.Location = New System.Drawing.Point(222, 402)
+        Me.TextBox9.Location = New System.Drawing.Point(221, 369)
         Me.TextBox9.Name = "TextBox9"
         Me.TextBox9.Size = New System.Drawing.Size(25, 29)
         Me.TextBox9.TabIndex = 27
@@ -371,7 +383,7 @@ Partial Class Form1
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label10.Location = New System.Drawing.Point(249, 406)
+        Me.Label10.Location = New System.Drawing.Point(248, 373)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(16, 21)
         Me.Label10.TabIndex = 28
@@ -381,7 +393,7 @@ Partial Class Form1
         'TextBox10
         '
         Me.TextBox10.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox10.Location = New System.Drawing.Point(266, 402)
+        Me.TextBox10.Location = New System.Drawing.Point(265, 369)
         Me.TextBox10.Name = "TextBox10"
         Me.TextBox10.Size = New System.Drawing.Size(50, 29)
         Me.TextBox10.TabIndex = 29
@@ -390,7 +402,7 @@ Partial Class Form1
         'TextBox11
         '
         Me.TextBox11.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox11.Location = New System.Drawing.Point(266, 437)
+        Me.TextBox11.Location = New System.Drawing.Point(265, 404)
         Me.TextBox11.Name = "TextBox11"
         Me.TextBox11.Size = New System.Drawing.Size(50, 29)
         Me.TextBox11.TabIndex = 34
@@ -400,7 +412,7 @@ Partial Class Form1
         '
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label11.Location = New System.Drawing.Point(249, 441)
+        Me.Label11.Location = New System.Drawing.Point(248, 408)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(16, 21)
         Me.Label11.TabIndex = 33
@@ -410,7 +422,7 @@ Partial Class Form1
         'TextBox12
         '
         Me.TextBox12.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox12.Location = New System.Drawing.Point(222, 437)
+        Me.TextBox12.Location = New System.Drawing.Point(221, 404)
         Me.TextBox12.Name = "TextBox12"
         Me.TextBox12.Size = New System.Drawing.Size(25, 29)
         Me.TextBox12.TabIndex = 32
@@ -420,7 +432,7 @@ Partial Class Form1
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label12.Location = New System.Drawing.Point(205, 441)
+        Me.Label12.Location = New System.Drawing.Point(204, 408)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(16, 21)
         Me.Label12.TabIndex = 31
@@ -430,7 +442,7 @@ Partial Class Form1
         'TextBox13
         '
         Me.TextBox13.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox13.Location = New System.Drawing.Point(178, 437)
+        Me.TextBox13.Location = New System.Drawing.Point(177, 404)
         Me.TextBox13.Name = "TextBox13"
         Me.TextBox13.Size = New System.Drawing.Size(25, 29)
         Me.TextBox13.TabIndex = 30
@@ -448,7 +460,7 @@ Partial Class Form1
         '
         Me.RadioButton2.AutoSize = True
         Me.RadioButton2.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.RadioButton2.Location = New System.Drawing.Point(9, 160)
+        Me.RadioButton2.Location = New System.Drawing.Point(9, 129)
         Me.RadioButton2.Name = "RadioButton2"
         Me.RadioButton2.Size = New System.Drawing.Size(200, 25)
         Me.RadioButton2.TabIndex = 36
@@ -459,7 +471,7 @@ Partial Class Form1
         '
         Me.RadioButton5.AutoSize = True
         Me.RadioButton5.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.RadioButton5.Location = New System.Drawing.Point(9, 191)
+        Me.RadioButton5.Location = New System.Drawing.Point(9, 160)
         Me.RadioButton5.Name = "RadioButton5"
         Me.RadioButton5.Size = New System.Drawing.Size(122, 25)
         Me.RadioButton5.TabIndex = 37
@@ -469,7 +481,7 @@ Partial Class Form1
         'TextBox14
         '
         Me.TextBox14.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox14.Location = New System.Drawing.Point(266, 367)
+        Me.TextBox14.Location = New System.Drawing.Point(265, 334)
         Me.TextBox14.Name = "TextBox14"
         Me.TextBox14.Size = New System.Drawing.Size(50, 29)
         Me.TextBox14.TabIndex = 47
@@ -479,7 +491,7 @@ Partial Class Form1
         '
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label14.Location = New System.Drawing.Point(249, 371)
+        Me.Label14.Location = New System.Drawing.Point(248, 338)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(16, 21)
         Me.Label14.TabIndex = 46
@@ -489,7 +501,7 @@ Partial Class Form1
         'TextBox15
         '
         Me.TextBox15.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox15.Location = New System.Drawing.Point(222, 367)
+        Me.TextBox15.Location = New System.Drawing.Point(221, 334)
         Me.TextBox15.Name = "TextBox15"
         Me.TextBox15.Size = New System.Drawing.Size(25, 29)
         Me.TextBox15.TabIndex = 45
@@ -499,7 +511,7 @@ Partial Class Form1
         '
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label15.Location = New System.Drawing.Point(205, 371)
+        Me.Label15.Location = New System.Drawing.Point(204, 338)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(16, 21)
         Me.Label15.TabIndex = 44
@@ -509,7 +521,7 @@ Partial Class Form1
         'TextBox16
         '
         Me.TextBox16.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox16.Location = New System.Drawing.Point(178, 367)
+        Me.TextBox16.Location = New System.Drawing.Point(177, 334)
         Me.TextBox16.Name = "TextBox16"
         Me.TextBox16.Size = New System.Drawing.Size(25, 29)
         Me.TextBox16.TabIndex = 43
@@ -518,7 +530,7 @@ Partial Class Form1
         'TextBox17
         '
         Me.TextBox17.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox17.Location = New System.Drawing.Point(266, 332)
+        Me.TextBox17.Location = New System.Drawing.Point(265, 299)
         Me.TextBox17.Name = "TextBox17"
         Me.TextBox17.Size = New System.Drawing.Size(50, 29)
         Me.TextBox17.TabIndex = 42
@@ -528,7 +540,7 @@ Partial Class Form1
         '
         Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label16.Location = New System.Drawing.Point(249, 336)
+        Me.Label16.Location = New System.Drawing.Point(248, 303)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(16, 21)
         Me.Label16.TabIndex = 41
@@ -538,7 +550,7 @@ Partial Class Form1
         'TextBox18
         '
         Me.TextBox18.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox18.Location = New System.Drawing.Point(222, 332)
+        Me.TextBox18.Location = New System.Drawing.Point(221, 299)
         Me.TextBox18.Name = "TextBox18"
         Me.TextBox18.Size = New System.Drawing.Size(25, 29)
         Me.TextBox18.TabIndex = 40
@@ -548,7 +560,7 @@ Partial Class Form1
         '
         Me.Label17.AutoSize = True
         Me.Label17.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label17.Location = New System.Drawing.Point(205, 336)
+        Me.Label17.Location = New System.Drawing.Point(204, 303)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(16, 21)
         Me.Label17.TabIndex = 39
@@ -558,7 +570,7 @@ Partial Class Form1
         'TextBox19
         '
         Me.TextBox19.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.TextBox19.Location = New System.Drawing.Point(178, 332)
+        Me.TextBox19.Location = New System.Drawing.Point(177, 299)
         Me.TextBox19.Name = "TextBox19"
         Me.TextBox19.Size = New System.Drawing.Size(25, 29)
         Me.TextBox19.TabIndex = 38
@@ -579,13 +591,13 @@ Partial Class Form1
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DataGridView2.DefaultCellStyle = DataGridViewCellStyle3
-        Me.DataGridView2.Location = New System.Drawing.Point(178, 402)
+        Me.DataGridView2.Location = New System.Drawing.Point(177, 369)
         Me.DataGridView2.MultiSelect = False
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.ReadOnly = True
         Me.DataGridView2.RowTemplate.Height = 25
         Me.DataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView2.Size = New System.Drawing.Size(265, 98)
+        Me.DataGridView2.Size = New System.Drawing.Size(265, 131)
         Me.DataGridView2.TabIndex = 48
         '
         'Printer
@@ -628,7 +640,7 @@ Partial Class Form1
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(161, 44)
         Me.Button5.TabIndex = 50
-        Me.Button5.Text = "Riwayat Tindakan"
+        Me.Button5.Text = "Riwayat Pertemuan"
         Me.Button5.UseVisualStyleBackColor = True
         '
         'RadioButton6
@@ -648,7 +660,7 @@ Partial Class Form1
         Me.CheckBox1.Checked = True
         Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBox1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.CheckBox1.Location = New System.Drawing.Point(13, 270)
+        Me.CheckBox1.Location = New System.Drawing.Point(12, 237)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(122, 25)
         Me.CheckBox1.TabIndex = 52
@@ -662,7 +674,7 @@ Partial Class Form1
         Me.CheckBox2.Checked = True
         Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CheckBox2.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.CheckBox2.Location = New System.Drawing.Point(13, 305)
+        Me.CheckBox2.Location = New System.Drawing.Point(12, 272)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(163, 25)
         Me.CheckBox2.TabIndex = 53
@@ -673,7 +685,7 @@ Partial Class Form1
         'NumericUpDown1
         '
         Me.NumericUpDown1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.NumericUpDown1.Location = New System.Drawing.Point(394, 352)
+        Me.NumericUpDown1.Location = New System.Drawing.Point(393, 319)
         Me.NumericUpDown1.Name = "NumericUpDown1"
         Me.NumericUpDown1.Size = New System.Drawing.Size(35, 29)
         Me.NumericUpDown1.TabIndex = 54
@@ -682,7 +694,7 @@ Partial Class Form1
         '
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label18.Location = New System.Drawing.Point(335, 354)
+        Me.Label18.Location = New System.Drawing.Point(334, 321)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(55, 21)
         Me.Label18.TabIndex = 55
@@ -692,7 +704,7 @@ Partial Class Form1
         '
         Me.Label19.AutoSize = True
         Me.Label19.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.Label19.Location = New System.Drawing.Point(435, 354)
+        Me.Label19.Location = New System.Drawing.Point(434, 321)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(39, 21)
         Me.Label19.TabIndex = 56
@@ -702,18 +714,134 @@ Partial Class Form1
         '
         Me.RadioButton7.AutoSize = True
         Me.RadioButton7.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.RadioButton7.Location = New System.Drawing.Point(9, 129)
+        Me.RadioButton7.Location = New System.Drawing.Point(251, 36)
         Me.RadioButton7.Name = "RadioButton7"
         Me.RadioButton7.Size = New System.Drawing.Size(131, 25)
         Me.RadioButton7.TabIndex = 57
         Me.RadioButton7.Text = "Input Tindakan"
         Me.RadioButton7.UseVisualStyleBackColor = True
         '
+        'RadioButton8
+        '
+        Me.RadioButton8.AutoSize = True
+        Me.RadioButton8.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.RadioButton8.Location = New System.Drawing.Point(251, 5)
+        Me.RadioButton8.Name = "RadioButton8"
+        Me.RadioButton8.Size = New System.Drawing.Size(143, 25)
+        Me.RadioButton8.TabIndex = 58
+        Me.RadioButton8.Text = "Input Pertemuan"
+        Me.RadioButton8.UseVisualStyleBackColor = True
+        '
+        'TextBox20
+        '
+        Me.TextBox20.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.TextBox20.Location = New System.Drawing.Point(265, 229)
+        Me.TextBox20.Name = "TextBox20"
+        Me.TextBox20.Size = New System.Drawing.Size(50, 29)
+        Me.TextBox20.TabIndex = 63
+        Me.TextBox20.Visible = False
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.Label20.Location = New System.Drawing.Point(248, 233)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(16, 21)
+        Me.Label20.TabIndex = 62
+        Me.Label20.Text = "/"
+        Me.Label20.Visible = False
+        '
+        'TextBox21
+        '
+        Me.TextBox21.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.TextBox21.Location = New System.Drawing.Point(221, 229)
+        Me.TextBox21.Name = "TextBox21"
+        Me.TextBox21.Size = New System.Drawing.Size(25, 29)
+        Me.TextBox21.TabIndex = 61
+        Me.TextBox21.Visible = False
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.Label21.Location = New System.Drawing.Point(204, 233)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(16, 21)
+        Me.Label21.TabIndex = 60
+        Me.Label21.Text = "/"
+        Me.Label21.Visible = False
+        '
+        'TextBox22
+        '
+        Me.TextBox22.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.TextBox22.Location = New System.Drawing.Point(177, 229)
+        Me.TextBox22.Name = "TextBox22"
+        Me.TextBox22.Size = New System.Drawing.Size(25, 29)
+        Me.TextBox22.TabIndex = 59
+        Me.TextBox22.Visible = False
+        '
+        'CheckBox3
+        '
+        Me.CheckBox3.AutoSize = True
+        Me.CheckBox3.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.CheckBox3.Location = New System.Drawing.Point(329, 231)
+        Me.CheckBox3.Name = "CheckBox3"
+        Me.CheckBox3.Size = New System.Drawing.Size(79, 25)
+        Me.CheckBox3.TabIndex = 64
+        Me.CheckBox3.Text = "Hari Ini"
+        Me.CheckBox3.UseVisualStyleBackColor = True
+        Me.CheckBox3.Visible = False
+        '
+        'RichTextBox2
+        '
+        Me.RichTextBox2.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.RichTextBox2.Location = New System.Drawing.Point(177, 369)
+        Me.RichTextBox2.Name = "RichTextBox2"
+        Me.RichTextBox2.Size = New System.Drawing.Size(265, 96)
+        Me.RichTextBox2.TabIndex = 65
+        Me.RichTextBox2.Text = ""
+        Me.RichTextBox2.Visible = False
+        '
+        'DataGridView4
+        '
+        Me.DataGridView4.AllowUserToAddRows = False
+        Me.DataGridView4.AllowUserToDeleteRows = False
+        Me.DataGridView4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.DataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView4.DefaultCellStyle = DataGridViewCellStyle5
+        Me.DataGridView4.Location = New System.Drawing.Point(482, 12)
+        Me.DataGridView4.MultiSelect = False
+        Me.DataGridView4.Name = "DataGridView4"
+        Me.DataGridView4.ReadOnly = True
+        Me.DataGridView4.RowTemplate.Height = 25
+        Me.DataGridView4.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridView4.Size = New System.Drawing.Size(837, 488)
+        Me.DataGridView4.TabIndex = 66
+        Me.DataGridView4.TabStop = False
+        Me.DataGridView4.Visible = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1351, 569)
+        Me.Controls.Add(Me.DataGridView4)
+        Me.Controls.Add(Me.RichTextBox2)
+        Me.Controls.Add(Me.CheckBox3)
+        Me.Controls.Add(Me.TextBox20)
+        Me.Controls.Add(Me.Label20)
+        Me.Controls.Add(Me.TextBox21)
+        Me.Controls.Add(Me.Label21)
+        Me.Controls.Add(Me.TextBox22)
+        Me.Controls.Add(Me.RadioButton8)
         Me.Controls.Add(Me.RadioButton7)
         Me.Controls.Add(Me.Label19)
         Me.Controls.Add(Me.Label18)
@@ -778,6 +906,7 @@ Partial Class Form1
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -841,4 +970,13 @@ Partial Class Form1
     Friend WithEvents Label19 As Label
     Friend WithEvents Printer As DataGridViewTextBoxColumn
     Friend WithEvents RadioButton7 As RadioButton
+    Friend WithEvents RadioButton8 As RadioButton
+    Friend WithEvents TextBox20 As TextBox
+    Friend WithEvents Label20 As Label
+    Friend WithEvents TextBox21 As TextBox
+    Friend WithEvents Label21 As Label
+    Friend WithEvents TextBox22 As TextBox
+    Friend WithEvents CheckBox3 As CheckBox
+    Friend WithEvents RichTextBox2 As RichTextBox
+    Friend WithEvents DataGridView4 As DataGridView
 End Class
