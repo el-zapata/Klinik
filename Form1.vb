@@ -425,7 +425,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-
+        TextBox23.Visible = False
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
@@ -512,7 +512,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-
+        TextBox23.Visible = False
     End Sub
 
     Private Sub RadioButton4_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton4.CheckedChanged
@@ -603,7 +603,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-
+        TextBox23.Visible = False
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -2200,7 +2200,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-
+        TextBox23.Visible = False
     End Sub
 
     Private Sub RadioButton5_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton5.CheckedChanged
@@ -2280,7 +2280,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-
+        TextBox23.Visible = False
     End Sub
 
     Dim Daftar_Pasien As Boolean = True
@@ -2290,13 +2290,14 @@ Public Class Form1
         If Daftar_Pasien = True Then
             If DataGridView1.SelectedRows.Count() > 0 Then
                 Call Connect()
-                da = New OdbcDataAdapter("Select Id_tindakan, Nama, Tanggal, Tindakan From tbl_tindakan Where Id_pasien = '" & DataGridView1.SelectedRows(0).Cells(0).Value & "'", conn)
+                da = New OdbcDataAdapter("Select* From tbl_pertemuan Where `Medical Record` = '" & DataGridView1.SelectedRows(0).Cells(0).Value & "' Order By Tanggal", conn)
                 ds = New DataSet
-                da.Fill(ds, "tbl_tindakan")
-                DataGridView3.DataSource = ds.Tables("tbl_tindakan")
+                da.Fill(ds, "tbl_pertemuan")
+                DataGridView4.DataSource = ds.Tables("tbl_pertemuan")
                 conn.Close()
 
-                DataGridView3.Visible = True
+                DataGridView4.Visible = True
+                DataGridView1.Visible = False
 
                 Daftar_Pasien = False
                 Riwayat_Tindakan = True
@@ -2304,11 +2305,12 @@ Public Class Form1
                 Button3.Enabled = False
             End If
         ElseIf Riwayat_Tindakan = True Then
-            DataGridView3.Visible = False
+            DataGridView4.Visible = False
+            DataGridView1.Visible = True
 
             Daftar_Pasien = True
             Riwayat_Tindakan = False
-            Button5.Text = "Riwayat Tindakan"
+            Button5.Text = "Riwayat Pertemuan"
             Button3.Enabled = True
         End If
     End Sub
@@ -2420,7 +2422,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-
+        TextBox23.Visible = False
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
@@ -2533,7 +2535,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = True
-
+        TextBox23.Visible = True
     End Sub
 
     Private Sub RadioButton8_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton8.CheckedChanged
@@ -2611,7 +2613,7 @@ Public Class Form1
         CheckBox3.Visible = True
 
         Label22.Visible = False
-
+        TextBox23.Visible = False
 
         If CheckBox3.Checked = True Then
             TextBox20.Enabled = False
