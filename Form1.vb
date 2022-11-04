@@ -1915,7 +1915,9 @@ Public Class Form1
 
             If Not (RadioButton1.Checked = False Xor RadioButton5.Checked = False) Then
                 TextBox6.Text = Data_Id
-                TextBox1.Text = Data_Nama
+                If RadioButton7.Checked = False Then
+                    TextBox1.Text = Data_Nama
+                End If
                 If RadioButton8.Checked = False Then
                     TextBox2.Text = Data_Umur
                 End If
@@ -2532,6 +2534,7 @@ Public Class Form1
 
         Label22.Visible = True
         ComboBox1.Visible = True
+        ComboBox1.Items.Clear()
     End Sub
 
     Private Sub RadioButton8_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton8.CheckedChanged
@@ -2639,6 +2642,13 @@ Public Class Form1
             TextBox20.Enabled = True
             TextBox21.Enabled = True
             TextBox22.Enabled = True
+        End If
+    End Sub
+
+    Private Sub ComboBox1_DropDown(sender As Object, e As EventArgs) Handles ComboBox1.DropDown
+        If TextBox6.Text = "" Then
+            MsgBox("Pilih terlebih dahulu data pasien")
+            Exit Sub
         End If
     End Sub
 
