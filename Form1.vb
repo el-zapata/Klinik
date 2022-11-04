@@ -423,6 +423,9 @@ Public Class Form1
         Label20.Visible = False
         Label21.Visible = False
         CheckBox3.Visible = False
+
+        Label22.Visible = False
+        ComboBox1.Visible = False
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
@@ -507,6 +510,9 @@ Public Class Form1
         Label20.Visible = False
         Label21.Visible = False
         CheckBox3.Visible = False
+
+        Label22.Visible = False
+        ComboBox1.Visible = False
     End Sub
 
     Private Sub RadioButton4_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton4.CheckedChanged
@@ -595,6 +601,9 @@ Public Class Form1
         Label20.Visible = False
         Label21.Visible = False
         CheckBox3.Visible = False
+
+        Label22.Visible = False
+        ComboBox1.Visible = False
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -1609,6 +1618,78 @@ Public Class Form1
                 DataGridView1.DataSource = ds.Tables("tbl_pasien")
                 conn.Close()
             End If
+        ElseIf RadioButton8.Checked = True Then
+            If TextBox6.Text = "" Then
+                MsgBox("Pilih terlebih dahulu data pasien yang akan diperbarui")
+                Exit Sub
+            ElseIf (TextBox22.Text = "" Or TextBox21.Text = "" Or TextBox20.Text = "") And CheckBox3.Checked = False Then
+                MsgBox("Tanggal harus diisi!!!")
+                Exit Sub
+            End If
+
+            Dim Harga As Int64
+
+            If TextBox2.Text <> "" And Int64.TryParse(TextBox2.Text, Harga) = False Then
+                MsgBox("Field Harga harus diisi dengan angka")
+                Exit Sub
+            End If
+
+            Dim Confirm As DialogResult = MessageBox.Show("Apakah anda yakin ingin menambahkan data pertemuan pasien ini ke Database?", "Konfirmasi Penambahan Data", MessageBoxButtons.YesNo)
+            If Confirm = DialogResult.Yes Then
+                'If TextBox2.Text = "" Then
+                '    TextBox2.Text = Nothing
+                'End If
+                Call Connect()
+                Dim InputData As String = "Select * From tbl_pertemuan Where `Medical Record` = '" & TextBox6.Text & "'"
+                cmd = New OdbcCommand(InputData, conn)
+                Dim dr As OdbcDataReader = cmd.ExecuteReader()
+                Dim Id_pertemuan As String
+                Dim count As Integer = 0
+
+                If dr.HasRows Then
+                    While dr.Read()
+                        count += 1
+                    End While
+                    count += 1
+                    Id_pertemuan = "P" + TextBox6.Text + "#" + count.ToString
+                Else
+                    Id_pertemuan = "P" + TextBox6.Text + "#1"
+                End If
+
+                If CheckBox3.Checked = False And TextBox2.Text = "" Then
+                    InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), '" & TextBox20.Text & "-" & TextBox21.Text & "-" & TextBox22.Text & "', NULL, '" & RichTextBox2.Text & "')"
+                ElseIf CheckBox3.Checked = True And TextBox2.Text = "" Then
+                    InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select NOW()), NULL, '" & RichTextBox2.Text & "')"
+                ElseIf CheckBox3.Checked = False And TextBox2.Text <> "" Then
+                    InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), '" & TextBox20.Text & "-" & TextBox21.Text & "-" & TextBox22.Text & "', '" & TextBox2.Text & "', '" & RichTextBox2.Text & "')"
+                ElseIf CheckBox3.Checked = True And TextBox2.Text <> "" Then
+                    InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select NOW()), '" & TextBox2.Text & "', '" & RichTextBox2.Text & "')"
+                End If
+
+                'InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), '" & TextBox20.Text & "-" & TextBox21.Text & "-" & TextBox22.Text & "', '" & TextBox2.Text & "', '" & RichTextBox2.Text & "')"
+                cmd = New OdbcCommand(InputData, conn)
+                cmd.ExecuteNonQuery()
+
+                If CheckBox3.Checked = False Then
+                    InputData = "Update tbl_pasien Set `Pertemuan Terakhir` = (Select MAX(Tanggal) From tbl_pertemuan Where `Medical Record` = '" & TextBox6.Text & "') Where `Medical Record` = '" & TextBox6.Text & "'"
+                Else
+                    InputData = "Update tbl_pasien Set `Pertemuan Terakhir` = (Select NOW()) Where `Medical Record` = '" & TextBox6.Text & "'"
+                End If
+
+                cmd = New OdbcCommand(InputData, conn)
+                cmd.ExecuteNonQuery()
+
+                MsgBox("Input Data Pertemuan Berhasil")
+                conn.Close()
+                Call Reset_textbox()
+                Call Connect()
+                da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien", conn)
+                ds = New DataSet
+                da.Fill(ds, "tbl_pasien")
+                DataGridView1.DataSource = ds.Tables("tbl_pasien")
+                conn.Close()
+
+            End If
         End If
     End Sub
 
@@ -1832,15 +1913,12 @@ Public Class Form1
             Dim Data_TglInput_Bulan As String = Data_TglInput(3) + Data_TglInput(4)
             Dim Data_TglInput_Tanggal As String = Data_TglInput(0) + Data_TglInput(1)
 
-
-
-
-
-
             If Not (RadioButton1.Checked = False Xor RadioButton5.Checked = False) Then
                 TextBox6.Text = Data_Id
                 TextBox1.Text = Data_Nama
-                TextBox2.Text = Data_Umur
+                If RadioButton8.Checked = False Then
+                    TextBox2.Text = Data_Umur
+                End If
                 TextBox3.Text = Data_Alamat
                 TextBox4.Text = Data_Hp
                 TextBox5.Text = Data_TglInput
@@ -2118,6 +2196,9 @@ Public Class Form1
         Label20.Visible = False
         Label21.Visible = False
         CheckBox3.Visible = False
+
+        Label22.Visible = False
+        ComboBox1.Visible = False
     End Sub
 
     Private Sub RadioButton5_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton5.CheckedChanged
@@ -2195,6 +2276,9 @@ Public Class Form1
         Label20.Visible = False
         Label21.Visible = False
         CheckBox3.Visible = False
+
+        Label22.Visible = False
+        ComboBox1.Visible = False
     End Sub
 
     Dim Daftar_Pasien As Boolean = True
@@ -2332,6 +2416,9 @@ Public Class Form1
         Label20.Visible = False
         Label21.Visible = False
         CheckBox3.Visible = False
+
+        Label22.Visible = False
+        ComboBox1.Visible = False
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
@@ -2442,6 +2529,9 @@ Public Class Form1
         Label20.Visible = False
         Label21.Visible = False
         CheckBox3.Visible = False
+
+        Label22.Visible = True
+        ComboBox1.Visible = True
     End Sub
 
     Private Sub RadioButton8_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton8.CheckedChanged
@@ -2517,6 +2607,9 @@ Public Class Form1
         Label20.Visible = True
         Label21.Visible = True
         CheckBox3.Visible = True
+
+        Label22.Visible = False
+        ComboBox1.Visible = False
 
         If CheckBox3.Checked = True Then
             TextBox20.Enabled = False
