@@ -2290,7 +2290,7 @@ Public Class Form1
         If Daftar_Pasien = True Then
             If DataGridView1.SelectedRows.Count() > 0 Then
                 Call Connect()
-                da = New OdbcDataAdapter("Select* From tbl_pertemuan Where `Medical Record` = '" & DataGridView1.SelectedRows(0).Cells(0).Value & "' Order By Tanggal", conn)
+                da = New OdbcDataAdapter("Select* From tbl_pertemuan Where `Medical Record` = '" & DataGridView1.SelectedRows(0).Cells(0).Value & "' Order By Tanggal Desc", conn)
                 ds = New DataSet
                 da.Fill(ds, "tbl_pertemuan")
                 DataGridView4.DataSource = ds.Tables("tbl_pertemuan")
