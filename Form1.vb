@@ -2646,17 +2646,7 @@ Public Class Form1
         End If
     End Sub
 
-    'Private Sub TextBox14_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox14.KeyPress
-    '    If e.KeyChar = Chr(13) Then
-    '        If TextBox14.Text = "" Or TextBox15.Text = "" Or TextBox16.Text = "" Then
-    '            MsgBox("Tahun, bulan, dan hari harus terisi semua atau dikosongkan semua")
-    '        ElseIf IsNumeric(TextBox13.Text) And IsNumeric(TextBox12.Text) And IsNumeric(TextBox11.Text) Then
-    '            If TextBox13.Text.Trim().Length() < 1 Or TextBox13.Text.Trim().Length() > 2 Or TextBox12.Text.Trim().Length() < 1 Or TextBox12.Text.Trim().Length() > 2 Or TextBox11.Text.Trim().Length() <> 4 Then
-    '                MsgBox("Input tanggal tidak valid")
-    '            Else
-    '                Call Enter_press_on_TextBox()
-    '            End If
-    '        End If
-    '    End If
-    'End Sub
+    ' Tambahin SelectionChanged buat DataGridView4 buat input tindakan
+    ' Hapus pasien harus hapus semua pertemuan dan tindakannya
+    ' Mungkin tambahin 1 radiobutton untuk update harga sama keterangan pertemuan (mungkin juga tambah 1 radiobutton buat update keterangan tindakan juga)
 End Class

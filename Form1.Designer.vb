@@ -651,9 +651,9 @@ Partial Class Form1
         Me.RadioButton6.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.RadioButton6.Location = New System.Drawing.Point(9, 98)
         Me.RadioButton6.Name = "RadioButton6"
-        Me.RadioButton6.Size = New System.Drawing.Size(309, 25)
+        Me.RadioButton6.Size = New System.Drawing.Size(219, 25)
         Me.RadioButton6.TabIndex = 51
-        Me.RadioButton6.Text = "Cari Pasien (Berdasarkan Range Tanggal)"
+        Me.RadioButton6.Text = "Cari Pasien (Range Tanggal)"
         Me.RadioButton6.UseVisualStyleBackColor = True
         '
         'CheckBox1
