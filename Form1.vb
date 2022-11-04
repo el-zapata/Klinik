@@ -425,7 +425,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-        ComboBox1.Visible = False
+
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
@@ -512,7 +512,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-        ComboBox1.Visible = False
+
     End Sub
 
     Private Sub RadioButton4_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton4.CheckedChanged
@@ -603,7 +603,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-        ComboBox1.Visible = False
+
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -2200,7 +2200,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-        ComboBox1.Visible = False
+
     End Sub
 
     Private Sub RadioButton5_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton5.CheckedChanged
@@ -2280,7 +2280,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-        ComboBox1.Visible = False
+
     End Sub
 
     Dim Daftar_Pasien As Boolean = True
@@ -2420,7 +2420,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = False
-        ComboBox1.Visible = False
+
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
@@ -2533,8 +2533,7 @@ Public Class Form1
         CheckBox3.Visible = False
 
         Label22.Visible = True
-        ComboBox1.Visible = True
-        ComboBox1.Items.Clear()
+
     End Sub
 
     Private Sub RadioButton8_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton8.CheckedChanged
@@ -2612,7 +2611,7 @@ Public Class Form1
         CheckBox3.Visible = True
 
         Label22.Visible = False
-        ComboBox1.Visible = False
+
 
         If CheckBox3.Checked = True Then
             TextBox20.Enabled = False
@@ -2642,13 +2641,6 @@ Public Class Form1
             TextBox20.Enabled = True
             TextBox21.Enabled = True
             TextBox22.Enabled = True
-        End If
-    End Sub
-
-    Private Sub ComboBox1_DropDown(sender As Object, e As EventArgs) Handles ComboBox1.DropDown
-        If TextBox6.Text = "" Then
-            MsgBox("Pilih terlebih dahulu data pasien")
-            Exit Sub
         End If
     End Sub
 

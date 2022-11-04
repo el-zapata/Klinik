@@ -94,7 +94,6 @@ Partial Class Form1
         Me.CheckBox3 = New System.Windows.Forms.CheckBox()
         Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
         Me.DataGridView4 = New System.Windows.Forms.DataGridView()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Label22 = New System.Windows.Forms.Label()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -830,16 +829,6 @@ Partial Class Form1
         Me.DataGridView4.TabStop = False
         Me.DataGridView4.Visible = False
         '
-        'ComboBox1
-        '
-        Me.ComboBox1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(177, 471)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(265, 29)
-        Me.ComboBox1.TabIndex = 67
-        Me.ComboBox1.Visible = False
-        '
         'Label22
         '
         Me.Label22.AutoSize = True
@@ -857,7 +846,6 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1350, 569)
         Me.Controls.Add(Me.Label22)
-        Me.Controls.Add(Me.ComboBox1)
         Me.Controls.Add(Me.DataGridView4)
         Me.Controls.Add(Me.RichTextBox2)
         Me.Controls.Add(Me.CheckBox3)
@@ -1004,6 +992,5 @@ Partial Class Form1
     Friend WithEvents CheckBox3 As CheckBox
     Friend WithEvents RichTextBox2 As RichTextBox
     Friend WithEvents DataGridView4 As DataGridView
-    Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents Label22 As Label
 End Class
