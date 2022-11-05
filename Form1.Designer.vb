@@ -718,9 +718,9 @@ Partial Class Form1
         Me.RadioButton7.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.RadioButton7.Location = New System.Drawing.Point(251, 36)
         Me.RadioButton7.Name = "RadioButton7"
-        Me.RadioButton7.Size = New System.Drawing.Size(131, 25)
+        Me.RadioButton7.Size = New System.Drawing.Size(187, 25)
         Me.RadioButton7.TabIndex = 57
-        Me.RadioButton7.Text = "Input Tindakan"
+        Me.RadioButton7.Text = "Input/Update Tindakan"
         Me.RadioButton7.UseVisualStyleBackColor = True
         '
         'RadioButton8
@@ -729,9 +729,9 @@ Partial Class Form1
         Me.RadioButton8.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         Me.RadioButton8.Location = New System.Drawing.Point(251, 5)
         Me.RadioButton8.Name = "RadioButton8"
-        Me.RadioButton8.Size = New System.Drawing.Size(143, 25)
+        Me.RadioButton8.Size = New System.Drawing.Size(199, 25)
         Me.RadioButton8.TabIndex = 58
-        Me.RadioButton8.Text = "Input Pertemuan"
+        Me.RadioButton8.Text = "Input/Update Pertemuan"
         Me.RadioButton8.UseVisualStyleBackColor = True
         '
         'TextBox20
