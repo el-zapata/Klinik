@@ -8,6 +8,7 @@ Imports Spire.Doc.Fields
 Imports Spire.Doc.Documents
 'Imports System.Drawing.Printing
 Imports Spire.Pdf
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Button
 'Imports MySqlConnector
 
 Public Class Form1
@@ -58,6 +59,7 @@ Public Class Form1
         TextBox21.Text = ""
         TextBox22.Text = ""
         RichTextBox1.Text = ""
+        RichTextBox2.Text = ""
     End Sub
 
     Sub Enter_press_on_TextBox()
@@ -458,6 +460,7 @@ Public Class Form1
 
         TextBox1.Visible = True
         TextBox2.Visible = True
+        TextBox2.Enabled = True
 
         Call Reset_textbox()
 
@@ -558,6 +561,7 @@ Public Class Form1
 
         TextBox1.Visible = True
         TextBox2.Visible = True
+        TextBox2.Enabled = True
 
         TextBox2.Font = New Font(TextBox2.Font, FontStyle.Regular)
 
@@ -1628,76 +1632,132 @@ Public Class Form1
                 conn.Close()
             End If
         ElseIf RadioButton8.Checked = True Then
-            If TextBox6.Text = "" Then
-                MsgBox("Pilih terlebih dahulu data pasien yang akan diperbarui")
-                Exit Sub
-            ElseIf (TextBox22.Text = "" Or TextBox21.Text = "" Or TextBox20.Text = "") And CheckBox3.Checked = False Then
-                MsgBox("Tanggal harus diisi!!!")
-                Exit Sub
-            End If
+            Dim Selected_Row_Count As Integer = DataGridView4.SelectedRows.Count()
+            If Selected_Row_Count < 1 Then
+                If TextBox6.Text = "" Then
+                    MsgBox("Pilih terlebih dahulu data pasien yang akan diperbarui")
+                    Exit Sub
+                ElseIf (TextBox22.Text = "" Or TextBox21.Text = "" Or TextBox20.Text = "") And CheckBox3.Checked = False Then
+                    MsgBox("Tanggal harus diisi!!!")
+                    Exit Sub
+                End If
 
-            Dim Harga As Int64
+                Dim Harga As Int64
 
-            If TextBox2.Text <> "" And Int64.TryParse(TextBox2.Text, Harga) = False Then
-                MsgBox("Field Harga harus diisi dengan angka")
-                Exit Sub
-            End If
+                If TextBox2.Text <> "" And Int64.TryParse(TextBox2.Text, Harga) = False Then
+                    MsgBox("Field Harga harus diisi dengan angka")
+                    Exit Sub
+                End If
 
-            Dim Confirm As DialogResult = MessageBox.Show("Apakah anda yakin ingin menambahkan data pertemuan pasien ini ke Database?", "Konfirmasi Penambahan Data", MessageBoxButtons.YesNo)
-            If Confirm = DialogResult.Yes Then
-                'If TextBox2.Text = "" Then
-                '    TextBox2.Text = Nothing
-                'End If
-                Call Connect()
-                Dim InputData As String = "Select * From tbl_pertemuan Where `Medical Record` = '" & TextBox6.Text & "'"
-                cmd = New OdbcCommand(InputData, conn)
-                Dim dr As OdbcDataReader = cmd.ExecuteReader()
-                Dim Id_pertemuan As String
-                Dim count As Integer = 0
+                Dim Confirm As DialogResult = MessageBox.Show("Apakah anda yakin ingin menambahkan data pertemuan pasien ini ke Database?", "Konfirmasi Penambahan Data", MessageBoxButtons.YesNo)
+                If Confirm = DialogResult.Yes Then
+                    'If TextBox2.Text = "" Then
+                    '    TextBox2.Text = Nothing
+                    'End If
+                    Call Connect()
+                    Dim InputData As String = "Select * From tbl_pertemuan Where `Medical Record` = '" & TextBox6.Text & "'"
+                    cmd = New OdbcCommand(InputData, conn)
+                    Dim dr As OdbcDataReader = cmd.ExecuteReader()
+                    Dim Id_pertemuan As String
+                    Dim count As Integer = 0
 
-                If dr.HasRows Then
-                    While dr.Read()
+                    If dr.HasRows Then
+                        While dr.Read()
+                            count += 1
+                        End While
                         count += 1
-                    End While
-                    count += 1
-                    Id_pertemuan = "P" + TextBox6.Text + "#" + count.ToString
+                        Id_pertemuan = "P" + TextBox6.Text + "#" + count.ToString
+                    Else
+                        Id_pertemuan = "P" + TextBox6.Text + "#1"
+                    End If
+
+                    If CheckBox3.Checked = False And TextBox2.Text = "" Then
+                        InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), '" & TextBox20.Text & "-" & TextBox21.Text & "-" & TextBox22.Text & "', NULL, '" & RichTextBox2.Text & "')"
+                    ElseIf CheckBox3.Checked = True And TextBox2.Text = "" Then
+                        InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select NOW()), NULL, '" & RichTextBox2.Text & "')"
+                    ElseIf CheckBox3.Checked = False And TextBox2.Text <> "" Then
+                        InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), '" & TextBox20.Text & "-" & TextBox21.Text & "-" & TextBox22.Text & "', '" & TextBox2.Text & "', '" & RichTextBox2.Text & "')"
+                    ElseIf CheckBox3.Checked = True And TextBox2.Text <> "" Then
+                        InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select NOW()), '" & TextBox2.Text & "', '" & RichTextBox2.Text & "')"
+                    End If
+
+                    'InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), '" & TextBox20.Text & "-" & TextBox21.Text & "-" & TextBox22.Text & "', '" & TextBox2.Text & "', '" & RichTextBox2.Text & "')"
+                    cmd = New OdbcCommand(InputData, conn)
+                    cmd.ExecuteNonQuery()
+
+                    If CheckBox3.Checked = False Then
+                        InputData = "Update tbl_pasien Set `Pertemuan Terakhir` = (Select MAX(Tanggal) From tbl_pertemuan Where `Medical Record` = '" & TextBox6.Text & "') Where `Medical Record` = '" & TextBox6.Text & "'"
+                    Else
+                        InputData = "Update tbl_pasien Set `Pertemuan Terakhir` = (Select NOW()) Where `Medical Record` = '" & TextBox6.Text & "'"
+                    End If
+
+                    cmd = New OdbcCommand(InputData, conn)
+                    cmd.ExecuteNonQuery()
+
+                    MsgBox("Input Data Pertemuan Berhasil")
+                    conn.Close()
+                    Call Reset_textbox()
+                    Call Connect()
+                    da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien", conn)
+                    ds = New DataSet
+                    da.Fill(ds, "tbl_pasien")
+                    DataGridView1.DataSource = ds.Tables("tbl_pasien")
+                    conn.Close()
+                End If
+            Else
+                If TextBox2.Enabled = False Then
+                    Dim Confirm_update As DialogResult = MessageBox.Show("Apakah anda yakin ingin memperbarui keterangan data pertemuan pasien ini ke Database?", "Konfirmasi Pembaruan Data", MessageBoxButtons.YesNo)
+                    If Confirm_update = DialogResult.Yes Then
+                        Call Connect()
+                        Dim EditData As String = "Update tbl_pertemuan Set Keterangan = '" & RichTextBox2.Text & "' Where Id_pertemuan = '" & DataGridView4.SelectedRows(0).Cells(0).Value.ToString & "'"
+                        cmd = New OdbcCommand(EditData, conn)
+                        cmd.ExecuteNonQuery()
+
+                        Dim MedRec As String = DataGridView4.SelectedRows(0).Cells(1).Value
+
+                        MsgBox("Pembaruan Data Pertemuan Berhasil")
+                        conn.Close()
+                        Call Reset_textbox()
+                        Call Connect()
+                        da = New OdbcDataAdapter("Select * From tbl_pertemuan Where `Medical Record` = '" & MedRec & "' Order By Tanggal Desc", conn)
+                        ds = New DataSet
+                        da.Fill(ds, "tbl_pertemuan")
+                        DataGridView4.DataSource = ds.Tables("tbl_pertemuan")
+                        conn.Close()
+                    End If
                 Else
-                    Id_pertemuan = "P" + TextBox6.Text + "#1"
+                    If TextBox2.Text = "" Then
+                        MsgBox("Field Harga belum diisi!!!")
+                        Exit Sub
+                    End If
+
+                    Dim Harga As Int64
+
+                    If TextBox2.Text <> "" And Int64.TryParse(TextBox2.Text, Harga) = False Then
+                        MsgBox("Field Harga harus diisi dengan angka")
+                        Exit Sub
+                    End If
+
+                    Dim Confirm_update As DialogResult = MessageBox.Show("Apakah anda yakin ingin memperbarui data pertemuan pasien ini ke Database?", "Konfirmasi Pembaruan Data", MessageBoxButtons.YesNo)
+                    If Confirm_update = DialogResult.Yes Then
+                        Call Connect()
+                        Dim EditData As String = "Update tbl_pertemuan Set Keterangan = '" & RichTextBox2.Text & "', Harga = '" & TextBox2.Text & "' Where Id_pertemuan = '" & DataGridView4.SelectedRows(0).Cells(0).Value.ToString & "'"
+                        cmd = New OdbcCommand(EditData, conn)
+                        cmd.ExecuteNonQuery()
+
+                        Dim MedRec As String = DataGridView4.SelectedRows(0).Cells(1).Value
+
+                        MsgBox("Pembaruan Data Pertemuan Berhasil")
+                        conn.Close()
+                        Call Reset_textbox()
+                        Call Connect()
+                        da = New OdbcDataAdapter("Select * From tbl_pertemuan Where `Medical Record` = '" & MedRec & "' Order By Tanggal Desc", conn)
+                        ds = New DataSet
+                        da.Fill(ds, "tbl_pertemuan")
+                        DataGridView4.DataSource = ds.Tables("tbl_pertemuan")
+                        conn.Close()
+                    End If
                 End If
-
-                If CheckBox3.Checked = False And TextBox2.Text = "" Then
-                    InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), '" & TextBox20.Text & "-" & TextBox21.Text & "-" & TextBox22.Text & "', NULL, '" & RichTextBox2.Text & "')"
-                ElseIf CheckBox3.Checked = True And TextBox2.Text = "" Then
-                    InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select NOW()), NULL, '" & RichTextBox2.Text & "')"
-                ElseIf CheckBox3.Checked = False And TextBox2.Text <> "" Then
-                    InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), '" & TextBox20.Text & "-" & TextBox21.Text & "-" & TextBox22.Text & "', '" & TextBox2.Text & "', '" & RichTextBox2.Text & "')"
-                ElseIf CheckBox3.Checked = True And TextBox2.Text <> "" Then
-                    InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select NOW()), '" & TextBox2.Text & "', '" & RichTextBox2.Text & "')"
-                End If
-
-                'InputData = "Insert into tbl_pertemuan Values ('" & Id_pertemuan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Nama From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), '" & TextBox20.Text & "-" & TextBox21.Text & "-" & TextBox22.Text & "', '" & TextBox2.Text & "', '" & RichTextBox2.Text & "')"
-                cmd = New OdbcCommand(InputData, conn)
-                cmd.ExecuteNonQuery()
-
-                If CheckBox3.Checked = False Then
-                    InputData = "Update tbl_pasien Set `Pertemuan Terakhir` = (Select MAX(Tanggal) From tbl_pertemuan Where `Medical Record` = '" & TextBox6.Text & "') Where `Medical Record` = '" & TextBox6.Text & "'"
-                Else
-                    InputData = "Update tbl_pasien Set `Pertemuan Terakhir` = (Select NOW()) Where `Medical Record` = '" & TextBox6.Text & "'"
-                End If
-
-                cmd = New OdbcCommand(InputData, conn)
-                cmd.ExecuteNonQuery()
-
-                MsgBox("Input Data Pertemuan Berhasil")
-                conn.Close()
-                Call Reset_textbox()
-                Call Connect()
-                da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien", conn)
-                ds = New DataSet
-                da.Fill(ds, "tbl_pasien")
-                DataGridView1.DataSource = ds.Tables("tbl_pasien")
-                conn.Close()
-
             End If
         End If
     End Sub
@@ -1964,6 +2024,26 @@ Public Class Form1
             If RadioButton7.Checked = True Then
                 TextBox6.Text = MedRec
                 TextBox23.Text = Id_pertemuan
+            ElseIf RadioButton8.Checked = True Then
+                CheckBox3.Enabled = False
+                TextBox20.Enabled = False
+                TextBox21.Enabled = False
+                TextBox22.Enabled = False
+                If DataGridView4.SelectedRows(0).Cells(4).Value.ToString <> "" Then
+                    TextBox2.Enabled = False
+                Else
+                    TextBox2.Enabled = True
+                End If
+                Dim tanggal As String = DataGridView4.SelectedRows(0).Cells(3).Value.ToString
+                Dim hari As String = tanggal(0) + tanggal(1)
+                Dim bulan As String = tanggal(3) + tanggal(4)
+                Dim tahun As String = tanggal(6) + tanggal(7) + tanggal(8) + tanggal(9)
+                TextBox20.Text = tahun
+                TextBox21.Text = bulan
+                TextBox22.Text = hari
+                TextBox2.Text = DataGridView4.SelectedRows(0).Cells(4).Value.ToString
+                TextBox6.Text = MedRec
+                RichTextBox2.Text = DataGridView4.SelectedRows(0).Cells(5).Value.ToString
             End If
         End If
     End Sub
@@ -1977,7 +2057,13 @@ Public Class Form1
         TextBox3.Text = ""
         TextBox4.Text = ""
         TextBox5.Text = ""
-        TextBox6.Text = ""
+
+        If RadioButton8.Checked = False And DataGridView4.Visible = False Then
+            TextBox6.Text = ""
+        ElseIf RadioButton8.Checked = True And DataGridView4.Visible = False Then
+            TextBox6.Text = ""
+        End If
+
         TextBox7.Text = ""
         TextBox8.Text = ""
         TextBox9.Text = ""
@@ -1991,7 +2077,14 @@ Public Class Form1
         TextBox17.Text = ""
         TextBox18.Text = ""
         TextBox19.Text = ""
+        TextBox20.Text = ""
+        TextBox21.Text = ""
+        TextBox22.Text = ""
+        TextBox23.Text = ""
         RichTextBox1.Text = ""
+        RichTextBox2.Text = ""
+
+
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
@@ -2161,6 +2254,7 @@ Public Class Form1
 
         TextBox1.Visible = True
         TextBox2.Visible = True
+        TextBox2.Enabled = True
 
         DataGridView2.Visible = True
 
@@ -2251,6 +2345,7 @@ Public Class Form1
 
         TextBox1.Visible = True
         TextBox2.Visible = True
+        TextBox2.Enabled = True
 
         DataGridView2.Visible = True
 
@@ -2329,6 +2424,8 @@ Public Class Form1
                 DataGridView4.Visible = True
                 DataGridView1.Visible = False
 
+                DataGridView4.ClearSelection()
+
                 Daftar_Pasien = False
                 Riwayat_Pertemuan = True
                 Button5.Text = "Daftar Pasien"
@@ -2337,6 +2434,7 @@ Public Class Form1
         ElseIf Riwayat_Pertemuan = True Then
             DataGridView4.Visible = False
             DataGridView1.Visible = True
+            DataGridView1.ClearSelection()
 
             Daftar_Pasien = True
             Riwayat_Pertemuan = False
@@ -2346,7 +2444,15 @@ Public Class Form1
             If RadioButton7.Checked = True Then
                 TextBox6.Text = ""
                 TextBox23.Text = ""
+            ElseIf RadioButton8.Checked = True Then
+                CheckBox3.Enabled = True
+                TextBox20.Enabled = True
+                TextBox21.Enabled = True
+                TextBox22.Enabled = True
+                TextBox2.Enabled = True
             End If
+
+            Call Reset_textbox()
         End If
     End Sub
 
@@ -2371,6 +2477,7 @@ Public Class Form1
 
         TextBox1.Visible = False
         TextBox2.Visible = False
+        TextBox2.Enabled = True
 
         DataGridView2.Visible = False
 
@@ -2520,6 +2627,7 @@ Public Class Form1
 
         TextBox1.Visible = True
         TextBox2.Visible = False
+        TextBox2.Enabled = True
 
         DataGridView2.Visible = False
 
@@ -2600,6 +2708,7 @@ Public Class Form1
 
         TextBox1.Visible = False
         TextBox2.Visible = True
+        TextBox2.Enabled = True
 
         DataGridView2.Visible = False
 
@@ -2659,6 +2768,11 @@ Public Class Form1
         TextBox23.Visible = False
         TextBox23.Text = ""
 
+        CheckBox3.Enabled = True
+        TextBox20.Enabled = True
+        TextBox21.Enabled = True
+        TextBox22.Enabled = True
+
         If CheckBox3.Checked = True Then
             TextBox20.Enabled = False
             TextBox21.Enabled = False
@@ -2690,8 +2804,7 @@ Public Class Form1
         End If
     End Sub
 
-    ' Tambahin SelectionChanged buat DataGridView4 buat input tindakan
+    ' Input/Update Tindakan
     ' Hapus pasien harus hapus semua pertemuan dan tindakannya
-    ' Mungkin tambahin 1 radiobutton untuk update harga sama keterangan pertemuan (mungkin juga tambah 1 radiobutton buat update keterangan tindakan juga), tanya dulu apakah keterangan dapat diubah setelah diinput
 
 End Class
