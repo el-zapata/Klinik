@@ -1635,7 +1635,7 @@ Public Class Form1
             Dim Selected_Row_Count As Integer = DataGridView4.SelectedRows.Count()
             If Selected_Row_Count < 1 Then
                 If TextBox6.Text = "" Then
-                    MsgBox("Pilih terlebih dahulu data pasien yang akan diperbarui")
+                    MsgBox("Pilih terlebih dahulu data pasien yang akan diinput atau diperbarui")
                     Exit Sub
                 ElseIf (TextBox22.Text = "" Or TextBox21.Text = "" Or TextBox20.Text = "") And CheckBox3.Checked = False Then
                     MsgBox("Tanggal harus diisi!!!")
@@ -1758,6 +1758,39 @@ Public Class Form1
                         conn.Close()
                     End If
                 End If
+            End If
+        ElseIf RadioButton7.Checked = True Then
+            Dim Selected_Row_Count As Integer = DataGridView3.SelectedRows.Count()
+            If Selected_Row_Count < 1 Then
+                If TextBox6.Text = "" And TextBox23.Text = "" Then
+                    MsgBox("Pilih terlebih dahulu data pertemuan yang akan diperbarui")
+                    Exit Sub
+                ElseIf TextBox1.Text = "" Or RichTextBox1.Text = "" Then
+                    MsgBox("Elemen dan Tindakan harus diisi!!!")
+                    Exit Sub
+                End If
+
+                Call Connect()
+                Dim InputData As String = "Select * From tbl_tindakan Where `Medical Record` = '" & TextBox6.Text & "' And Id_pertemuan = '" & TextBox23.Text & "'"
+                cmd = New OdbcCommand(InputData, conn)
+                Dim dr As OdbcDataReader = cmd.ExecuteReader()
+                Dim Id_tindakan As String
+                Dim count As Integer = 0
+
+                If dr.HasRows Then
+                    While dr.Read()
+                        count += 1
+                    End While
+                    count += 1
+                    'Id_tindakan = "P" + TextBox6.Text + "#" + count.ToString
+                    Id_tindakan = "T" + TextBox6.Text + "/" + TextBox23.Text + "-" + count.ToString
+                Else
+                    Id_tindakan = "T" + TextBox6.Text + "/" + TextBox23.Text + "-1"
+                End If
+
+                InputData = "Insert Into tbl_tindakan Values ('" & Id_tindakan & "', (Select `Medical Record` From tbl_pasien Where `Medical Record` = '" & TextBox6.Text & "'), (Select Id_pertemuan From tbl_pertemuan Where Id_pertemuan = '" & TextBox23.Text & "'), '" & TextBox1.Text & "', '" & RichTextBox1.Text & "', '" & RichTextBox2.Text & "')"
+                cmd = New OdbcCommand(InputData, conn)
+                cmd.ExecuteNonQuery()
             End If
         End If
     End Sub
@@ -2115,17 +2148,40 @@ Public Class Form1
         End If
     End Sub
 
+    Dim Seluruh_Pasien As Boolean = True
+    Dim Detail_Tindakan As Boolean = False
+
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        DataGridView3.Visible = False
-        Call Connect()
-        da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien", conn)
-        ds = New DataSet
-        da.Fill(ds, "tbl_pasien")
-        DataGridView1.DataSource = ds.Tables("tbl_pasien")
-        conn.Close()
-        Daftar_Pasien = True
-        Riwayat_Pertemuan = False
-        Button5.Text = "Riwayat Tindakan"
+        If Seluruh_Pasien = True Then
+            Call Connect()
+            da = New OdbcDataAdapter("Select `Medical Record`, Nama, Umur, Alamat, `No. Hp`,`Tanggal Input`, `Pertemuan Terakhir` From tbl_pasien", conn)
+            ds = New DataSet
+            da.Fill(ds, "tbl_pasien")
+            DataGridView1.DataSource = ds.Tables("tbl_pasien")
+            conn.Close()
+        ElseIf Riwayat_Pertemuan = True Then
+            DataGridView3.Visible = True
+            DataGridView4.Visible = False
+
+            Call Connect()
+            da = New OdbcDataAdapter("Select Elemen, Tindakan, Keterangan From tbl_tindakan Where `Medical Record` = '" & DataGridView4.SelectedRows(0).Cells(1).Value.ToString & "'", conn)
+            ds = New DataSet
+            da.Fill(ds, "tbl_pasien")
+            DataGridView3.DataSource = ds.Tables("tbl_pasien")
+            conn.Close()
+
+            Button4.Text = "Pertemuan"
+            Detail_Tindakan = True
+            Riwayat_Pertemuan = False
+        ElseIf Detail_Tindakan = True Then
+            DataGridView3.Visible = False
+            DataGridView4.Visible = True
+            DataGridView3.ClearSelection()
+            Button4.Text = "Detail Tindakan"
+            Detail_Tindakan = False
+            Riwayat_Pertemuan = True
+        End If
+
     End Sub
 
     Private Sub TextBox8_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox8.KeyPress
@@ -2424,20 +2480,28 @@ Public Class Form1
                 DataGridView4.Visible = True
                 DataGridView1.Visible = False
 
-                DataGridView4.ClearSelection()
+                'DataGridView4.ClearSelection()
 
                 Daftar_Pasien = False
                 Riwayat_Pertemuan = True
+                Seluruh_Pasien = False
+                Detail_Tindakan = False
+                Button4.Text = "Detail Tindakan"
                 Button5.Text = "Daftar Pasien"
                 Button3.Enabled = False
             End If
-        ElseIf Riwayat_Pertemuan = True Then
+        ElseIf Riwayat_Pertemuan = True Or Detail_Tindakan = True Then
             DataGridView4.Visible = False
+            DataGridView3.Visible = False
             DataGridView1.Visible = True
             DataGridView1.ClearSelection()
+            DataGridView4.ClearSelection()
 
             Daftar_Pasien = True
             Riwayat_Pertemuan = False
+            Seluruh_Pasien = True
+            Detail_Tindakan = False
+            Button4.Text = "Tampilkan Seluruh Pasien"
             Button5.Text = "Riwayat Pertemuan"
             Button3.Enabled = True
 
@@ -2453,6 +2517,8 @@ Public Class Form1
             End If
 
             Call Reset_textbox()
+        ElseIf Detail_Tindakan = True Then
+
         End If
     End Sub
 
